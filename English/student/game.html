@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Educational Games | NOVA PRIME</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.topbar{
+background:#f1f5f9;
+padding:12px 20px;
+border-radius:12px;
+margin-bottom:20px;
+}
+
+body.dark .topbar{
+background:#1e293b;
+}
+
+.dark-toggle{
+cursor:pointer;
+font-size:20px;
+margin-left:auto;
+}
+
+body.dark{
+background:#0f172a;
+color:#e5e7eb;
+}
+
+body.dark .card{
+background:#1e293b;
+color:#e5e7eb;
+}
+
+.game-box{
+border:1px solid #e5e7eb;
+border-radius:16px;
+padding:25px;
+margin-bottom:20px;
+transition:0.3s;
+}
+
+.game-box:hover{
+transform:translateY(-5px);
+box-shadow:0 12px 25px rgba(0,0,0,0.08);
+}
+
+.level-badge{
+background:#111827;
+color:#fff;
+padding:6px 12px;
+border-radius:20px;
+font-size:12px;
+display:inline-block;
+margin-bottom:10px;
+}
+
+.score{
+font-size:18px;
+font-weight:600;
+}
+
+.game-list li{
+margin:4px 0;
+}
+
+</style>
+</head>
+
+<body class="student-page">
+
+<div class="overlay"></div>
+
+<div class="dashboard">
+
+<aside class="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<ul>
+
+<li><a href="index.html">🏠 Dashboard</a></li>
+<li><a href="courses.html">📚 My Courses</a></li>
+<li><a href="lessons.html">🎓 Level / Lesson</a></li>
+<li><a href="agenda.html">📅 My Agenda</a></li>
+<li><a href="library.html">📖 Library</a></li>
+<li><a href="ai.html">🧠 Skill Lab</a></li>
+<li><a href="homework.html">📝 Tasks</a></li>
+<li><a href="quiz.html">🧠 Assessments (Quiz)</a></li>
+<li><a href="ai-practice.html">🤖 Practice with AI</a></li>
+<li><a href="live.html">🎙 Live Practice Challenge</a></li>
+<li><a href="panic.html">🚨 Panic Button – Speak</a></li>
+<li><a href="progress.html">📊 My Progress</a></li>
+<li><a href="game.html">🎮 Educational Games</a></li>
+<li><a href="certificates.html">🏆 Certificates</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="support.html">❓ Help / Support</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+
+<hr>
+
+<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
+
+</ul>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+<button class="menu-btn">☰</button>
+
+<h1>🎮 English Challenge Arena</h1>
+
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
+
+</header>
+
+<section class="cards">
+
+<div class="game-box">
+
+<div class="level-badge">
+Nivel <span id="levelValue">1</span>
+</div>
+
+<p class="score">
+Puntos actuales: <span id="pointValue">0</span>
+</p>
+
+</div>
+
+
+<!-- CLIENT REQUEST: GAME TYPES -->
+
+<div class="game-box">
+
+<h3>Available Games</h3>
+
+<ul class="game-list">
+
+<li>Word Search</li>
+<li>Word Connect</li>
+<li>Memory Game</li>
+<li>Sentence Builder</li>
+<li>Speed Translation</li>
+<li>Vocabulary Race</li>
+<li>Listening Challenge</li>
+<li>Hangman</li>
+
+</ul>
+
+</div>
+
+
+<div class="game-box">
+
+<h3 id="questionText"></h3>
+
+<p>
+⏱️ Tiempo: <span id="timer">10</span>s
+</p>
+
+<input
+type="text"
+id="answerInput"
+style="width:100%;padding:10px;"
+placeholder="Write the translation">
+
+<button class="btn" onclick="submitAnswer()">
+Responder
+</button>
+
+<div id="resultArea" style="margin-top:15px;"></div>
+
+</div>
+
+
+<!-- CLIENT REQUEST: LEADERBOARD -->
+
+<div class="game-box">
+
+<h3>Leaderboard</h3>
+
+<ol>
+
+<li>Maria — 250 XP</li>
+<li>David — 210 XP</li>
+<li>You — <span id="pointValue">0</span> XP</li>
+
+</ol>
+
+</div>
+
+
+</section>
+
+</main>
+
+</div>
+
+<script>
+
+/* USER */
+
+const user = JSON.parse(localStorage.getItem("novaUser"));
+
+if(!user){
+window.location.href="../index.html";
+}
+
+function logoutUser(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+/* GAME DATA */
+
+let plan = localStorage.getItem("novaPlan") || "free";
+let points = parseInt(localStorage.getItem("novaPoints")) || 0;
+let level = parseInt(localStorage.getItem("novaGameLevel")) || 1;
+
+document.getElementById("pointValue").textContent = points;
+document.getElementById("levelValue").textContent = level;
+
+/* QUESTIONS */
+const questions = [
+{q:"Hello",a:"hola"},
+{q:"Good night",a:"buenas noches"},
+{q:"Thank you",a:"gracias"},
+{q:"See you",a:"hasta luego"},
+{q:"How are you?",a:"como estas"},
+{q:"Good morning",a:"buenos dias"},
+{q:"Please",a:"por favor"}
+];
+
+let currentQuestion;
+let timer;
+let timeLeft = 10;
+
+function startGame(){
+
+currentQuestion = questions[Math.floor(Math.random()*questions.length)];
+
+document.getElementById("questionText").textContent = currentQuestion.q;
+
+document.getElementById("resultArea").innerHTML = "";
+
+document.getElementById("answerInput").value="";
+
+timeLeft = 10;
+
+clearInterval(timer);
+
+timer = setInterval(()=>{
+
+timeLeft--;
+
+document.getElementById("timer").textContent = timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+document.getElementById("resultArea").innerHTML="⛔️ Tiempo terminado";
+
+}
+
+},1000);
+
+}
+
+function submitAnswer(){
+
+let ans = document.getElementById("answerInput").value.trim().toLowerCase();
+
+if(timeLeft<=0) return;
+
+clearInterval(timer);
+
+if(ans === currentQuestion.a){
+
+let reward = 10 * level;
+
+if(plan === "pro" || plan === "premium"){
+reward *= 2;
+}
+
+points += reward;
+
+localStorage.setItem("novaPoints",points);
+
+document.getElementById("pointValue").textContent = points;
+
+saveHistory("vocab");
+
+document.getElementById("resultArea").innerHTML =
+"✅ Correcto +" + reward + " XP";
+
+if(points >= level * 100){
+
+level++;
+
+localStorage.setItem("novaGameLevel",level);
+document.getElementById("levelValue").textContent = level;
+
+document.getElementById("resultArea").innerHTML +=
+"<br>🎉 ¡Nivel subido!";
+
+}
+
+}else{
+
+document.getElementById("resultArea").innerHTML="❌ Incorrecto";
+
+}
+
+setTimeout(startGame,1500);
+
+}
+
+function saveHistory(type){
+
+let history = JSON.parse(localStorage.getItem("novaHistory")) || [];
+
+history.push({
+type:type,
+date:new Date()
+});
+
+localStorage.setItem("novaHistory",JSON.stringify(history));
+
+}
+
+startGame();
+
+/* SIDEBAR MOBILE */
+
+const menuBtn=document.querySelector(".menu-btn");
+const sidebar=document.querySelector(".sidebar");
+const overlay=document.querySelector(".overlay");
+
+menuBtn.addEventListener("click",()=>{
+sidebar.classList.toggle("show");
+overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",()=>{
+sidebar.classList.remove("show");
+overlay.classList.remove("show");
+});
+
+/* DARK MODE */
+
+function toggleMode(){
+
+document.body.classList.toggle("dark");
+
+let btn=document.getElementById("darkBtn");
+
+if(document.body.classList.contains("dark")){
+btn.textContent="☀️";
+localStorage.setItem("novaMode","dark");
+}else{
+btn.textContent="🌙";
+localStorage.setItem("novaMode","light");
+}
+
+}
+
+function loadMode(){
+
+let saved=localStorage.getItem("novaMode");
+
+let btn=document.getElementById("darkBtn");
+
+if(saved==="dark"){
+document.body.classList.add("dark");
+btn.textContent="☀️";
+}
+
+}
+
+loadMode();
+
+/* ACTIVE MENU AUTO */
+
+const currentPage = window.location.pathname.split("/").pop();
+
+document.querySelectorAll(".sidebar a").forEach(link => {
+
+if(link.getAttribute("href") === currentPage){
+link.parentElement.classList.add("active");
+}
+
+});
+
+</script>
+
+</body>
+</html>

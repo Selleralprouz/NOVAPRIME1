@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Secure Access | NOVA PRIME</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#0f172a,#1e3a8a);
+}
+
+.card{
+background:white;
+width:380px;
+padding:40px;
+border-radius:18px;
+box-shadow:0 25px 60px rgba(0,0,0,.3);
+text-align:center;
+}
+
+.logo{
+font-weight:bold;
+font-size:22px;
+margin-bottom:10px;
+color:#1e3a8a;
+}
+
+.subtitle{
+font-size:13px;
+color:#64748b;
+margin-bottom:25px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border-radius:10px;
+border:1px solid #d1d5db;
+transition:.3s;
+}
+
+input:focus{
+border-color:#2563eb;
+outline:none;
+box-shadow:0 0 0 3px rgba(37,99,235,.2);
+}
+
+button{
+width:100%;
+padding:13px;
+border:none;
+border-radius:10px;
+background:#dc2626;
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+background:#b91c1c;
+}
+
+.error{
+margin-top:10px;
+color:#ef4444;
+font-size:13px;
+display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="logo">🔐 NOVA PRIME</div>
+<div class="subtitle">Administrator Secure Access</div>
+
+<input type="text" id="adminName" placeholder="Admin Username">
+<input type="password" id="adminCode" placeholder="Secure Access Code">
+
+<button onclick="login()">Enter Admin Panel</button>
+
+<div class="error" id="errorMsg">
+Invalid administrator credentials
+</div>
+
+</div>
+<script>
+
+function login(){
+
+const name = document.getElementById("adminName").value.trim();
+const code = document.getElementById("adminCode").value;
+
+if(name === "NovaAdmin" && code === "123456"){
+
+// ADMIN LOGIN FLAG
+localStorage.setItem("isAdminLoggedIn", "true");
+
+window.location.href = "../admin/dashboard.html";
+
+}else{
+document.getElementById("errorMsg").style.display="block";
+}
+
+}
+
+</script>
+
+</body>
+</html>

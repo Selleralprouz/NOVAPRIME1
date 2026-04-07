@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Progress | NOVA PRIME</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.topbar{
+background:#f1f5f9;
+padding:12px 20px;
+border-radius:12px;
+margin-bottom:20px;
+}
+
+body.dark .topbar{
+background:#1e293b;
+}
+
+.dark-toggle{
+cursor:pointer;
+font-size:20px;
+margin-left:auto;
+}
+
+body.dark{
+background:#0f172a;
+color:#e5e7eb;
+}
+
+body.dark .card{
+background:#1e293b;
+color:#e5e7eb;
+}
+
+.progress-bar{
+background:#e5e7eb;
+height:10px;
+border-radius:10px;
+overflow:hidden;
+margin:10px 0;
+}
+
+.progress-fill{
+background:#3b82f6;
+height:100%;
+}
+
+.stat-box{
+background:#111827;
+color:#fff;
+padding:12px;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+.big-number{
+font-size:22px;
+font-weight:700;
+}
+
+.card{
+border:1px solid #e5e7eb;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-4px);
+box-shadow:0 8px 18px rgba(0,0,0,0.08);
+}
+
+</style>
+</head>
+
+<body class="student-page">
+
+<div class="overlay"></div>
+
+<div class="dashboard">
+
+<aside class="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<ul>
+
+<li><a href="index.html">🏠 Dashboard</a></li>
+<li><a href="courses.html">📚 My Courses</a></li>
+<li><a href="lessons.html">🎓 Level / Lesson</a></li>
+<li><a href="agenda.html">📅 My Agenda</a></li>
+<li><a href="library.html">📖 Library</a></li>
+<li><a href="ai.html">🧠 Skill Lab</a></li>
+<li><a href="homework.html">📝 Tasks</a></li>
+<li><a href="quiz.html">🧠 Assessments (Quiz)</a></li>
+<li><a href="ai-practice.html">🤖 Practice with AI</a></li>
+<li><a href="live.html">🎙 Live Practice Challenge</a></li>
+<li><a href="panic.html">🚨 Panic Button – Speak</a></li>
+<li><a href="progress.html">📊 My Progress</a></li>
+<li><a href="game.html">🎮 Educational Games</a></li>
+<li><a href="certificates.html">🏆 Certificates</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="support.html">❓ Help / Support</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+
+<hr>
+
+<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
+
+</ul>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+<button class="menu-btn">☰</button>
+
+<h1>📊 My Progress</h1>
+
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
+
+</header>
+
+<section class="cards">
+
+<div class="card">
+
+<h3>Overall Course Progress</h3>
+
+<div class="progress-bar">
+<div class="progress-fill" id="overallProgress" style="width:0%"></div>
+</div>
+
+<p><span id="overallText">0%</span> completed</p>
+
+</div>
+
+<div class="card">
+
+<h3>Lessons Completed</h3>
+
+<div class="stat-box">
+<div class="big-number" id="lessonsCompleted">0</div>
+Lessons finished
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Quiz Average</h3>
+
+<div class="stat-box">
+<div class="big-number" id="quizAverage">0%</div>
+Average performance
+</div>
+
+</div>
+
+<!-- CLIENT METRICS ADDED -->
+
+<div class="card">
+
+<h3>Points</h3>
+
+<div class="stat-box">
+<div class="big-number" id="pointsBox">0</div>
+Total points earned
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Streak</h3>
+
+<div class="stat-box">
+<div class="big-number" id="streakBox">0</div>
+Days learning streak
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Achievements</h3>
+
+<div class="stat-box">
+<div class="big-number" id="achievementsBox">0</div>
+Unlocked achievements
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Goals</h3>
+
+<div class="stat-box">
+Weekly goal: <span id="weeklyGoal">0</span> lessons
+</div>
+
+<div class="stat-box">
+Monthly goal: <span id="monthlyGoal">0</span> lessons
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Recent Activity</h3>
+
+<div id="recentActivity"></div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<script>
+
+/* USER */
+
+const user = JSON.parse(localStorage.getItem("novaUser"));
+
+if(!user){
+window.location.href="../index.html";
+}
+
+function logoutUser(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+/* SIDEBAR */
+
+const menuBtn=document.querySelector(".menu-btn");
+const sidebar=document.querySelector(".sidebar");
+const overlay=document.querySelector(".overlay");
+menuBtn.addEventListener("click",()=>{
+sidebar.classList.toggle("show");
+overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",()=>{
+sidebar.classList.remove("show");
+overlay.classList.remove("show");
+});
+
+/* DARK MODE */
+
+function toggleMode(){
+
+document.body.classList.toggle("dark");
+
+let btn=document.getElementById("darkBtn");
+
+if(document.body.classList.contains("dark")){
+btn.textContent="☀️";
+localStorage.setItem("novaMode","dark");
+}else{
+btn.textContent="🌙";
+localStorage.setItem("novaMode","light");
+}
+
+}
+
+function loadMode(){
+
+let saved=localStorage.getItem("novaMode");
+
+let btn=document.getElementById("darkBtn");
+
+if(saved==="dark"){
+document.body.classList.add("dark");
+btn.textContent="☀️";
+}
+
+}
+
+loadMode();
+
+/* ACTIVE MENU */
+
+const currentPage = window.location.pathname.split("/").pop();
+document.querySelectorAll(".sidebar a").forEach(link => {
+
+if(link.getAttribute("href") === currentPage){
+link.parentElement.classList.add("active");
+}
+
+});
+
+/* PROGRESS SYSTEM */
+
+let history = JSON.parse(localStorage.getItem("novaHistory")) || [];
+
+let lessons = history.length;
+
+let quizScore = localStorage.getItem("lastQuizScore") || 0;
+
+let overall = Math.min(lessons * 5, 100);
+
+document.getElementById("overallProgress").style.width = overall + "%";
+document.getElementById("overallText").textContent = overall + "%";
+document.getElementById("lessonsCompleted").textContent = lessons;
+document.getElementById("quizAverage").textContent = quizScore + "%";
+
+/* CLIENT METRICS */
+
+let points = localStorage.getItem("novaPoints") || 0;
+document.getElementById("pointsBox").textContent = points;
+
+let streak = localStorage.getItem("novaStreak") || 1;
+document.getElementById("streakBox").textContent = streak;
+
+let achievements = localStorage.getItem("novaAchievements") || 0;
+document.getElementById("achievementsBox").textContent = achievements;
+
+document.getElementById("weeklyGoal").textContent = 5;
+document.getElementById("monthlyGoal").textContent = 20;
+
+/* RECENT ACTIVITY */
+
+let activityBox = document.getElementById("recentActivity");
+
+if(history.length === 0){
+
+activityBox.innerHTML = "<p>No recent activity.</p>";
+
+}else{
+
+history.slice(-5).reverse().forEach(item=>{
+
+activityBox.innerHTML += `
+<div style="padding:6px 0;border-bottom:1px solid #eee;">
+Activity: ${item.type} — ${new Date(item.date).toLocaleDateString()}
+</div>
+`;
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

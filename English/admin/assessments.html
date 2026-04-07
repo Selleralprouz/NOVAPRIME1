@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Assessments Manager | NOVA PRIME ADMIN</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#f1f5f9;
+}
+
+body.dark{
+background:#0f172a;
+color:#e5e7eb;
+}
+
+.dashboard{
+display:flex;
+min-height:100vh;
+}
+
+.sidebar{
+width:260px;
+background:linear-gradient(180deg,#0f172a,#020617);
+color:white;
+padding:20px;
+}
+
+.sidebar h2{
+margin-bottom:30px;
+}
+
+.sidebar ul{
+list-style:none;
+padding:0;
+}
+
+.sidebar li{
+margin-bottom:10px;
+}
+
+.sidebar a{
+color:white;
+text-decoration:none;
+padding:10px;
+display:block;
+border-radius:8px;
+transition:0.2s;
+}
+
+.sidebar a:hover{
+background:#1e293b;
+}
+
+.sidebar a.active{
+background:#2563eb;
+}
+
+.content{
+flex:1;
+padding:30px;
+}
+
+.topbar{
+display:flex;
+align-items:center;
+margin-bottom:25px;
+}
+
+.menu-btn{
+font-size:22px;
+cursor:pointer;
+margin-right:15px;
+}
+
+.dark-toggle{
+margin-left:auto;
+cursor:pointer;
+font-size:20px;
+}
+
+.filters{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.filters input,
+.filters select{
+padding:8px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+.create{
+background:#22c55e;
+color:white;
+border:none;
+padding:8px 14px;
+border-radius:6px;
+cursor:pointer;
+margin-bottom:15px;
+}
+
+.table{
+width:100%;
+border-collapse:collapse;
+background:white;
+border-radius:10px;
+overflow:hidden;
+}
+
+body.dark .table{
+background:#1e293b;
+}
+
+.table th,
+.table td{
+padding:12px;
+border-bottom:1px solid #e2e8f0;
+text-align:left;
+}
+
+.actions button{
+padding:6px 10px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin-right:5px;
+}
+
+.edit{background:#3b82f6;color:white;}
+.delete{background:#ef4444;color:white;}
+.preview{background:#22c55e;color:white;}
+
+@media(max-width:900px){
+.sidebar{
+position:fixed;
+left:-260px;
+top:0;
+height:100%;
+transition:0.3s;
+}
+.sidebar.show{
+left:0;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<aside class="sidebar" id="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<ul>
+
+<li><a href="dashboard.html">🏠 Dashboard</a></li>
+<li><a href="users.html">👥 Users</a></li>
+<li><a href="teachers.html">👨‍🏫 Teachers</a></li>
+<li><a href="courses.html">📚 Course Manager</a></li>
+<li><a href="activity-builder.html">🛠 Activity Builder</a></li>
+<li><a href="learning-blocks.html">🧱 Learning Blocks</a></li>
+<li><a href="skill-lab.html">🧠 Skill Lab</a></li>
+<li><a href="ai-practice.html">🤖 AI Practice</a></li>
+<li><a href="games.html">🎮 Games</a></li>
+
+<li><a href="assessments.html" class="active">📝 Assessments</a></li>
+
+<li><a href="analytics.html">📊 Analytics</a></li>
+
+<li><a href="banner-manager.html">📢 Banner Manager</a></li>
+
+<li><a href="certificates.html">🏆 Certificates</a></li>
+<li><a href="donations.html">💰 Payments</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+
+<hr>
+
+<li><a href="#" onclick="logout()">🚪 Logout</a></li>
+
+</ul>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+<h1>Assessments Manager</h1>
+
+<div class="dark-toggle" onclick="toggleMode()">🌙</div>
+
+</header>
+
+<div class="filters">
+
+<input type="text" placeholder="Search assessment...">
+
+<select>
+<option>All Types</option>
+<option>Multiple Choice</option>
+<option>Listening</option>
+<option>Reading</option>
+<option>Speaking</option>
+
+<!-- 🔥 QO‘SHILDI -->
+<option>Writing</option>
+<option>True / False</option>
+<option>Scramble</option>
+<option>Fill in the Blank</option>
+
+</select>
+
+<select>
+<option>All Levels</option>
+<option>A1</option>
+<option>A2</option>
+<option>B1</option>
+<option>B2</option>
+</select>
+
+</div>
+
+<button class="create">+ Create Final Test</button>
+
+<table class="table">
+
+<thead>
+<tr>
+<th>Assessment</th>
+<th>Type</th>
+<th>Level</th>
+<th>Questions</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Multiple Choice Final Test</td>
+<td>Multiple Choice</td>
+<td>A1</td>
+<td>10</td>
+<td class="actions">
+<button class="edit">Edit</button>
+<button>Duplicate</button>
+<button>Move</button>
+<button class="delete">Delete</button>
+</td>
+</tr>
+
+<tr>
+<td>Writing Task</td>
+<td>Writing</td>
+<td>B1</td>
+<td>5</td>
+<td class="actions">
+<button class="edit">Edit</button>
+<button>Duplicate</button>
+<button>Move</button>
+<button class="delete">Delete</button>
+</td>
+</tr>
+
+<tr>
+<td>Fill Blank Test</td>
+<td>Fill in the Blank</td>
+<td>A2</td>
+<td>8</td>
+<td class="actions">
+<button class="edit">Edit</button>
+<button>Duplicate</button>
+<button>Move</button>
+<button class="delete">Delete</button>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</main>
+
+</div>
+
+<script>
+
+if(localStorage.getItem("nova-theme")==="dark"){
+document.body.classList.add("dark");
+}
+
+function toggleMode(){
+document.body.classList.toggle("dark");
+
+if(document.body.classList.contains("dark")){
+localStorage.setItem("nova-theme","dark");
+}else{
+localStorage.setItem("nova-theme","light");
+}
+}
+
+function toggleMenu(){
+document.getElementById("sidebar").classList.toggle("show");
+}
+
+function logout(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+</script>
+
+</body>
+</html>

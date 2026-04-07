@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iniciar Sesión | NOVA PRIME</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#0f172a,#1e3a8a);
+}
+
+.auth-container{
+width:380px;
+background:white;
+padding:40px;
+border-radius:18px;
+box-shadow:0 25px 60px rgba(0,0,0,.3);
+animation:fadeIn .5s ease-in-out;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+.logo{
+display:block;
+margin:0 auto 20px auto;
+width:140px;
+}
+
+h2{
+text-align:center;
+color:#1e3a8a;
+margin-bottom:10px;
+}
+
+.subtitle{
+text-align:center;
+font-size:14px;
+color:#64748b;
+margin-bottom:25px;
+}
+
+.form-group{
+margin-bottom:15px;
+}
+
+input{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid #d1d5db;
+font-size:14px;
+transition:.3s;
+}
+
+input:focus{
+border-color:#2563eb;
+outline:none;
+box-shadow:0 0 0 3px rgba(37,99,235,.2);
+}
+
+.forgot-link{
+text-align:right;
+margin-bottom:20px;
+}
+
+.forgot-link a{
+font-size:13px;
+color:#2563eb;
+text-decoration:none;
+font-weight:500;
+}
+
+.forgot-link a:hover{
+text-decoration:underline;
+}
+
+.btn-main{
+width:100%;
+padding:13px;
+border:none;
+border-radius:10px;
+background:#2563eb;
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+font-size:15px;
+}
+
+.btn-main:hover{
+background:#1d4ed8;
+transform:translateY(-2px);
+}
+
+.extra-links{
+text-align:center;
+margin-top:20px;
+}
+
+.extra-links a{
+font-size:14px;
+color:#2563eb;
+text-decoration:none;
+font-weight:500;
+}
+
+.extra-links a:hover{
+text-decoration:underline;
+}
+
+.back-link{
+text-align:center;
+margin-top:15px;
+}
+
+.back-link a{
+font-size:13px;
+color:#64748b;
+text-decoration:none;
+}
+
+.back-link a:hover{
+color:#1e3a8a;
+}
+</style>
+</head>
+
+<body>
+
+<div class="auth-container">
+
+<img src="../assets/images/nova-prime-logo.png" 
+alt="NOVA PRIME Logo" 
+class="logo">
+
+<h2>Iniciar Sesión</h2>
+<p class="subtitle">
+Accede a tu cuenta registrada
+</p>
+
+<div class="form-group">
+<input type="email" id="loginEmail" placeholder="Correo electrónico">
+</div>
+
+<div class="form-group">
+<input type="password" id="loginPassword" placeholder="Contraseña">
+</div>
+
+<div class="forgot-link">
+<a href="forgot-password.html">¿Olvidaste tu contraseña?</a>
+</div>
+
+<button class="btn-main" onclick="loginUser()">
+🔐 Iniciar sesión
+</button>
+
+<div class="extra-links">
+<a href="age.html">Crear cuenta</a>
+</div>
+
+<div class="back-link">
+<a href="../index.html">← Volver al inicio</a>
+</div>
+
+</div>
+
+<script type="module">
+
+import { auth, db } from "../firebase.js";
+
+import { 
+  signInWithEmailAndPassword 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import { 
+  doc, 
+  getDoc 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+window.loginUser = async function(){
+
+const email = document.getElementById("loginEmail").value.trim();
+const password = document.getElementById("loginPassword").value;
+
+/* VALIDATION */
+if(!email || !password){
+alert("Por favor completa todos los campos.");
+return;
+}
+
+try{
+
+/* 🔐 LOGIN */
+const userCredential = await signInWithEmailAndPassword(auth,email,password);
+
+const uid = userCredential.user.uid;
+
+/* 🧠 FIRESTORE DAN USER OLAMIZ */
+const userRef = doc(db, "users", uid);
+const userSnap = await getDoc(userRef);
+
+if(!userSnap.exists()){
+alert("Usuario no encontrado en la base de datos ❗️");
+return;
+}
+
+const userData = userSnap.data();
+
+/* 🔥 CURRENT USER */
+localStorage.setItem("currentUser", JSON.stringify({
+email: userCredential.user.email,
+name: userData.name,
+role: userData.role
+}));
+
+/* 🔥 REDIRECT */
+if(userData.role === "teacher"){
+window.location.href = "../teacher/dashboard.html";
+}else{
+window.location.href = "../student/index.html";
+}
+
+}catch(error){
+
+if(error.code==="auth/user-not-found"){
+alert("Usuario no encontrado. Regístrate primero ❗️");
+}
+else if(error.code==="auth/wrong-password"){
+alert("Contraseña incorrecta ❌");
+}
+else if(error.code==="auth/invalid-email"){
+alert("Correo inválido ❌");
+}
+else{
+alert("Error: "+error.message);
+}
+
+}
+
+}
+
+</script>
+</body>
+</html>

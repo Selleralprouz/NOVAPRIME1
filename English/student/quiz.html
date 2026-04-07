@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assessments | NOVA PRIME</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.topbar{
+background:#f1f5f9;
+padding:12px 20px;
+border-radius:12px;
+margin-bottom:20px;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+body.dark .topbar{
+background:#1e293b;
+}
+
+.dark-toggle{
+cursor:pointer;
+margin-left:auto;
+font-size:20px;
+}
+
+.quiz-box{
+border:1px solid #e5e7eb;
+border-radius:16px;
+padding:25px;
+margin-bottom:20px;
+background:#f9fafb;
+}
+
+body.dark .quiz-box{
+background:#111827;
+color:#fff;
+}
+
+.quiz-option{
+display:block;
+margin:10px 0;
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+cursor:pointer;
+}
+
+.quiz-option:hover{
+background:#e5e7eb;
+}
+
+body.dark .quiz-option:hover{
+background:#374151;
+}
+
+</style>
+
+</head>
+
+<body class="student-page">
+
+<div class="overlay"></div>
+
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<ul>
+
+<li><a href="index.html">🏠 Dashboard</a></li>
+<li><a href="courses.html">📚 My Courses</a></li>
+<li><a href="lessons.html">🎓 Level / Lesson</a></li>
+<li><a href="agenda.html">📅 My Agenda</a></li>
+<li><a href="library.html">📖 Library</a></li>
+<li><a href="ai.html">🧠 Skill Lab</a></li>
+<li><a href="homework.html">📝 Tasks</a></li>
+<li><a href="quiz.html">🧠 Assessments (Quiz)</a></li>
+<li><a href="ai-practice.html">🤖 Practice with AI</a></li>
+<li><a href="live.html">🎙 Live Practice Challenge</a></li>
+<li><a href="panic.html">🚨 Panic Button – Speak</a></li>
+<li><a href="progress.html">📊 My Progress</a></li>
+<li><a href="game.html">🎮 Educational Games</a></li>
+<li><a href="certificates.html">🏆 Certificates</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="support.html">❓ Help / Support</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+
+<hr>
+
+<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
+
+</ul>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="content">
+
+<header class="topbar">
+
+<button class="menu-btn">☰</button>
+
+<h1>🧠 Assessments</h1>
+
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
+
+</header>
+
+<section class="cards">
+
+<div class="quiz-box">
+
+<h3>Question 1</h3>
+
+<p><strong>Hello</strong> = ?</p>
+
+<label class="quiz-option">
+<input type="radio" name="q1" value="hola"> Hola
+</label>
+
+<label class="quiz-option">
+<input type="radio" name="q1" value="adios"> Adiós
+</label>
+
+<label class="quiz-option">
+<input type="radio" name="q1" value="gracias"> Gracias
+</label>
+
+</div>
+
+
+<div class="quiz-box">
+
+<h3>Question 2</h3>
+
+<p>True or False: "Goodbye" means "Adiós"</p>
+
+<label class="quiz-option">
+<input type="radio" name="q2" value="true"> True
+</label>
+
+<label class="quiz-option">
+<input type="radio" name="q2" value="false"> False
+</label>
+
+</div>
+
+
+<div class="quiz-box">
+
+<h3>Question 3</h3>
+
+<p>Write the translation of <strong>Thank you</strong></p>
+
+<input type="text" id="q3" placeholder="Your answer">
+
+</div>
+
+
+<button class="btn" onclick="checkQuiz()">Submit Quiz</button>
+
+<h3 id="quizResult"></h3>
+
+</section>
+
+</main>
+
+</div>
+
+<script>
+
+/* USER */
+
+const user = JSON.parse(localStorage.getItem("novaUser"));
+
+if(!user){
+window.location.href="../index.html";
+}
+
+function logoutUser(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+/* QUIZ */
+
+function checkQuiz(){
+
+let score=0;
+
+let q1=document.querySelector('input[name="q1"]:checked');
+let q2=document.querySelector('input[name="q2"]:checked');
+let q3=document.getElementById("q3").value.toLowerCase();
+
+if(q1 && q1.value==="hola") score++;
+
+if(q2 && q2.value==="true") score++;
+
+if(q3==="gracias") score++;
+
+document.getElementById("quizResult").innerHTML=
+"Score: "+score+" / 3";
+
+}
+
+/* SIDEBAR */
+
+const menuBtn=document.querySelector(".menu-btn");
+const sidebar=document.querySelector(".sidebar");
+const overlay=document.querySelector(".overlay");
+menuBtn.addEventListener("click",()=>{
+sidebar.classList.toggle("show");
+overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",()=>{
+sidebar.classList.remove("show");
+overlay.classList.remove("show");
+});
+
+/* DARK MODE */
+
+function toggleMode(){
+
+document.body.classList.toggle("dark");
+
+let btn=document.getElementById("darkBtn");
+
+if(document.body.classList.contains("dark")){
+btn.textContent="☀️";
+localStorage.setItem("novaMode","dark");
+}else{
+btn.textContent="🌙";
+localStorage.setItem("novaMode","light");
+}
+
+}
+
+function loadMode(){
+
+let saved=localStorage.getItem("novaMode");
+
+let btn=document.getElementById("darkBtn");
+
+if(saved==="dark"){
+document.body.classList.add("dark");
+btn.textContent="☀️";
+}
+
+}
+
+loadMode();
+
+</script>
+
+<script>
+
+const currentPage = window.location.pathname.split("/").pop();
+
+document.querySelectorAll(".sidebar a").forEach(link => {
+
+if(link.getAttribute("href") === currentPage){
+link.parentElement.classList.add("active");
+}
+
+});
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro de Adulto | NOVA PRIME</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="auth-page">
+
+<div class="auth-container">
+
+<img src="../assets/images/nova-prime-logo.png"
+     alt="NOVA PRIME Logo"
+     class="logo">
+
+<h2>Registro de Adulto</h2>
+<p class="subtitle">
+Crea tu cuenta y comienza tu progreso en inglés
+</p>
+
+<div class="form-group">
+<input type="text" id="adultName" placeholder="Nombre completo">
+</div>
+
+<div class="form-group">
+<input type="email" id="adultEmail" placeholder="Correo electrónico">
+</div>
+
+<div class="form-group">
+<input type="password" id="adultPassword" placeholder="Crear contraseña">
+</div>
+
+<div class="form-group">
+<input type="password" id="adultConfirmPassword" placeholder="Confirmar contraseña">
+</div>
+
+<div class="checkbox-group">
+<label>
+<input type="checkbox" id="adultDeclaration">
+Declaro bajo protesta de decir verdad que soy mayor de 18 años.
+</label>
+</div>
+
+<div class="checkbox-group">
+<label>
+<input type="checkbox" id="adultLegalAccept">
+Acepto el 
+<a href="../legal.html" target="_blank">Aviso Legal</a>, 
+la <a href="../privacy.html" target="_blank">Política de Privacidad</a> 
+y los <a href="../terms.html" target="_blank">Términos y Condiciones</a>.
+</label>
+</div>
+
+<button class="btn-main" onclick="registerAdult()">
+Crear cuenta
+</button>
+
+<div class="back-link">
+<a href="age.html">← Volver</a>
+</div>
+
+</div>
+
+<script type="module">
+
+import { auth, db } from "../firebase.js";
+
+import { 
+  createUserWithEmailAndPassword, 
+  updateProfile 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import { 
+  setDoc, 
+  doc 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+window.registerAdult = async function() {
+
+const name = document.getElementById("adultName").value.trim();
+const email = document.getElementById("adultEmail").value.trim();
+const pass = document.getElementById("adultPassword").value;
+const confirm = document.getElementById("adultConfirmPassword").value;
+
+const declaration = document.getElementById("adultDeclaration").checked;
+const legal = document.getElementById("adultLegalAccept").checked;
+
+/* VALIDATION */
+if (!name || !email || !pass || !confirm) {
+alert("Completa todos los campos.");
+return;
+}
+
+if (pass !== confirm) {
+alert("Las contraseñas no coinciden.");
+return;
+}
+
+if (!declaration) {
+alert("Debes confirmar que eres mayor de 18 años.");
+return;
+}
+
+if (!legal) {
+alert("Debes aceptar los términos legales.");
+return;
+}
+
+try {
+
+/* 🔐 CREATE USER */
+const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+
+/* 👤 SAVE NAME */
+await updateProfile(userCredential.user, {
+displayName: name
+});
+
+/* 🧠 SAVE TO FIRESTORE */
+await setDoc(doc(db, "users", userCredential.user.uid), {
+name: name,
+email: email,
+role: "student",
+type: "adult",
+createdAt: new Date()
+});
+
+/* SUCCESS */
+alert("Cuenta creada correctamente ✅");
+
+/* REDIRECT */
+window.location.href = "../student/index.html";
+
+} catch (error) {
+
+if (error.code === "auth/email-already-in-use") {
+alert("Este correo ya está registrado ❗️");
+}
+else if (error.code === "auth/weak-password") {
+alert("La contraseña debe tener al menos 6 caracteres ❗️");
+}
+else if (error.code === "auth/invalid-email") {
+alert("Correo inválido ❗️");
+}
+else {
+alert("Error: " + error.message);
+}
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Messages | NOVA PRIME</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.topbar{
+background:#f1f5f9;
+padding:12px 20px;
+border-radius:12px;
+margin-bottom:20px;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+body.dark .topbar{
+background:#1e293b;
+}
+
+.dark-toggle{
+cursor:pointer;
+margin-left:auto;
+font-size:20px;
+}
+
+.chat-container{
+border:1px solid #e5e7eb;
+border-radius:16px;
+display:flex;
+flex-direction:column;
+height:520px;
+background:#f9fafb;
+overflow:hidden;
+}
+
+body.dark .chat-container{
+background:#111827;
+}
+
+.chat-messages{
+flex:1;
+overflow-y:auto;
+padding:20px;
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.message{
+padding:10px 14px;
+border-radius:12px;
+max-width:70%;
+word-break:break-word;
+}
+
+.user{
+background:#3b82f6;
+color:white;
+align-self:flex-end;
+}
+
+.bot{
+background:#e5e7eb;
+}
+
+body.dark .bot{
+background:#374151;
+color:#fff;
+}
+
+.chat-input-area{
+border-top:1px solid #e5e7eb;
+padding:10px;
+display:flex;
+gap:10px;
+align-items:center;
+}
+
+.chat-input-area input{
+flex:1;
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+.chat-input-area button{
+padding:10px 16px;
+}
+
+.file-btn{
+background:#3b82f6;
+color:#fff;
+border:none;
+padding:10px 12px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.preview img,
+.preview video{
+max-width:180px;
+border-radius:10px;
+margin-top:6px;
+}
+
+</style>
+
+</head>
+
+<body class="student-page">
+
+<div class="overlay"></div>
+
+<div class="dashboard">
+
+<aside class="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<ul>
+
+<li><a href="index.html">🏠 Dashboard</a></li>
+<li><a href="courses.html">📚 My Courses</a></li>
+<li><a href="lessons.html">🎓 Level / Lesson</a></li>
+<li><a href="agenda.html">📅 My Agenda</a></li>
+<li><a href="library.html">📖 Library</a></li>
+<li><a href="ai.html">🧠 Skill Lab</a></li>
+<li><a href="homework.html">📝 Tasks</a></li>
+<li><a href="quiz.html">🧠 Assessments (Quiz)</a></li>
+<li><a href="ai-practice.html">🤖 Practice with AI</a></li>
+<li><a href="live.html">🎙 Live Practice Challenge</a></li>
+<li><a href="panic.html">🚨 Panic Button – Speak</a></li>
+<li><a href="progress.html">📊 My Progress</a></li>
+<li><a href="game.html">🎮 Educational Games</a></li>
+<li><a href="certificates.html">🏆 Certificates</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="support.html">❓ Help / Support</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+
+<hr>
+
+<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
+
+</ul>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+<button class="menu-btn">☰</button>
+
+<h1>💬 Messages</h1>
+
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
+
+</header>
+
+<div style="display:flex;gap:10px;margin-bottom:10px;">
+
+<button onclick="openChat('tutor')" class="btn">Tutor</button>
+<button onclick="openChat('system')" class="btn">System</button>
+<button onclick="openChat('support')" class="btn">Support</button>
+
+<span id="notifBadge" style="margin-left:auto;background:#ef4444;color:#fff;padding:4px 10px;border-radius:20px;font-size:12px;">
+1 notification
+</span>
+
+</div>
+
+<div class="chat-container">
+
+<div class="chat-messages" id="chatMessages">
+<div class="message bot">
+Hello 👋 I am the NOVA PRIME assistant. How can I help you?
+</div>
+</div>
+
+<div class="chat-input-area">
+
+<input type="file" id="fileInput" hidden>
+
+<button class="file-btn" onclick="document.getElementById('fileInput').click()">📎</button>
+
+<input type="text" id="msgInput" placeholder="Write a message...">
+
+<button onclick="sendMessage()">Send</button>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+/* USER */
+
+const user = JSON.parse(localStorage.getItem("novaUser"));
+if(!user){window.location.href="../index.html";}
+
+function logoutUser(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+/* CHANNEL */
+
+let currentChannel = "system";
+
+/* SEND */
+
+function sendMessage(){
+
+const input=document.getElementById("msgInput");
+const text=input.value.trim();
+if(text==="") return;
+
+if(currentChannel==="tutor"){
+addUserMessage(text,"pending");
+}else{
+addUserMessage(text,"sent");
+}
+
+input.value="";
+}
+
+/* MESSAGE UI */
+
+function addUserMessage(text,status){
+
+const box=document.getElementById("chatMessages");
+
+let statusHtml="";
+
+if(status==="pending"){
+statusHtml=`<div style="font-size:11px;opacity:0.7;">⏳ Pending approval</div>`;
+}
+
+if(status==="sent"){
+statusHtml=`<div style="font-size:11px;opacity:0.7;">✅ Sent</div>`;
+}
+
+box.innerHTML+=`
+<div class="message user">
+${text}
+${statusHtml}
+</div>
+`;
+
+box.scrollTop=box.scrollHeight;
+}
+
+function addBotMessage(text){
+
+const box=document.getElementById("chatMessages");
+
+box.innerHTML+=`
+<div class="message bot">${text}</div>
+`;
+
+box.scrollTop=box.scrollHeight;
+}
+
+/* CHAT SWITCH */
+
+function openChat(type){
+
+currentChannel=type;
+
+const box=document.getElementById("chatMessages");
+box.innerHTML="";
+
+if(type==="tutor"){
+addBotMessage("Your message will be reviewed by admin before reaching the tutor.");
+}
+
+if(type==="system"){
+addBotMessage("System message: Welcome.");
+}
+
+if(type==="support"){
+addBotMessage("Support team here.");
+}
+
+}
+
+/* FILE */
+
+document.getElementById("fileInput").addEventListener("change",function(){
+const file=this.files[0];
+if(!file) return;
+
+const url=URL.createObjectURL(file);
+const box=document.getElementById("chatMessages");
+
+box.innerHTML+=`
+<div class="message user preview">
+<img src="${url}">
+</div>
+`;
+
+box.scrollTop=box.scrollHeight;
+});
+
+/* ENTER */
+
+document.getElementById("msgInput").addEventListener("keypress",function(e){
+if(e.key==="Enter"){sendMessage();}
+});
+
+/* SIDEBAR */
+
+const menuBtn=document.querySelector(".menu-btn");
+const sidebar=document.querySelector(".sidebar");
+const overlay=document.querySelector(".overlay");
+
+menuBtn.addEventListener("click",()=>{
+sidebar.classList.toggle("show");
+overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",()=>{
+sidebar.classList.remove("show");
+overlay.classList.remove("show");
+});
+
+/* DARK MODE */
+
+function toggleMode(){
+
+document.body.classList.toggle("dark");
+
+let btn=document.getElementById("darkBtn");
+
+if(document.body.classList.contains("dark")){
+btn.textContent="☀️";
+localStorage.setItem("novaMode","dark");
+}else{
+btn.textContent="🌙";
+localStorage.setItem("novaMode","light");
+}
+
+}
+
+function loadMode(){
+
+let saved=localStorage.getItem("novaMode");
+let btn=document.getElementById("darkBtn");
+
+if(saved==="dark"){
+document.body.classList.add("dark");
+btn.textContent="☀️";
+}
+
+}
+
+loadMode();
+
+</script>
+
+</body>
+</html>

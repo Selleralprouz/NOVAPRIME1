@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Lab | NOVA PRIME</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.topbar{
+background:#f1f5f9;
+padding:12px 20px;
+border-radius:12px;
+margin-bottom:20px;
+}
+
+body.dark .topbar{
+background:#1e293b;
+}
+
+.dark-toggle{
+cursor:pointer;
+font-size:20px;
+margin-left:auto;
+}
+
+body.dark{
+background:#0f172a;
+color:#e5e7eb;
+}
+
+body.dark .card{
+background:#1e293b;
+color:#e5e7eb;
+}
+
+</style>
+
+</head>
+
+<body class="student-page">
+
+<div class="overlay"></div>
+
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<ul>
+
+<li><a href="index.html">🏠 Dashboard</a></li>
+<li><a href="courses.html">📚 My Courses</a></li>
+<li><a href="lessons.html">🎓 Level / Lesson</a></li>
+<li><a href="agenda.html">📅 My Agenda</a></li>
+<li><a href="library.html">📖 Library</a></li>
+<li><a href="ai.html">🧠 Skill Lab</a></li>
+<li><a href="homework.html">📝 Tasks</a></li>
+<li><a href="quiz.html">🧠 Assessments (Quiz)</a></li>
+<li><a href="ai-practice.html">🤖 Practice with AI</a></li>
+<li><a href="live.html">🎙 Live Practice Challenge</a></li>
+<li><a href="panic.html">🚨 Panic Button – Speak</a></li>
+<li><a href="progress.html">📊 My Progress</a></li>
+<li><a href="game.html">🎮 Educational Games</a></li>
+<li><a href="certificates.html">🏆 Certificates</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="support.html">❓ Help / Support</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+
+<hr>
+
+<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
+
+</ul>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="content">
+
+<header class="topbar">
+
+<button class="menu-btn">☰</button>
+
+<h1>🧠 Skill Lab</h1>
+
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
+
+</header>
+
+
+<section class="cards">
+
+<!-- LISTENING -->
+
+<div class="card">
+
+<h3>🎧 Listening Training</h3>
+
+<ul>
+<li>Dictation</li>
+<li>Audio comprehension</li>
+<li>Real conversations</li>
+</ul>
+
+<button class="btn">Start Listening</button>
+
+</div>
+
+
+<!-- READING -->
+
+<div class="card">
+
+<h3>📖 Reading Practice</h3>
+
+<ul>
+<li>Short texts</li>
+<li>Articles</li>
+<li>Reading comprehension</li>
+</ul>
+
+<button class="btn">Start Reading</button>
+
+</div>
+
+
+<!-- SPEAKING -->
+
+<div class="card">
+
+<h3>🎤 Speaking Practice</h3>
+
+<ul>
+<li>Pronunciation trainer</li>
+<li>AI conversation</li>
+<li>Role play</li>
+</ul>
+
+<button class="btn">Start Speaking</button>
+
+</div>
+
+
+<!-- WRITING -->
+
+<div class="card">
+
+<h3>✍️ Writing Practice</h3>
+
+<ul>
+<li>Sentence builder</li>
+<li>Paragraph writing</li>
+<li>AI correction</li>
+</ul>
+
+<button class="btn">Start Writing</button>
+
+</div>
+
+
+<!-- AI CONVERSATION -->
+
+<div class="card">
+
+<h3>AI Conversation Practice</h3>
+
+<p>Write your answer in English and receive automatic feedback.</p>
+
+<textarea id="aiInput"
+placeholder="Write your answer in English..."
+style="width:100%; height:120px; margin-top:15px;"></textarea>
+
+<button class="btn" onclick="analyzeAnswer()">
+Analyze with AI
+</button>
+
+<div id="aiFeedback" style="margin-top:20px;"></div>
+
+</div>
+
+
+<!-- AI HINT -->
+
+<div class="card">
+
+<h3>💡 AI Hint (-20 points)</h3>
+
+<p>Get an advanced suggestion.</p>
+
+<button class="btn" onclick="useHint()">
+Use Hint
+</button>
+
+</div>
+
+
+<!-- PRONUNCIATION -->
+
+<div class="card">
+
+<h3>🔊 Slow Pronunciation (-30 points)</h3>
+
+<p>Guided pronunciation simulation.</p>
+
+<button class="btn" onclick="slowPronunciation()">
+Activate
+</button>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<script>
+
+/* USER */
+
+const user = JSON.parse(localStorage.getItem("novaUser"));
+
+if(!user){
+window.location.href="../index.html";
+}
+
+function logoutUser(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+/* POINT SYSTEM */
+
+let points = parseInt(localStorage.getItem("novaPoints")) || 100;
+
+function updatePoints(value){
+points += value;
+localStorage.setItem("novaPoints", points);
+}
+
+/* SAVE HISTORY */
+function saveHistory(type){
+let history = JSON.parse(localStorage.getItem("novaHistory")) || [];
+history.push({ type:type, date:new Date() });
+localStorage.setItem("novaHistory", JSON.stringify(history));
+}
+
+/* AI ANALYSIS */
+
+function analyzeAnswer(){
+
+const input=document.getElementById("aiInput").value.trim();
+
+if(input===""){
+alert("Write an answer first.");
+return;
+}
+
+let feedback=```
+<strong>AI Feedback:</strong><br>
+✔️ Good structure.<br>
+📚 Correct vocabulary.<br>
+⚠️ Check verb tenses if referring to the past.<br><br>
+⭐️ +10 points earned.
+`;
+
+document.getElementById("aiFeedback").innerHTML=feedback;
+
+updatePoints(10);
+saveHistory("speaking");
+
+}
+
+/* HINT */
+
+function useHint(){
+
+if(points < 20){
+alert("Not enough points.");
+return;
+}
+
+updatePoints(-20);
+
+alert("AI Hint activated (-20 points).");
+
+}
+
+/* PRONUNCIATION */
+
+function slowPronunciation(){
+
+if(points < 30){
+alert("Not enough points.");
+return;
+}
+
+updatePoints(-30);
+
+alert("Slow pronunciation activated (-30 points).");
+
+saveHistory("listening");
+
+}
+
+/* SIDEBAR MOBILE */
+
+const menuBtn=document.querySelector(".menu-btn");
+const sidebar=document.querySelector(".sidebar");
+const overlay=document.querySelector(".overlay");
+
+menuBtn.addEventListener("click",()=>{
+sidebar.classList.toggle("show");
+overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",()=>{
+sidebar.classList.remove("show");
+overlay.classList.remove("show");
+});
+
+/* DARK MODE */
+
+function toggleMode(){
+
+document.body.classList.toggle("dark");
+
+let btn=document.getElementById("darkBtn");
+
+if(document.body.classList.contains("dark")){
+btn.textContent="☀️";
+localStorage.setItem("novaMode","dark");
+}else{
+btn.textContent="🌙";
+localStorage.setItem("novaMode","light");
+}
+
+}
+
+function loadMode(){
+
+let saved=localStorage.getItem("novaMode");
+
+let btn=document.getElementById("darkBtn");
+
+if(saved==="dark"){
+document.body.classList.add("dark");
+btn.textContent="☀️";
+}
+
+}
+
+loadMode();
+
+/* ACTIVE MENU */
+
+const currentPage = window.location.pathname.split("/").pop();
+
+document.querySelectorAll(".sidebar a").forEach(link => {
+
+if(link.getAttribute("href") === currentPage){
+link.parentElement.classList.add("active");
+}
+
+});
+
+</script>
+
+</body>
+</html>

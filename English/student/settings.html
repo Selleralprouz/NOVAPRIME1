@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings | NOVA PRIME</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.topbar{
+background:#f1f5f9;
+padding:12px 20px;
+border-radius:12px;
+margin-bottom:20px;
+display:flex;
+align-items:center;
+}
+
+body.dark .topbar{
+background:#1e293b;
+}
+
+.dark-toggle{
+margin-left:auto;
+cursor:pointer;
+font-size:20px;
+}
+
+.settings-box{
+border:1px solid #e5e7eb;
+border-radius:16px;
+padding:25px;
+margin-bottom:20px;
+background:#f9fafb;
+}
+
+body.dark .settings-box{
+background:#111827;
+color:white;
+}
+
+.settings-box input{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+margin-bottom:10px;
+}
+
+.settings-box button{
+padding:10px 20px;
+}
+
+.toggle{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+</style>
+
+</head>
+
+<body class="student-page">
+
+<div class="overlay"></div>
+
+<div class="dashboard">
+
+<aside class="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<ul>
+
+<li><a href="index.html">🏠 Dashboard</a></li>
+<li><a href="courses.html">📚 My Courses</a></li>
+<li><a href="lessons.html">🎓 Level / Lesson</a></li>
+<li><a href="agenda.html">📅 My Agenda</a></li>
+<li><a href="library.html">📖 Library</a></li>
+<li><a href="ai.html">🧠 Skill Lab</a></li>
+<li><a href="homework.html">📝 Tasks</a></li>
+<li><a href="quiz.html">🧠 Assessments (Quiz)</a></li>
+<li><a href="ai-practice.html">🤖 Practice with AI</a></li>
+<li><a href="live.html">🎙 Live Practice Challenge</a></li>
+<li><a href="panic.html">🚨 Panic Button – Speak</a></li>
+<li><a href="progress.html">📊 My Progress</a></li>
+<li><a href="game.html">🎮 Educational Games</a></li>
+<li><a href="certificates.html">🏆 Certificates</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="support.html">❓ Help / Support</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+
+<hr>
+
+<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
+
+</ul>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+<button class="menu-btn">☰</button>
+<h1>⚙️ Settings</h1>
+
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
+
+</header>
+
+<section class="cards">
+
+<!-- PROFILE -->
+
+<div class="settings-box">
+
+<h3>Profile</h3>
+
+<input type="text" id="userNameInput" placeholder="Your name">
+
+<input type="email" id="userEmailInput" placeholder="Email" disabled>
+
+<button class="btn" onclick="saveProfile()">Save Profile</button>
+
+</div>
+
+<!-- PASSWORD -->
+
+<div class="settings-box">
+
+<h3>Change Password</h3>
+
+<input type="password" placeholder="New Password">
+<input type="password" placeholder="Confirm Password">
+
+<button class="btn">Update Password</button>
+
+</div>
+
+<!-- NOTIFICATIONS -->
+
+<div class="settings-box">
+
+<h3>Notifications</h3>
+
+<div class="toggle">
+<input type="checkbox" id="notifToggle">
+<label for="notifToggle">Enable notifications</label>
+</div>
+
+</div>
+
+<!-- PLAN -->
+
+<div class="settings-box">
+
+<h3>Plan & Billing</h3>
+
+<p>Current Plan: <strong id="planName">Free</strong></p>
+
+<button onclick="upgradePlan()">Upgrade Plan</button>
+
+</div>
+
+<!-- DONATION -->
+
+<div class="settings-box">
+
+<h3>Support the Project</h3>
+
+<p>If you like NOVA PRIME you can support development.</p>
+
+<button onclick="donate()">Donate ❤️</button>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<script>
+
+const user = JSON.parse(localStorage.getItem("novaUser"));
+
+if(!user){
+window.location.href="../index.html";
+}
+
+document.getElementById("userNameInput").value=user.name || "";
+document.getElementById("userEmailInput").value=user.email || "";
+
+/* SAVE PROFILE */
+
+function saveProfile(){
+
+let name=document.getElementById("userNameInput").value;
+
+user.name=name;
+
+localStorage.setItem("novaUser",JSON.stringify(user));
+
+alert("Profile updated");
+
+}
+
+/* PLAN */
+
+let plan=localStorage.getItem("novaPlan") || "Free";
+
+document.getElementById("planName").innerText=plan;
+
+function upgradePlan(){
+
+alert("Upgrade system will connect to payment gateway.");
+
+}
+
+/* DONATE */
+
+function donate(){
+
+alert("Thank you for supporting the project ❤️");
+
+}
+
+/* LOGOUT */
+function logoutUser(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+/* DARK MODE */
+
+function toggleMode(){
+
+document.body.classList.toggle("dark");
+
+let btn=document.getElementById("darkBtn");
+
+if(document.body.classList.contains("dark")){
+btn.textContent="☀️";
+localStorage.setItem("novaMode","dark");
+}else{
+btn.textContent="🌙";
+localStorage.setItem("novaMode","light");
+}
+
+}
+
+function loadMode(){
+
+let saved=localStorage.getItem("novaMode");
+
+let btn=document.getElementById("darkBtn");
+
+if(saved==="dark"){
+document.body.classList.add("dark");
+btn.textContent="☀️";
+}
+
+}
+
+loadMode();
+
+/* MOBILE SIDEBAR FIX */
+
+const menuBtn=document.querySelector(".menu-btn");
+const sidebar=document.querySelector(".sidebar");
+const overlay=document.querySelector(".overlay");
+
+menuBtn.addEventListener("click",()=>{
+sidebar.classList.toggle("show");
+overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",()=>{
+sidebar.classList.remove("show");
+overlay.classList.remove("show");
+});
+
+/* ACTIVE MENU */
+
+const currentPage = window.location.pathname.split("/").pop();
+
+document.querySelectorAll(".sidebar a").forEach(link=>{
+if(link.getAttribute("href")===currentPage){
+link.parentElement.classList.add("active");
+}
+});
+
+</script>
+
+</body>
+</html>

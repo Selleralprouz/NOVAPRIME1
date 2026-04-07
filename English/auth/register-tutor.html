@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro del Tutor | NOVA PRIME</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="auth-page">
+
+<div class="auth-container">
+
+<h2>Registro del Tutor Legal</h2>
+<p class="subtitle">
+Crear cuenta como padre, madre o tutor responsable
+</p>
+
+<div class="form-group">
+<input type="text" id="tutorName" placeholder="Nombre completo del tutor">
+</div>
+
+<div class="form-group">
+<input type="email" id="tutorEmail" placeholder="Correo electrónico">
+</div>
+
+<div class="form-group">
+<input type="password" id="tutorPassword" placeholder="Crear contraseña (mínimo 6 caracteres)">
+</div>
+
+<div class="checkbox-group">
+<label>
+<input type="checkbox" id="confirmTutor">
+Declaro bajo protesta que soy tutor legal.
+</label>
+</div>
+
+<div class="checkbox-group">
+<label>
+<input type="checkbox" id="acceptLegal">
+Acepto el 
+<a href="../legal.html" target="_blank">Aviso Legal</a>, 
+la <a href="../privacy.html" target="_blank">Política de Privacidad</a> 
+y los <a href="../terms.html" target="_blank">Términos y Condiciones</a>.
+</label>
+</div>
+
+<div class="info-box">
+🔒 La cuenta del menor quedará vinculada a esta cuenta de tutor.
+</div>
+
+<button class="btn-main" onclick="registerTutor()">
+Crear cuenta
+</button>
+
+<div class="back-link">
+<a href="age.html">← Volver</a>
+</div>
+
+</div>
+
+<script type="module">
+
+import { auth, db } from "../firebase.js";
+
+import { 
+  createUserWithEmailAndPassword, 
+  updateProfile 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import { 
+  setDoc, 
+  doc 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+window.registerTutor = async function(){
+
+const name = document.getElementById("tutorName").value.trim();
+const email = document.getElementById("tutorEmail").value.trim();
+const pass = document.getElementById("tutorPassword").value;
+const confirmTutor = document.getElementById("confirmTutor").checked;
+const legal = document.getElementById("acceptLegal").checked;
+
+/* VALIDATION */
+if(!name || !email || !pass){
+alert("Completa todos los campos.");
+return;
+}
+
+if(pass.length < 6){
+alert("La contraseña debe tener mínimo 6 caracteres.");
+return;
+}
+
+if(!confirmTutor){
+alert("Debes confirmar que eres tutor legal.");
+return;
+}
+
+if(!legal){
+alert("Debes aceptar los términos.");
+return;
+}
+
+try{
+
+/* 🔐 CREATE USER */
+const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+
+/* 👤 SAVE NAME */
+await updateProfile(userCredential.user, {
+displayName: name
+});
+
+/* 🧠 SAVE TO FIRESTORE (ENG MUHIM) */
+await setDoc(doc(db, "users", userCredential.user.uid), {
+name: name,
+email: email,
+role: "student",   // 🔥 tutor ham student
+type: "tutor",
+createdAt: new Date()
+});
+
+/* SUCCESS */
+alert("Cuenta creada correctamente ✅");
+
+/* REDIRECT */
+window.location.href = "../student/index.html";
+
+}catch(error){
+
+if (error.code === "auth/email-already-in-use") {
+alert("Este correo ya está registrado ❗️");
+}
+else if (error.code === "auth/weak-password") {
+alert("La contraseña es muy débil ❗️");
+}
+else if (error.code === "auth/invalid-email") {
+alert("Correo inválido ❗️");
+}
+else{
+alert("Error: " + error.message);
+}
+
+}
+
+}
+
+</script>
+</body>
+</html>

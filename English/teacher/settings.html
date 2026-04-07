@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Teacher Settings | NOVA PRIME</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.dark-toggle{
+cursor:pointer;
+font-size:20px;
+margin-left:auto;
+}
+
+body.dark{
+background:#0f172a;
+color:#e5e7eb;
+}
+
+body.dark .card{
+background:#1e293b;
+color:#e5e7eb;
+}
+
+.topbar{
+background:#f1f5f9;
+padding:12px 20px;
+border-radius:12px;
+margin-bottom:20px;
+display:flex;
+align-items:center;
+}
+
+body.dark .topbar{
+background:#1e293b;
+}
+
+.settings-form input{
+width:100%;
+padding:10px;
+margin-top:6px;
+margin-bottom:12px;
+border-radius:8px;
+border:1px solid #e5e7eb;
+}
+
+body.dark .settings-form input{
+background:#0f172a;
+border:1px solid #334155;
+color:#fff;
+}
+
+.permission-list li{
+margin-bottom:6px;
+}
+
+</style>
+
+</head>
+
+<body class="teacher-page">
+
+<div class="overlay"></div>
+
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<ul>
+
+<li><a href="dashboard.html">🏠 Dashboard</a></li>
+<li><a href="students.html">👨‍🎓 My Students</a></li>
+<li><a href="content.html">📚 My Content</a></li>
+<li><a href="activity-builder.html">🛠 Activity Builder</a></li>
+<li><a href="assessments.html">🧠 My Assessments</a></li>
+<li><a href="practice-tools.html">🎧 Practice Tools</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="analytics.html">📊 My Analytics</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+
+<hr>
+
+<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
+
+</ul>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="content">
+
+<header class="topbar">
+
+<button class="menu-btn">☰</button>
+
+<h1>Teacher Settings</h1>
+
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
+
+</header>
+
+
+<section class="cards">
+
+<div class="card">
+
+<h3>Profile Settings</h3>
+
+<form class="settings-form">
+
+<label>Name</label>
+<input type="text" placeholder="Teacher Name">
+
+<label>Email</label>
+<input type="email" placeholder="teacher@email.com">
+
+<button class="btn">Save Profile</button>
+
+</form>
+
+</div>
+
+
+<div class="card">
+
+<h3>Change Password</h3>
+
+<form class="settings-form">
+
+<label>Current Password</label>
+<input type="password">
+
+<label>New Password</label>
+<input type="password">
+
+<label>Confirm Password</label>
+<input type="password">
+
+<button class="btn">Update Password</button>
+
+</form>
+
+</div>
+
+</section>
+
+
+<section class="cards">
+
+<div class="card">
+
+<h3>Notification Settings</h3>
+
+<label>
+<input type="checkbox"> Email notifications
+</label><br>
+
+<label>
+<input type="checkbox"> Student activity alerts
+</label><br>
+
+<label>
+<input type="checkbox"> Message approvals
+</label><br>
+
+<button class="btn" style="margin-top:10px;">
+Save Preferences
+</button>
+
+</div>
+
+</section>
+
+
+<section class="cards">
+
+<div class="card">
+
+<h3>External Teacher Permissions</h3>
+<p style="margin-bottom:10px; opacity:0.8;">
+External teachers have limited access. They can only manage their own students, content and assessments.
+</p>
+
+<ul class="permission-list">
+
+<li>✔ Manage own students</li>
+<li>✔ Manage own content</li>
+<li>✔ Manage own assessments</li>
+<li>✔ Approved messages</li>
+<li>✔ View student analytics</li>
+
+</ul>
+
+</div>
+
+
+<div class="card">
+
+<h3>Restricted Access</h3>
+
+<ul class="permission-list">
+
+<li>❌ Payments</li>
+<li>❌ Donations</li>
+<li>❌ Adult content</li>
+<li>❌ Global users</li>
+<li>❌ Delete students</li>
+<li>❌ Banner manager</li>
+<li>❌ Announcements</li>
+<li>❌ Certificates</li>
+<li>❌ Global analytics</li>
+<li>❌ Platform configuration</li>
+<li>❌ Admin courses</li>
+
+</ul>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<script>
+
+/* LOGOUT */
+
+function logoutUser(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+/* SIDEBAR MOBILE */
+
+const menuBtn=document.querySelector(".menu-btn");
+const sidebar=document.querySelector(".sidebar");
+const overlay=document.querySelector(".overlay");
+
+menuBtn.addEventListener("click",()=>{
+sidebar.classList.toggle("show");
+overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",()=>{
+sidebar.classList.remove("show");
+overlay.classList.remove("show");
+});
+
+
+/* DARK MODE */
+
+function toggleMode(){
+
+document.body.classList.toggle("dark");
+let btn=document.getElementById("darkBtn");
+
+if(document.body.classList.contains("dark")){
+btn.textContent="☀️";
+localStorage.setItem("novaMode","dark");
+}else{
+btn.textContent="🌙";
+localStorage.setItem("novaMode","light");
+}
+
+}
+
+function loadMode(){
+
+let saved=localStorage.getItem("novaMode");
+
+let btn=document.getElementById("darkBtn");
+
+if(saved==="dark"){
+document.body.classList.add("dark");
+btn.textContent="☀️";
+}
+
+}
+
+loadMode();
+
+
+/* ACTIVE MENU */
+
+const currentPage = window.location.pathname.split("/").pop();
+
+document.querySelectorAll(".sidebar a").forEach(link => {
+
+if(link.getAttribute("href") === currentPage){
+link.parentElement.classList.add("active");
+}
+
+});
+
+</script>
+
+</body>
+</html>

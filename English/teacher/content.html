@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Content | NOVA PRIME</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.dark-toggle{
+cursor:pointer;
+font-size:20px;
+margin-left:auto;
+}
+
+body.dark{
+background:#0f172a;
+color:#e5e7eb;
+}
+
+body.dark .card{
+background:#1e293b;
+color:#e5e7eb;
+}
+
+.topbar{
+background:#f1f5f9;
+padding:12px 20px;
+border-radius:12px;
+margin-bottom:20px;
+display:flex;
+align-items:center;
+}
+
+body.dark .topbar{
+background:#1e293b;
+}
+
+.content-table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+table-layout:fixed;
+}
+
+.content-table th,
+.content-table td{
+padding:10px;
+border-bottom:1px solid #e5e7eb;
+text-align:left;
+vertical-align:top;
+}
+
+body.dark .content-table th,
+body.dark .content-table td{
+border-bottom:1px solid #334155;
+}
+
+/* FIX */
+
+.actions{
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+.actions .btn{
+padding:6px 10px;
+font-size:12px;
+border-radius:8px;
+}
+
+</style>
+
+</head>
+
+<body class="teacher-page">
+
+<div class="overlay"></div>
+
+<div class="dashboard">
+
+<aside class="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<ul>
+
+<li><a href="dashboard.html">🏠 Dashboard</a></li>
+<li><a href="students.html">👨‍🎓 My Students</a></li>
+<li><a href="content.html">📚 My Content</a></li>
+<li><a href="activity-builder.html">🛠 Activity Builder</a></li>
+<li><a href="assessments.html">🧠 My Assessments</a></li>
+<li><a href="practice-tools.html">🎧 Practice Tools</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="analytics.html">📊 My Analytics</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+
+<hr>
+
+<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
+
+</ul>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+<button class="menu-btn">☰</button>
+
+<h1>My Content</h1>
+
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
+
+</header>
+
+<section class="cards">
+
+<div class="card">
+
+<h3>My Courses</h3>
+
+<table class="content-table">
+
+<thead>
+<tr>
+<th>Course</th>
+<th>Lessons</th>
+<th>Students</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Basic English</td>
+<td>12</td>
+<td>20</td>
+<td class="actions">
+<button class="btn">Edit</button>
+<button class="btn">Duplicate</button>
+<button class="btn">Move</button>
+</td>
+</tr>
+
+<tr>
+<td>Intermediate English</td>
+<td>18</td>
+<td>15</td>
+<td class="actions">
+<button class="btn">Edit</button>
+<button class="btn">Duplicate</button>
+<button class="btn">Move</button>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<button class="btn" style="margin-top:10px;">Create Course</button>
+
+</div>
+
+<div class="card">
+
+<h3>My Levels</h3>
+
+<table class="content-table">
+
+<thead>
+<tr>
+<th>Level</th>
+<th>Description</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>A1</td>
+<td>Beginner</td>
+<td class="actions">
+<button class="btn">Edit</button>
+<button class="btn">Duplicate</button>
+<button class="btn">Move</button>
+</td>
+</tr>
+
+<tr>
+<td>A2</td>
+<td>Elementary</td>
+<td class="actions">
+<button class="btn">Edit</button>
+<button class="btn">Duplicate</button>
+<button class="btn">Move</button>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<button class="btn" style="margin-top:10px;">Create Level</button>
+
+</div>
+
+<div class="card">
+
+<h3>My Lessons</h3>
+
+<table class="content-table">
+
+<thead>
+<tr>
+<th>Lesson</th>
+<th>Level</th>
+<th>Duration</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Lesson 1</td>
+<td>A1</td>
+<td>15 min</td>
+<td class="actions">
+<button class="btn">Edit</button>
+<button class="btn">Duplicate</button>
+<button class="btn">Move</button>
+</td>
+</tr>
+
+<tr>
+<td>Lesson 2</td>
+<td>A1</td>
+<td>20 min</td>
+<td class="actions">
+<button class="btn">Edit</button>
+<button class="btn">Duplicate</button>
+<button class="btn">Move</button>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<button class="btn" style="margin-top:10px;">Create Lesson</button>
+
+</div>
+
+</section>
+
+<section class="cards">
+
+<div class="card">
+
+<h3>Permissions</h3>
+
+<ul>
+
+<li>✔ Create content</li>
+<li>✔ Edit own content</li>
+<li>✔ Duplicate lessons</li>
+<li>✔ Move lessons</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h3>Restrictions</h3>
+
+<ul>
+
+<li>❌ Cannot edit official admin courses</li>
+<li>❌ Cannot delete admin content</li>
+
+</ul>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<script>
+
+function logoutUser(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+const menuBtn=document.querySelector(".menu-btn");
+const sidebar=document.querySelector(".sidebar");
+const overlay=document.querySelector(".overlay");
+
+menuBtn.addEventListener("click",()=>{
+sidebar.classList.toggle("show");
+overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",()=>{
+sidebar.classList.remove("show");
+overlay.classList.remove("show");
+});
+
+function toggleMode(){
+
+document.body.classList.toggle("dark");
+
+let btn=document.getElementById("darkBtn");
+
+if(document.body.classList.contains("dark")){
+btn.textContent="☀️";
+localStorage.setItem("novaMode","dark");
+}else{
+btn.textContent="🌙";
+localStorage.setItem("novaMode","light");
+}
+
+}
+
+function loadMode(){
+
+let saved=localStorage.getItem("novaMode");
+
+let btn=document.getElementById("darkBtn");
+
+if(saved==="dark"){
+document.body.classList.add("dark");
+btn.textContent="☀️";
+}
+
+}
+
+loadMode();
+
+const currentPage = window.location.pathname.split("/").pop();
+
+document.querySelectorAll(".sidebar a").forEach(link => {
+
+if(link.getAttribute("href") === currentPage){
+link.parentElement.classList.add("active");
+}
+
+});
+
+</script>
+
+</body>
+</html>

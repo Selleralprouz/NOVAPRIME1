@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help / Support | NOVA PRIME</title>
+
+<link rel="stylesheet" href="../style.css">
+
+
+
+<style>
+
+.topbar{
+background:#f1f5f9;
+padding:12px 20px;
+border-radius:12px;
+margin-bottom:20px;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+body.dark .topbar{
+background:#1e293b;
+}
+
+.dark-toggle{
+cursor:pointer;
+margin-left:auto;
+font-size:20px;
+}
+
+.support-box{
+border:1px solid #e5e7eb;
+border-radius:16px;
+padding:25px;
+margin-bottom:20px;
+background:#f9fafb;
+}
+
+body.dark .support-box{
+background:#111827;
+color:#fff;
+}
+
+.faq-item{
+margin-bottom:10px;
+border-bottom:1px solid #e5e7eb;
+padding-bottom:10px;
+}
+
+.faq-question{
+cursor:pointer;
+font-weight:600;
+}
+
+.faq-answer{
+display:none;
+margin-top:6px;
+}
+
+.support-form input,
+.support-form textarea{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+margin-bottom:10px;
+}
+
+.support-form button{
+padding:10px 20px;
+}
+
+.ai-help{
+border:1px solid #e5e7eb;
+padding:15px;
+border-radius:10px;
+margin-top:10px;
+}
+
+.ai-help textarea{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body class="student-page">
+
+<div class="overlay"></div>
+
+<div class="dashboard">
+
+<aside class="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<ul>
+
+<li><a href="index.html">🏠 Dashboard</a></li>
+<li><a href="courses.html">📚 My Courses</a></li>
+<li><a href="lessons.html">🎓 Level / Lesson</a></li>
+<li><a href="agenda.html">📅 My Agenda</a></li>
+<li><a href="library.html">📖 Library</a></li>
+<li><a href="ai.html">🧠 Skill Lab</a></li>
+<li><a href="homework.html">📝 Tasks</a></li>
+<li><a href="quiz.html">🧠 Assessments (Quiz)</a></li>
+<li><a href="ai-practice.html">🤖 Practice with AI</a></li>
+<li><a href="live.html">🎙 Live Practice Challenge</a></li>
+<li><a href="panic.html">🚨 Panic Button – Speak</a></li>
+<li><a href="progress.html">📊 My Progress</a></li>
+<li><a href="game.html">🎮 Educational Games</a></li>
+<li><a href="certificates.html">🏆 Certificates</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="support.html">❓ Help / Support</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+
+<hr>
+
+<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
+
+</ul>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+<button class="menu-btn">☰</button>
+
+<h1>❓ Help / Support</h1>
+
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
+
+</header>
+
+<section class="cards">
+
+<!-- SEARCH -->
+
+<div class="support-box">
+
+<h3>Help Search</h3>
+
+<input
+type="text"
+id="helpSearch"
+placeholder="Search help topics..."
+style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;"
+onkeyup="searchHelp()">
+
+</div>
+
+<!-- GUIDE -->
+
+<div class="support-box">
+
+<h3>How to use the platform</h3>
+
+<ul>
+<li>Go to <b>My Courses</b> to start learning.</li>
+<li>Complete lessons and quizzes.</li>
+<li>Practice in <b>Skill Lab</b>.</li>
+<li>Play educational games.</li>
+<li>Track results in <b>My Progress</b>.</li>
+</ul>
+
+</div>
+
+<!-- FAQ -->
+
+<div class="support-box">
+
+<h3>Frequently Asked Questions</h3>
+
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+How do I start my lessons?
+</div>
+<div class="faq-answer">
+Go to "My Courses" and open your lesson.
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+How do I earn points?
+</div>
+<div class="faq-answer">
+You earn points by completing lessons, quizzes and games.
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFAQ(this)">
+Why are some lessons locked?
+</div>
+<div class="faq-answer">
+You must complete previous levels first.
+</div>
+</div>
+
+</div>
+
+<!-- AI HELP -->
+
+<div class="support-box">
+
+<h3>AI Help Assistant</h3>
+
+<div class="ai-help">
+
+<textarea id="aiQuestion" rows="3"
+placeholder="Ask a question..."></textarea>
+
+<button class="btn" onclick="askAI()">Ask AI</button>
+<div id="aiAnswer" style="margin-top:10px;"></div>
+
+</div>
+
+</div>
+
+<!-- CONTACT -->
+
+<div class="support-box">
+
+<h3>Contact Support</h3>
+
+<form class="support-form" onsubmit="sendSupport(event)">
+
+<input type="text" placeholder="Your Name" required>
+
+<input type="email" placeholder="Your Email" required>
+
+<textarea rows="4" placeholder="Write your message..." required></textarea>
+
+<button class="btn">Send Message</button>
+
+</form>
+
+<div id="supportResult"></div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<script>
+
+const user = JSON.parse(localStorage.getItem("novaUser"));
+if(!user){window.location.href="../index.html";}
+
+function logoutUser(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+/* FAQ ACCORDION */
+
+function toggleFAQ(el){
+
+const answer = el.nextElementSibling;
+
+answer.style.display =
+answer.style.display==="block" ? "none" : "block";
+
+}
+
+/* SEARCH */
+
+function searchHelp(){
+
+let input =
+document.getElementById("helpSearch").value.toLowerCase();
+
+let items =
+document.querySelectorAll(".faq-item");
+
+items.forEach(item=>{
+
+let text=item.innerText.toLowerCase();
+
+item.style.display =
+text.includes(input) ? "block":"none";
+
+});
+
+}
+
+/* AI HELP */
+
+function askAI(){
+
+let q=document.getElementById("aiQuestion").value;
+
+if(q==="") return;
+
+document.getElementById("aiAnswer").innerHTML=
+"AI suggestion: Try checking your lessons or FAQ section.";
+
+}
+
+/* SUPPORT FORM */
+
+function sendSupport(e){
+
+e.preventDefault();
+
+document.getElementById("supportResult").innerHTML=
+"✅ Your message has been sent.";
+
+}
+
+/* SIDEBAR */
+
+const menuBtn=document.querySelector(".menu-btn");
+const sidebar=document.querySelector(".sidebar");
+const overlay=document.querySelector(".overlay");
+
+menuBtn.onclick=()=>{
+sidebar.classList.toggle("show");
+overlay.classList.toggle("show");
+};
+
+overlay.onclick=()=>{
+sidebar.classList.remove("show");
+overlay.classList.remove("show");
+};
+
+/* DARK MODE */
+
+function toggleMode(){
+
+document.body.classList.toggle("dark");
+
+let btn=document.getElementById("darkBtn");
+
+if(document.body.classList.contains("dark")){
+btn.textContent="☀️";
+localStorage.setItem("novaMode","dark");
+}else{
+btn.textContent="🌙";
+localStorage.setItem("novaMode","light");
+}
+
+}
+
+function loadMode(){
+
+let saved=localStorage.getItem("novaMode");
+let btn=document.getElementById("darkBtn");
+
+if(saved==="dark"){
+document.body.classList.add("dark");
+btn.textContent="☀️";
+}
+
+}
+
+loadMode();
+
+const currentPage = window.location.pathname.split("/").pop();
+
+document.querySelectorAll(".sidebar a").forEach(link => {
+
+if(link.getAttribute("href") === currentPage){
+link.parentElement.classList.add("active");
+}
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Certificates Manager | NOVA PRIME ADMIN</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#f1f5f9;
+}
+
+body.dark{
+background:#0f172a;
+color:#e5e7eb;
+}
+
+.dashboard{
+display:flex;
+min-height:100vh;
+}
+
+.sidebar{
+width:260px;
+background:linear-gradient(180deg,#0f172a,#020617);
+color:white;
+padding:20px;
+}
+
+.sidebar h2{
+margin-bottom:30px;
+}
+
+.sidebar ul{
+list-style:none;
+padding:0;
+}
+
+.sidebar li{
+margin-bottom:10px;
+}
+
+.sidebar a{
+color:white;
+text-decoration:none;
+padding:10px;
+display:block;
+border-radius:8px;
+transition:0.2s;
+}
+
+.sidebar a:hover{
+background:#1e293b;
+}
+
+.sidebar a.active{
+background:#2563eb;
+}
+
+.content{
+flex:1;
+padding:30px;
+}
+
+.topbar{
+display:flex;
+align-items:center;
+margin-bottom:25px;
+}
+
+.menu-btn{
+font-size:22px;
+cursor:pointer;
+margin-right:15px;
+}
+
+.dark-toggle{
+margin-left:auto;
+cursor:pointer;
+font-size:20px;
+}
+
+.create{
+background:#22c55e;
+color:white;
+border:none;
+padding:8px 14px;
+border-radius:6px;
+cursor:pointer;
+margin-bottom:15px;
+}
+
+.table{
+width:100%;
+border-collapse:collapse;
+background:white;
+border-radius:10px;
+overflow:hidden;
+}
+
+body.dark .table{
+background:#1e293b;
+}
+
+.table th,
+.table td{
+padding:12px;
+border-bottom:1px solid #e2e8f0;
+text-align:left;
+}
+
+.actions button{
+padding:6px 10px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin-right:5px;
+margin-bottom:4px;
+}
+
+.edit{background:#3b82f6;color:white;}
+.delete{background:#ef4444;color:white;}
+.download{background:#22c55e;color:white;}
+.send{background:#f59e0b;color:white;}
+
+@media(max-width:900px){
+
+.sidebar{
+position:fixed;
+left:-260px;
+top:0;
+height:100%;
+transition:0.3s;
+}
+
+.sidebar.show{
+left:0;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<aside class="sidebar" id="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<ul>
+
+<li><a href="dashboard.html">🏠 Dashboard</a></li>
+<li><a href="users.html">👥 Users</a></li>
+<li><a href="teachers.html">👨‍🏫 Teachers</a></li>
+<li><a href="courses.html">📚 Course Manager</a></li>
+<li><a href="activity-builder.html">🛠 Activity Builder</a></li>
+<li><a href="learning-blocks.html">🧱 Learning Blocks</a></li>
+<li><a href="skill-lab.html">🧠 Skill Lab</a></li>
+<li><a href="ai-practice.html">🤖 AI Practice</a></li>
+<li><a href="games.html">🎮 Games</a></li>
+<li><a href="assessments.html">📝 Assessments</a></li>
+<li><a href="analytics.html">📊 Analytics</a></li>
+
+<li><a href="certificates.html" class="active">🏆 Certificates</a></li>
+
+<li><a href="banner-manager.html">📢 Banner Manager</a></li>
+
+<li><a href="donations.html">💰 Payments</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+
+<hr>
+
+<li><a href="#" onclick="logout()">🚪 Logout</a></li>
+
+</ul>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+<h1>Certificates Manager</h1>
+
+<div class="dark-toggle" onclick="toggleMode()">🌙</div>
+
+</header>
+
+<button class="create">+ Create Certificate Template</button>
+
+<table class="table">
+
+<thead>
+<tr>
+<th>Certificate</th>
+<th>Course</th>
+<th>Level</th>
+<th>Issued</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>English Basics Certificate</td>
+<td>Basic English</td>
+<td>A2</td>
+<td>120</td>
+<td class="actions">
+<button class="download">Download</button>
+<button class="send" onclick="sendStudent()">Send to Student</button>
+<button class="send" onclick="sendAll()">Send to All</button>
+<button class="edit">Edit</button>
+<button class="delete">Delete</button>
+</td>
+</tr>
+
+<tr>
+<td>Intermediate English Certificate</td>
+<td>Intermediate English</td>
+<td>B1</td>
+<td>85</td>
+<td class="actions">
+<button class="download">Download</button>
+<button class="send" onclick="sendStudent()">Send to Student</button>
+<button class="send" onclick="sendAll()">Send to All</button>
+<button class="edit">Edit</button>
+<button class="delete">Delete</button>
+</td>
+</tr>
+</tbody>
+
+</table>
+
+</main>
+
+</div>
+
+<script>
+
+if(localStorage.getItem("nova-theme")==="dark"){
+document.body.classList.add("dark");
+}
+
+function toggleMode(){
+document.body.classList.toggle("dark");
+
+if(document.body.classList.contains("dark")){
+localStorage.setItem("nova-theme","dark");
+}else{
+localStorage.setItem("nova-theme","light");
+}
+}
+
+function toggleMenu(){
+document.getElementById("sidebar").classList.toggle("show");
+}
+
+function logout(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+/* SEND CERTIFICATE */
+
+function sendStudent(){
+alert("Certificate sent to selected student");
+}
+
+function sendAll(){
+if(confirm("Send certificate to ALL students who completed this level?")){
+alert("Certificates sent to all students");
+}
+}
+
+</script>
+
+</body>
+</html>

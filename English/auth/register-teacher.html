@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro Profesor | NOVA PRIME</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="auth-page">
+
+<div class="auth-container">
+
+<h2>Solicitud de Registro de Docente</h2>
+<p class="subtitle">
+NOVA PRIME English Platform
+</p>
+
+<div class="form-group">
+<input type="text" id="teacherName" placeholder="Nombre completo">
+</div>
+
+<div class="form-group">
+<input type="email" id="teacherEmail" placeholder="Correo electrónico">
+</div>
+
+<div class="form-group">
+<input type="password" id="teacherPassword" placeholder="Crear contraseña (mínimo 6 caracteres)">
+</div>
+
+<div class="checkbox-group">
+<label>
+<input type="checkbox" id="teacherDeclaration">
+Declaro que la información proporcionada es veraz.
+</label>
+</div>
+
+<div class="checkbox-group">
+<label>
+<input type="checkbox" id="teacherLegalAccept">
+Acepto el 
+<a href="../legal.html" target="_blank">Aviso Legal</a>, 
+la <a href="../privacy.html" target="_blank">Política de Privacidad</a> 
+y los <a href="../terms.html" target="_blank">Términos y Condiciones</a>.
+</label>
+</div>
+
+<div class="info-box">
+🔓 La cuenta será creada automáticamente.
+</div>
+
+<button class="btn-main glow-btn" onclick="registerTeacher()">
+🚀 Crear cuenta
+</button>
+
+<div class="back-link">
+<a href="login.html">← Ya tengo cuenta</a>
+</div>
+
+</div>
+
+<script type="module">
+
+import { auth, db } from "../firebase.js";
+
+import { 
+  createUserWithEmailAndPassword, 
+  updateProfile 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import { 
+  setDoc, 
+  doc 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+window.registerTeacher = async function(){
+
+const name = document.getElementById("teacherName").value.trim();
+const email = document.getElementById("teacherEmail").value.trim();
+const password = document.getElementById("teacherPassword").value;
+const declaration = document.getElementById("teacherDeclaration").checked;
+const legal = document.getElementById("teacherLegalAccept").checked;
+
+/* VALIDATION */
+if(!name || !email || !password){
+alert("Completa todos los campos obligatorios.");
+return;
+}
+
+if(password.length < 6){
+alert("La contraseña debe tener mínimo 6 caracteres.");
+return;
+}
+
+if(!declaration){
+alert("Debes confirmar que la información es veraz.");
+return;
+}
+
+if(!legal){
+alert("Debes aceptar los términos legales.");
+return;
+}
+
+try{
+
+/* 🔐 CREATE AUTH USER */
+const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+/* 👤 SAVE NAME */
+await updateProfile(userCredential.user, {
+displayName: name
+});
+
+/* 🧠 SAVE TO FIRESTORE (ENG MUHIM JOY) */
+await setDoc(doc(db, "users", userCredential.user.uid), {
+name: name,
+email: email,
+role: "teacher",
+createdAt: new Date()
+});
+
+/* ❌ LOCALSTORAGE ROLE O‘CHDI */
+
+/* SUCCESS */
+alert("Cuenta creada correctamente ✅");
+
+/* REDIRECT */
+window.location.href = "login.html";
+
+}catch(error){
+
+if (error.code === "auth/email-already-in-use") {
+alert("Este correo ya está registrado ❗️");
+}
+else if (error.code === "auth/weak-password") {
+alert("La contraseña es muy débil ❗️");
+}
+else if (error.code === "auth/invalid-email") {
+alert("Correo inválido ❗️");
+}
+else{
+alert("Error: " + error.message);
+}
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

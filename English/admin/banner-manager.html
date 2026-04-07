@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Banner Manager | NOVA PRIME ADMIN</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#f1f5f9;
+}
+
+body.dark{
+background:#0f172a;
+color:#e5e7eb;
+}
+
+.dashboard{
+display:flex;
+min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:260px;
+background:linear-gradient(180deg,#0f172a,#020617);
+color:white;
+padding:20px;
+
+display:flex;
+flex-direction:column;
+height:100vh;
+}
+
+.menu-top{
+flex:1;
+overflow-y:auto;
+}
+
+.menu-bottom{
+padding-top:10px;
+border-top:1px solid rgba(255,255,255,0.15);
+margin-top:10px;
+}
+
+.sidebar h2{
+margin-bottom:30px;
+}
+
+.sidebar ul{
+list-style:none;
+padding:0;
+margin:0;
+}
+
+.sidebar li{
+margin-bottom:6px;
+}
+
+.sidebar a{
+color:white;
+text-decoration:none;
+padding:10px;
+display:block;
+border-radius:8px;
+}
+
+.sidebar a:hover{
+background:#1e293b;
+}
+
+.sidebar a.active{
+background:#2563eb;
+}
+
+/* CONTENT */
+
+.content{
+flex:1;
+padding:30px;
+}
+
+.topbar{
+display:flex;
+align-items:center;
+margin-bottom:25px;
+}
+
+.menu-btn{
+font-size:22px;
+cursor:pointer;
+margin-right:15px;
+}
+
+.dark-toggle{
+margin-left:auto;
+cursor:pointer;
+font-size:20px;
+}
+
+/* CARD */
+
+.card{
+background:white;
+padding:20px;
+border-radius:12px;
+margin-bottom:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+
+body.dark .card{
+background:#1e293b;
+}
+
+/* FORM */
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+button{
+margin-top:15px;
+padding:10px 14px;
+background:#22c55e;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.btn-blue{
+background:#3b82f6;
+}
+
+.btn-red{
+background:#ef4444;
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+border-radius:10px;
+overflow:hidden;
+}
+
+body.dark table{
+background:#1e293b;
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #e2e8f0;
+text-align:left;
+}
+
+.status{
+background:#22c55e;
+color:white;
+padding:4px 8px;
+border-radius:6px;
+font-size:12px;
+}
+
+/* CHART */
+
+.chart-box{
+height:280px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.sidebar{
+position:fixed;
+left:-260px;
+top:0;
+height:100%;
+transition:.3s;
+}
+
+.sidebar.show{
+left:0;
+}
+
+.content{
+padding:20px;
+}
+
+table{
+display:block;
+overflow-x:auto;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<div class="menu-top">
+
+<ul>
+
+<li><a href="dashboard.html">🏠 Dashboard</a></li>
+<li><a href="users.html">👥 Users</a></li>
+<li><a href="teachers.html">👨‍🏫 Teachers</a></li>
+<li><a href="courses.html">📚 Course Manager</a></li>
+<li><a href="activity-builder.html">🛠 Activity Builder</a></li>
+<li><a href="learning-blocks.html">🧱 Learning Blocks</a></li>
+<li><a href="skill-lab.html">🧠 Skill Lab</a></li>
+<li><a href="ai-practice.html">🤖 AI Practice</a></li>
+<li><a href="games.html">🎮 Games</a></li>
+<li><a href="assessments.html">📝 Assessments</a></li>
+<li><a href="analytics.html">📊 Analytics</a></li>
+<li><a href="certificates.html">🏆 Certificates</a></li>
+<li><a href="donations.html">💰 Payments</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+
+<li><a href="banner-manager.html">📢 Banner Manager</a></li>
+
+</ul>
+
+</div>
+
+<div class="menu-bottom">
+
+<ul>
+
+<li><a href="settings.html">⚙️ Settings</a></li>
+<li><a href="#" onclick="logout()">🚪 Logout</a></li>
+
+</ul>
+
+</div>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="content">
+
+<header class="topbar">
+
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+<h1>Banner Manager</h1>
+
+<div class="dark-toggle" onclick="toggleMode()">🌙</div>
+
+</header>
+
+<!-- CREATE -->
+
+<div class="card">
+
+<h3>Create Banner</h3>
+
+<label>Audience</label>
+<select id="audience">
+<option value="all">All Users</option>
+<option value="students">Students</option>
+<option value="teachers">Teachers</option>
+</select>
+
+<label>Start Date</label>
+<input type="date">
+
+<label>End Date</label>
+<input type="date">
+<label>Upload Video (max 60s / 5MB)</label>
+<input type="file" id="videoInput" accept="video/*">
+
+<label>Upload Images (max 5)</label>
+<input type="file" id="imageInput" multiple accept="image/*">
+
+<button>Create Banner</button>
+
+</div>
+
+<!-- ACTIVE -->
+
+<div class="card">
+
+<h3>Active Banners</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>Banner</th>
+<th>Audience</th>
+<th>Start</th>
+<th>End</th>
+<th>Views</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>English Course Promo</td>
+<td>All</td>
+<td>10 Jun</td>
+<td>20 Jun</td>
+<td>Students 30k / Teachers 14k</td>
+<td><span class="status">Active</span></td>
+<td>
+<button class="btn-blue">Preview</button>
+<button>Edit</button>
+<button class="btn-red">Delete</button>
+</td>
+</tr>
+
+<tr>
+<td>Teacher Webinar</td>
+<td>Teachers</td>
+<td>5 Jun</td>
+<td>25 Jun</td>
+<td>Teachers 100k</td>
+<td><span class="status">Active</span></td>
+<td>
+<button class="btn-blue">Preview</button>
+<button>Edit</button>
+<button class="btn-red">Delete</button>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<!-- ANALYTICS -->
+
+<div class="card">
+
+<h3>Banner Performance</h3>
+
+<div class="chart-box">
+<canvas id="bannerChart"></canvas>
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+function toggleMenu(){
+document.getElementById("sidebar").classList.toggle("show");
+}
+
+const darkBtn=document.querySelector(".dark-toggle");
+
+if(localStorage.getItem("nova-theme")==="dark"){
+document.body.classList.add("dark");
+darkBtn.textContent="☀️";
+}
+
+function toggleMode(){
+
+document.body.classList.toggle("dark");
+
+if(document.body.classList.contains("dark")){
+localStorage.setItem("nova-theme","dark");
+darkBtn.textContent="☀️";
+}else{
+localStorage.setItem("nova-theme","light");
+darkBtn.textContent="🌙";
+}
+
+}
+
+function logout(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+const currentPage=window.location.pathname.split("/").pop();
+
+document.querySelectorAll(".sidebar a").forEach(link=>{
+if(link.getAttribute("href")===currentPage){
+link.classList.add("active");
+}
+});
+
+const video=document.getElementById("videoInput");
+const images=document.getElementById("imageInput");
+
+video.addEventListener("change",()=>{
+if(video.files.length>0){
+images.disabled=true;
+}else{
+images.disabled=false;
+}
+});
+
+images.addEventListener("change",()=>{
+if(images.files.length>0){
+video.disabled=true;
+}else{
+video.disabled=false;
+}
+});
+
+new Chart(document.getElementById("bannerChart"),{
+type:'bar',
+data:{
+labels:["Students","Teachers"],
+datasets:[{
+label:"Banner Views",
+data:[30000,14000]
+}]
+}
+});
+
+</script>
+
+</body>
+</html>

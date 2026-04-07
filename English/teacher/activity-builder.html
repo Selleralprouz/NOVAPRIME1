@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Activity Builder | NOVA PRIME</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.dashboard{
+display:flex;
+min-height:100vh;
+}
+
+.sidebar{
+display:flex;
+flex-direction:column;
+min-height:100vh;
+}
+
+.sidebar{
+position:fixed;
+top:0;
+left:0;
+bottom:0;
+width:240px;
+overflow-y:auto;
+}
+
+.content{
+margin-left:240px;
+}
+
+.dark-toggle{
+cursor:pointer;
+font-size:20px;
+margin-left:auto;
+}
+
+body.dark{
+background:#0f172a;
+color:#e5e7eb;
+}
+
+body.dark .card{
+background:#1e293b;
+color:#e5e7eb;
+}
+
+.topbar{
+background:#f1f5f9;
+padding:12px 20px;
+border-radius:12px;
+margin-bottom:20px;
+display:flex;
+align-items:center;
+}
+
+body.dark .topbar{
+background:#1e293b;
+}
+
+.activity-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-top:10px;
+}
+
+.activity-item{
+padding:15px;
+border-radius:12px;
+border:1px solid #e5e7eb;
+transition:0.2s;
+}
+
+body.dark .activity-item{
+border:1px solid #334155;
+}
+
+.activity-item:hover{
+transform:translateY(-3px);
+}
+
+.activity-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+font-weight:600;
+}
+
+.activity-actions{
+display:flex;
+gap:6px;
+flex-wrap:wrap;
+}
+
+.activity-actions button{
+padding:6px 10px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-size:12px;
+}
+
+.builder-box{
+margin-top:20px;
+}
+
+.builder-box input,
+.builder-box textarea,
+.builder-box select{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+margin-bottom:10px;
+}
+
+body.dark .builder-box input,
+body.dark .builder-box textarea,
+body.dark .builder-box select{
+background:#0f172a;
+color:#fff;
+border:1px solid #334155;
+}
+
+</style>
+
+</head>
+
+<body class="teacher-page">
+
+<div class="overlay"></div>
+
+<div class="dashboard">
+
+<aside class="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<ul>
+
+<li><a href="dashboard.html">🏠 Dashboard</a></li>
+<li><a href="students.html">👨‍🎓 My Students</a></li>
+<li><a href="content.html">📚 My Content</a></li>
+<li><a href="activity-builder.html">🛠 Activity Builder</a></li>
+<li><a href="assessments.html">🧠 My Assessments</a></li>
+<li><a href="practice-tools.html">🎧 Practice Tools</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="analytics.html">📊 My Analytics</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+
+<hr>
+
+<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
+
+</ul>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+<button class="menu-btn">☰</button>
+
+<h1>Activity Builder</h1>
+
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
+
+</header>
+
+
+<section class="cards">
+
+<div class="card">
+
+<h3>Create Activities</h3>
+
+<p>Create activities for your lessons.</p>
+
+<div class="activity-grid">
+
+<div class="activity-item">
+<div class="activity-header">
+<span>Translation</span>
+<div class="activity-actions">
+<button class="btn">Edit</button>
+<button class="btn">Move</button>
+<button class="btn">Delete</button>
+<button class="btn">Copy</button>
+</div>
+</div>
+</div>
+
+<div class="activity-item">
+<div class="activity-header">
+<span>Dictation</span>
+<div class="activity-actions">
+<button class="btn">Edit</button>
+<button class="btn">Move</button>
+<button class="btn">Delete</button>
+<button class="btn">Copy</button>
+</div>
+</div>
+</div>
+
+<div class="activity-item">
+<div class="activity-header">
+<span>Drag & Drop</span>
+<div class="activity-actions">
+<button class="btn">Edit</button>
+<button class="btn">Move</button>
+<button class="btn">Delete</button>
+<button class="btn">Copy</button>
+</div>
+</div>
+</div>
+
+<div class="activity-item">
+<div class="activity-header">
+<span>Multiple Choice</span>
+<div class="activity-actions">
+<button class="btn">Edit</button>
+<button class="btn">Move</button>
+<button class="btn">Delete</button>
+<button class="btn">Copy</button>
+</div>
+</div>
+</div>
+
+<div class="activity-item">
+<div class="activity-header">
+<span>Scramble</span>
+<div class="activity-actions">
+<button class="btn">Edit</button>
+<button class="btn">Move</button>
+<button class="btn">Delete</button>
+<button class="btn">Copy</button>
+</div>
+</div>
+</div>
+<div class="activity-item">
+<div class="activity-header">
+<span>Word Search</span>
+<div class="activity-actions">
+<button class="btn">Edit</button>
+<button class="btn">Move</button>
+<button class="btn">Delete</button>
+<button class="btn">Copy</button>
+</div>
+</div>
+</div>
+
+<div class="activity-item">
+<div class="activity-header">
+<span>Reading + Questions</span>
+<div class="activity-actions">
+<button class="btn">Edit</button>
+<button class="btn">Move</button>
+<button class="btn">Delete</button>
+<button class="btn">Copy</button>
+</div>
+</div>
+</div>
+
+<div class="activity-item">
+<div class="activity-header">
+<span>Fill in the Blank</span>
+<div class="activity-actions">
+<button class="btn">Edit</button>
+<button class="btn">Move</button>
+<button class="btn">Delete</button>
+<button class="btn">Copy</button>
+</div>
+</div>
+</div>
+
+<div class="activity-item">
+<div class="activity-header">
+<span>True / False</span>
+<div class="activity-actions">
+<button class="btn">Edit</button>
+<button class="btn">Move</button>
+<button class="btn">Delete</button>
+<button class="btn">Copy</button>
+</div>
+</div>
+</div>
+
+</div>
+
+<p style="margin-top:10px;">
+Teacher cannot edit activities created by admin.
+</p>
+
+</div>
+
+</section>
+
+
+<section class="cards">
+
+<div class="card">
+
+<h3>Create Activity</h3>
+
+<div class="builder-box">
+
+<label>Lesson</label>
+<select>
+<option>Select Lesson</option>
+<option>Lesson 1</option>
+<option>Lesson 2</option>
+</select>
+
+<label>Activity Type</label>
+<select>
+<option>Translation</option>
+<option>Dictation</option>
+<option>Drag & Drop</option>
+<option>Multiple Choice</option>
+<option>Scramble</option>
+<option>Word Search</option>
+<option>Reading + Questions</option>
+<option>Fill in the Blank</option>
+<option>True / False</option>
+</select>
+
+<label>Question / Instruction</label>
+<textarea rows="4"></textarea>
+
+<label>Answer</label>
+<input type="text">
+
+<button class="btn">Create Activity</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Activity Preview</h3>
+
+<p>
+Here teachers can preview the activity before assigning it to students.
+</p>
+
+<button class="btn">Preview Activity</button>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<script>
+
+function logoutUser(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+const menuBtn=document.querySelector(".menu-btn");
+const sidebar=document.querySelector(".sidebar");
+const overlay=document.querySelector(".overlay");
+
+menuBtn.addEventListener("click",()=>{
+sidebar.classList.toggle("show");
+overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",()=>{
+sidebar.classList.remove("show");
+overlay.classList.remove("show");
+});
+
+function toggleMode(){
+
+document.body.classList.toggle("dark");
+
+let btn=document.getElementById("darkBtn");
+
+if(document.body.classList.contains("dark")){
+btn.textContent="☀️";
+localStorage.setItem("novaMode","dark");
+}else{
+btn.textContent="🌙";
+localStorage.setItem("novaMode","light");
+}
+
+}
+
+function loadMode(){
+
+let saved=localStorage.getItem("novaMode");
+
+let btn=document.getElementById("darkBtn");
+
+if(saved==="dark"){
+document.body.classList.add("dark");
+btn.textContent="☀️";
+}
+
+}
+
+loadMode();
+
+const currentPage = window.location.pathname.split("/").pop();
+
+document.querySelectorAll(".sidebar a").forEach(link => {
+
+if(link.getAttribute("href") === currentPage){
+link.parentElement.classList.add("active");
+}
+
+});
+
+</script>
+
+</body>
+</html>

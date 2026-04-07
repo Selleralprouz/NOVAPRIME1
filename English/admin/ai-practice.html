@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Practice | NOVA PRIME ADMIN</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+/* 🔥 GLOBAL SYSTEM */
+:root{
+--bg-light:#f1f5f9;
+--bg-dark:#0f172a;
+--card-light:#ffffff;
+--card-dark:#1e293b;
+--text-light:#0f172a;
+--text-dark:#e5e7eb;
+}
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:var(--bg-light);
+color:var(--text-light);
+}
+
+body.dark{
+background:var(--bg-dark);
+color:var(--text-dark);
+}
+
+/* 🔥 FORCE TEXT FIX */
+body h1, body h2, body h3, body th, body td, body span, body div{
+color:inherit !important;
+}
+
+.dashboard{
+display:flex;
+min-height:100vh;
+}
+
+.sidebar{
+width:260px;
+background:linear-gradient(180deg,#0f172a,#020617);
+color:white;
+padding:20px;
+}
+
+.sidebar a{
+color:white;
+}
+
+/* CONTENT */
+.content{
+flex:1;
+padding:30px;
+}
+
+/* TOPBAR */
+.topbar{
+display:flex;
+align-items:center;
+margin-bottom:25px;
+}
+
+/* FILTER */
+.filters{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.filters input,
+.filters select{
+padding:8px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+/* 🔥 INPUT DARK FIX */
+body.dark input,
+body.dark select{
+background:#020617;
+color:#e5e7eb;
+border:1px solid #334155;
+}
+
+/* BUTTONS */
+.create{background:#22c55e;color:white;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;}
+.manual{background:#3b82f6;color:white;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;margin-left:10px;}
+
+/* 🔥 TABLE SYSTEM */
+.table{
+width:100%;
+border-collapse:collapse;
+background:var(--card-light);
+border-radius:10px;
+overflow:hidden;
+}
+
+body.dark .table{
+background:var(--card-dark);
+}
+
+.table th{
+background:#f8fafc;
+}
+
+body.dark .table th{
+background:#020617;
+}
+
+.table th,
+.table td{
+padding:12px;
+border-bottom:1px solid #e2e8f0;
+text-align:left;
+}
+
+/* 🔥 TABLE TEXT */
+body.dark .table td,
+body.dark .table th{
+color:#e5e7eb !important;
+}
+
+/* 🔥 ROW BACKGROUND */
+body.dark .table tr{
+background:#1e293b;
+}
+
+/* ACTIONS */
+.actions button{
+padding:6px 10px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin-right:5px;
+}
+
+.edit{background:#3b82f6;color:white;}
+.delete{background:#ef4444;color:white;}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<aside class="sidebar" id="sidebar">
+<h2>NOVA PRIME</h2>
+<ul>
+<li><a href="dashboard.html">🏠 Dashboard</a></li>
+<li><a href="users.html">👥 Users</a></li>
+<li><a href="teachers.html">👨‍🏫 Teachers</a></li>
+<li><a href="courses.html">📚 Course Manager</a></li>
+<li><a href="activity-builder.html">🛠 Activity Builder</a></li>
+<li><a href="learning-blocks.html">🧱 Learning Blocks</a></li>
+<li><a href="skill-lab.html">🧠 Skill Lab</a></li>
+<li><a href="ai-practice.html" class="active">🤖 AI Practice</a></li>
+<li><a href="games.html">🎮 Games</a></li>
+<li><a href="assessments.html">📝 Assessments</a></li>
+<li><a href="analytics.html">📊 Analytics</a></li>
+<li><a href="banner-manager.html">📢 Banner Manager</a></li>
+<li><a href="certificates.html">🏆 Certificates</a></li>
+<li><a href="donations.html">💰 Payments</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+<hr>
+<li><a href="#" onclick="logout()">🚪 Logout</a></li>
+</ul>
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+<h1>AI Practice Manager</h1>
+<div class="dark-toggle" onclick="toggleMode()">🌙</div>
+</header>
+
+<div class="filters">
+<input type="text" placeholder="Search AI activity...">
+<select>
+<option>All Types</option>
+<option>AI Conversation</option>
+<option>Sentence Correction</option>
+<option>Vocabulary AI</option>
+</select>
+<select>
+<option>All Levels</option>
+<option>A1</option>
+<option>A2</option>
+<option>B1</option>
+<option>B2</option>
+</select>
+</div>
+
+<button class="create">+ Create AI Practice</button>
+<button class="manual">+ Create Manual Practice</button>
+<table class="table">
+<thead>
+<tr>
+<th>AI Activity</th>
+<th>Type</th>
+<th>Level</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI Conversation Practice</td>
+<td>Conversation</td>
+<td>A2</td>
+<td>Active</td>
+<td class="actions">
+<button class="edit">Edit</button>
+<button>Duplicate</button>
+<button>Move</button>
+<button class="delete">Delete</button>
+</td>
+</tr>
+<tr>
+<td>Sentence Correction</td>
+<td>Grammar AI</td>
+<td>B1</td>
+<td>Active</td>
+<td class="actions">
+<button class="edit">Edit</button>
+<button>Duplicate</button>
+<button>Move</button>
+<button class="delete">Delete</button>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h2 style="margin-top:40px;">Panic Button Manager</h2>
+
+<button class="create" onclick="createPanic()">+ Create Conversation</button>
+
+<table class="table">
+<thead>
+<tr>
+<th>Practice</th>
+<th>Mode</th>
+<th>Level</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conversation Listening</td>
+<td>Solo Escuchar</td>
+<td>A2</td>
+<td>Active</td>
+<td class="actions">
+<button class="edit">Edit</button>
+<button>Duplicate</button>
+<button>Move</button>
+<button class="delete">Delete</button>
+</td>
+</tr>
+</tbody>
+</table>
+
+</main>
+</div>
+
+<script>
+
+if(localStorage.getItem("nova-theme")==="dark"){
+document.body.classList.add("dark");
+}
+
+function toggleMode(){
+document.body.classList.toggle("dark");
+
+if(document.body.classList.contains("dark")){
+localStorage.setItem("nova-theme","dark");
+}else{
+localStorage.setItem("nova-theme","light");
+}
+}
+
+function toggleMenu(){
+document.getElementById("sidebar").classList.toggle("show");
+}
+
+function logout(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+function createPanic(){
+alert("New Panic Conversation Created");
+}
+
+</script>
+
+</body>
+</html>

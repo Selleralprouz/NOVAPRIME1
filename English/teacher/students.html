@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Students | NOVA PRIME</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.dark-toggle{
+cursor:pointer;
+font-size:20px;
+margin-left:auto;
+}
+
+body.dark{
+background:#0f172a;
+color:#e5e7eb;
+}
+
+body.dark .card{
+background:#1e293b;
+color:#e5e7eb;
+}
+
+.topbar{
+background:#f1f5f9;
+padding:12px 20px;
+border-radius:12px;
+margin-bottom:20px;
+display:flex;
+align-items:center;
+}
+
+body.dark .topbar{
+background:#1e293b;
+}
+
+/* TABLE */
+
+.student-table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+table-layout:fixed;
+}
+
+.student-table th,
+.student-table td{
+padding:10px;
+border-bottom:1px solid #e5e7eb;
+text-align:left;
+}
+
+body.dark .student-table th,
+body.dark .student-table td{
+border-bottom:1px solid #334155;
+}
+
+/* FILTER */
+
+.filter-bar{
+display:flex;
+gap:10px;
+margin-bottom:10px;
+flex-wrap:wrap;
+}
+
+.filter-bar select{
+padding:6px 10px;
+border-radius:6px;
+}
+
+/* EXPORT */
+
+.export-bar{
+margin-bottom:10px;
+}
+
+.export-bar button{
+margin-right:8px;
+}
+
+/* MOBILE FIX */
+
+@media (max-width:768px){
+
+.student-table{
+display:block;
+overflow-x:auto;
+white-space:nowrap;
+}
+
+.student-table th,
+.student-table td{
+font-size:13px;
+padding:8px;
+}
+
+.filter-bar{
+flex-direction:column;
+}
+
+.export-bar{
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body class="teacher-page">
+
+<div class="overlay"></div>
+
+<div class="dashboard">
+
+<aside class="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<ul>
+
+<li><a href="dashboard.html">🏠 Dashboard</a></li>
+<li><a href="students.html">👨‍🎓 My Students</a></li>
+<li><a href="content.html">📚 My Content</a></li>
+<li><a href="activity-builder.html">🛠 Activity Builder</a></li>
+<li><a href="assessments.html">🧠 My Assessments</a></li>
+<li><a href="practice-tools.html">🎧 Practice Tools</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="analytics.html">📊 My Analytics</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+
+<hr>
+
+<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
+
+</ul>
+
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+<button class="menu-btn">☰</button>
+
+<h1>My Students</h1>
+
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
+
+</header>
+
+<section class="cards">
+
+<div class="card">
+
+<h3>My Students</h3>
+
+<div class="filter-bar">
+<select id="gradeFilter">
+<option value="">All Grades</option>
+<option>Grade 1</option>
+<option>Grade 2</option>
+<option>Grade 3</option>
+</select>
+
+<select id="groupFilter">
+<option value="">All Groups</option>
+<option>A</option>
+<option>B</option>
+<option>C</option>
+</select>
+</div>
+
+<div class="export-bar">
+<button class="btn" onclick="exportTable('excel')">Export Excel</button>
+<button class="btn" onclick="exportTable('pdf')">Export PDF</button>
+<button class="btn" onclick="exportTable('png')">Export PNG</button>
+</div>
+
+<table class="student-table" id="studentTable">
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Level</th>
+<th>Grade</th>
+<th>Group</th>
+<th>Progress</th>
+<th>Last Login</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Maria</td>
+<td>A2</td>
+<td>Grade 2</td>
+<td>
+<span class="group-label">A</span>
+<select class="groupSelect" style="display:none;">
+<option>A</option>
+<option>B</option>
+<option>C</option>
+</select>
+</td>
+<td>72%</td>
+<td>Today</td>
+<td>
+<button class="btn viewBtn">View</button>
+<button class="btn moveBtn">Move</button>
+</td>
+</tr>
+
+<tr>
+<td>David</td>
+<td>B1</td>
+<td>Grade 3</td>
+<td>
+<span class="group-label">B</span>
+<select class="groupSelect" style="display:none;">
+<option>A</option>
+<option>B</option>
+<option>C</option>
+</select>
+</td>
+<td>65%</td>
+<td>Yesterday</td>
+<td>
+<button class="btn viewBtn">View</button>
+<button class="btn moveBtn">Move</button>
+</td>
+</tr>
+<tr>
+<td>Anna</td>
+<td>A1</td>
+<td>Grade 1</td>
+<td>
+<span class="group-label">A</span>
+<select class="groupSelect" style="display:none;">
+<option>A</option>
+<option>B</option>
+<option>C</option>
+</select>
+</td>
+<td>90%</td>
+<td>2 days ago</td>
+<td>
+<button class="btn viewBtn">View</button>
+<button class="btn moveBtn">Move</button>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<script>
+
+/* LOGOUT */
+
+function logoutUser(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+/* DARK MODE */
+
+function toggleMode(){
+
+document.body.classList.toggle("dark");
+
+let btn=document.getElementById("darkBtn");
+
+if(document.body.classList.contains("dark")){
+btn.textContent="☀️";
+localStorage.setItem("novaMode","dark");
+}else{
+btn.textContent="🌙";
+localStorage.setItem("novaMode","light");
+}
+
+}
+function loadMode(){
+
+let saved=localStorage.getItem("novaMode");
+
+let btn=document.getElementById("darkBtn");
+
+if(saved==="dark"){
+document.body.classList.add("dark");
+btn.textContent="☀️";
+}
+
+}
+
+loadMode();
+
+
+/* FILTER SYSTEM */
+
+const gradeFilter = document.getElementById("gradeFilter");
+const groupFilter = document.getElementById("groupFilter");
+
+gradeFilter.addEventListener("change", filterStudents);
+groupFilter.addEventListener("change", filterStudents);
+
+function filterStudents(){
+
+const grade = gradeFilter.value;
+const group = groupFilter.value;
+
+const rows = document.querySelectorAll("#studentTable tbody tr");
+
+rows.forEach(row=>{
+
+const rowGrade = row.children[2].textContent;
+const rowGroup = row.querySelector(".group-label").textContent;
+
+let show = true;
+
+if(grade && rowGrade !== grade){
+show = false;
+}
+
+if(group && rowGroup !== group){
+show = false;
+}
+
+row.style.display = show ? "" : "none";
+
+});
+
+}
+
+
+/* EXPORT */
+
+function exportTable(type){
+
+if(type==="excel"){
+alert("Excel export ready");
+}
+
+if(type==="pdf"){
+alert("PDF export ready");
+}
+
+if(type==="png"){
+alert("PNG export ready");
+}
+
+}
+
+
+/* VIEW STUDENT */
+
+document.querySelectorAll(".viewBtn").forEach(btn=>{
+
+btn.addEventListener("click",function(){
+
+const name=this.closest("tr").children[0].textContent;
+
+alert("Opening profile of "+name);
+
+});
+
+});
+
+
+/* MOVE TO GROUP FIX */
+
+document.querySelectorAll(".moveBtn").forEach(btn=>{
+
+btn.addEventListener("click",function(){
+
+const row = this.closest("tr");
+const label = row.querySelector(".group-label");
+const select = row.querySelector(".groupSelect");
+
+if(select.style.display==="none"){
+select.style.display="inline";
+this.textContent="Save";
+}else{
+label.textContent = select.value;
+select.style.display="none";
+this.textContent="Move";
+}
+
+});
+
+});
+
+
+/* SIDEBAR MENU */
+
+const menuBtn = document.querySelector(".menu-btn");
+const sidebar = document.querySelector(".sidebar");
+const overlay = document.querySelector(".overlay");
+
+menuBtn.addEventListener("click", () => {
+
+sidebar.classList.toggle("show");
+overlay.classList.toggle("show");
+
+});
+
+overlay.addEventListener("click", () => {
+
+sidebar.classList.remove("show");
+overlay.classList.remove("show");
+
+});
+
+</script>
+
+</body>
+</html>

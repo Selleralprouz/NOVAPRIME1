@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Messages | NOVA PRIME</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.dark-toggle{
+cursor:pointer;
+font-size:20px;
+margin-left:auto;
+}
+
+body.dark{
+background:#0f172a;
+color:#e5e7eb;
+}
+
+body.dark .card{
+background:#1e293b;
+color:#e5e7eb;
+}
+
+.topbar{
+background:#f1f5f9;
+padding:12px 20px;
+border-radius:12px;
+margin-bottom:20px;
+display:flex;
+align-items:center;
+}
+
+body.dark .topbar{
+background:#1e293b;
+}
+
+.message-form input,
+.message-form textarea,
+.message-form select{
+width:100%;
+padding:10px;
+margin-top:6px;
+margin-bottom:12px;
+border-radius:8px;
+border:1px solid #e5e7eb;
+}
+
+body.dark .message-form input,
+body.dark .message-form textarea,
+body.dark .message-form select{
+background:#0f172a;
+border:1px solid #334155;
+color:#fff;
+}
+
+.message-table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
+
+.message-table th,
+.message-table td{
+padding:10px;
+border-bottom:1px solid #e5e7eb;
+text-align:left;
+}
+
+body.dark .message-table th,
+body.dark .message-table td{
+border-bottom:1px solid #334155;
+}
+
+.status-pending{
+color:orange;
+}
+
+.status-approved{
+color:#10b981;
+}
+
+.status-rejected{
+color:#ef4444;
+}
+
+</style>
+
+</head>
+
+<body class="teacher-page">
+
+<div class="overlay"></div>
+
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<h2>NOVA PRIME</h2>
+
+<ul>
+
+<li><a href="dashboard.html">🏠 Dashboard</a></li>
+<li><a href="students.html">👨‍🎓 My Students</a></li>
+<li><a href="content.html">📚 My Content</a></li>
+<li><a href="activity-builder.html">🛠 Activity Builder</a></li>
+<li><a href="assessments.html">🧠 My Assessments</a></li>
+<li><a href="practice-tools.html">🎧 Practice Tools</a></li>
+<li><a href="messages.html">💬 Messages</a></li>
+<li><a href="analytics.html">📊 My Analytics</a></li>
+<li><a href="settings.html">⚙️ Settings</a></li>
+
+<hr>
+
+<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
+
+</ul>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="content">
+
+<header class="topbar">
+
+<button class="menu-btn">☰</button>
+
+<h1>Messages</h1>
+
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
+
+</header>
+
+
+<section class="cards">
+
+<div class="card">
+
+<h3>Admin Approval System</h3>
+
+<p>
+Messages are not sent automatically.  
+Every message requires admin approval before being delivered.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- NEW MESSAGE -->
+
+<section class="cards">
+
+<div class="card">
+
+<h3>New Message</h3>
+
+<form class="message-form">
+
+<label>Recipient</label>
+
+<select>
+<option>Select student</option>
+<option>Maria</option>
+<option>David</option>
+<option>Anna</option>
+</select>
+
+
+<label>Subject</label>
+
+<input type="text" placeholder="Message subject">
+
+
+<label>Message</label>
+
+<textarea rows="5" placeholder="Write your message"></textarea>
+
+
+<button class="btn">
+Submit for Approval
+</button>
+
+</form>
+
+<p style="margin-top:10px;">
+Initial status: <strong>Pending Approval</strong>
+</p>
+
+</div>
+
+
+<!-- MESSAGE STATUS -->
+
+<div class="card">
+
+<h3>Message Status</h3>
+
+<table class="message-table">
+
+<thead>
+<tr>
+<th>Date</th>
+<th>Recipient</th>
+<th>Subject</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Today</td>
+<td>Maria</td>
+<td>Homework Reminder</td>
+<td class="status-pending">Pending</td>
+</tr>
+
+<tr>
+<td>Yesterday</td>
+<td>David</td>
+<td>Exam Schedule</td>
+<td class="status-approved">Sent</td>
+</tr>
+
+<tr>
+<td>2 days ago</td>
+<td>Anna</td>
+<td>Lesson Update</td>
+<td class="status-rejected">Rejected</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- MESSAGE INFO -->
+
+<section class="cards">
+
+<div class="card">
+
+<h3>Approval Process</h3>
+
+<ul>
+
+<li>Teacher creates message</li>
+<li>Message goes to admin approval</li>
+<li>Admin can approve or reject</li>
+<li>If approved → message is sent to student</li>
+<li>If rejected → teacher sees rejection status</li>
+
+</ul>
+
+</div>
+
+
+<div class="card">
+
+<h3>Status Types</h3>
+
+<ul>
+<li class="status-pending">Pending Approval</li>
+<li class="status-approved">Sent</li>
+<li class="status-rejected">Rejected</li>
+
+</ul>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<script>
+
+/* LOGOUT */
+
+function logoutUser(){
+localStorage.removeItem("novaUser");
+window.location.href="../index.html";
+}
+
+/* SIDEBAR MOBILE */
+
+const menuBtn=document.querySelector(".menu-btn");
+const sidebar=document.querySelector(".sidebar");
+const overlay=document.querySelector(".overlay");
+
+menuBtn.addEventListener("click",()=>{
+sidebar.classList.toggle("show");
+overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",()=>{
+sidebar.classList.remove("show");
+overlay.classList.remove("show");
+});
+
+
+/* DARK MODE */
+
+function toggleMode(){
+
+document.body.classList.toggle("dark");
+
+let btn=document.getElementById("darkBtn");
+
+if(document.body.classList.contains("dark")){
+btn.textContent="☀️";
+localStorage.setItem("novaMode","dark");
+}else{
+btn.textContent="🌙";
+localStorage.setItem("novaMode","light");
+}
+
+}
+
+function loadMode(){
+
+let saved=localStorage.getItem("novaMode");
+
+let btn=document.getElementById("darkBtn");
+
+if(saved==="dark"){
+document.body.classList.add("dark");
+btn.textContent="☀️";
+}
+
+}
+
+loadMode();
+
+
+/* ACTIVE MENU */
+
+const currentPage = window.location.pathname.split("/").pop();
+
+document.querySelectorAll(".sidebar a").forEach(link => {
+
+if(link.getAttribute("href") === currentPage){
+link.parentElement.classList.add("active");
+}
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selecciona tu perfil | NOVA PRIME</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="auth-page">
+
+<div class="auth-container age-box">
+
+<img src="../assets/images/nova-prime-logo.png"
+class="logo"
+alt="NOVA PRIME English Learning Platform">
+
+<h2>Selecciona tu perfil</h2>
+<p class="subtitle">Antes de continuar</p>
+
+<div class="age-options">
+
+<!-- ADULT -->
+<label class="age-card">
+<input type="radio" name="profile" value="adult">
+<div class="card-content">
+<span class="icon">👤</span>
+<h3>Soy mayor de 18 años</h3>
+<p>Cuento con capacidad legal para registrarme</p>
+</div>
+</label>
+
+<!-- MINOR -->
+<label class="age-card">
+<input type="radio" name="profile" value="minor">
+<div class="card-content">
+<span class="icon">🧒</span>
+<h3>Soy menor de edad</h3>
+<p>Acceso mediante tutor legal</p>
+</div>
+</label>
+
+<!-- TEACHER -->
+<label class="age-card">
+<input type="radio" name="profile" value="teacher">
+<div class="card-content">
+<span class="icon">👨‍🏫</span>
+<h3>Soy profesor</h3>
+<p>Solicitar acceso como docente</p>
+</div>
+</label>
+
+</div>
+
+<button class="btn-primary" onclick="continueRegistration()">
+Continuar
+</button>
+
+<p style="margin-top:15px;font-size:13px;opacity:0.8;">
+El acceso para menores se realiza exclusivamente a través de su tutor legal.
+</p>
+
+</div>
+
+<script>
+
+function continueRegistration(){
+
+const selected = document.querySelector('input[name="profile"]:checked');
+
+if(!selected){
+alert("Por favor selecciona una opción.");
+return;
+}
+
+const role = selected.value;
+
+/* USER OBJECT CREATE */
+
+const user = {
+role: role
+};
+
+localStorage.setItem("novaUser", JSON.stringify(user));
+
+/* REDIRECT */
+
+if(role === "adult"){
+window.location.href = "register-adult.html";
+}
+
+if(role === "minor"){
+window.location.href = "register-tutor.html";
+}
+
+if(role === "teacher"){
+window.location.href = "register-teacher.html";
+}
+
+}
+
+</script>
+
+</body>
+</html>
