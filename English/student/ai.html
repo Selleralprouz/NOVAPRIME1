@@ -4,56 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skill Lab | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.dark-toggle{
-cursor:pointer;
-font-size:20px;
-margin-left:auto;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-body.dark .card{
-background:#1e293b;
-color:#e5e7eb;
-}
-
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px;}
+body.dark .topbar{background:#1e293b;}
+.dark-toggle{cursor:pointer; font-size:20px; margin-left:auto;}
+body.dark{background:#0f172a; color:#e5e7eb;}
+body.dark .card{background:#1e293b; color:#e5e7eb;}
+.btn{background:#3b82f6; color:white; border:none; padding:10px 16px; border-radius:8px; cursor:pointer; margin-top:10px;}
+.btn:hover{background:#2563eb;}
+textarea{width:100%; height:120px; margin-top:15px; padding:10px; border-radius:8px; border:1px solid #ccc;}
+body.dark textarea{background:#0f172a; color:#fff; border-color:#334155;}
+.points-display{font-size:18px; font-weight:bold; margin-bottom:10px; color:#f59e0b;}
 </style>
-
 </head>
-
 <body class="student-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
-<!-- SIDEBAR -->
-
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="index.html">🏠 Dashboard</a></li>
 <li><a href="courses.html">📚 My Courses</a></li>
 <li><a href="lessons.html">🎓 Level / Lesson</a></li>
@@ -71,308 +42,119 @@ color:#e5e7eb;
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="support.html">❓ Help / Support</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Log out</a></li>
 </ul>
-
 </aside>
 
-<!-- MAIN -->
-
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
-
 <h1>🧠 Skill Lab</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
 
+<div class="points-display" id="pointsDisplay">⭐️ Points: 0</div>
 
 <section class="cards">
-
-<!-- LISTENING -->
-
-<div class="card">
-
-<h3>🎧 Listening Training</h3>
-
-<ul>
-<li>Dictation</li>
-<li>Audio comprehension</li>
-<li>Real conversations</li>
-</ul>
-
-<button class="btn">Start Listening</button>
-
-</div>
-
-
-<!-- READING -->
+<div class="card"><h3>🎧 Listening Training</h3><ul><li>Dictation</li><li>Audio comprehension</li><li>Real conversations</li></ul><button class="btn" onclick="window.startActivity('listening')">Start Listening</button></div>
+<div class="card"><h3>📖 Reading Practice</h3><ul><li>Short texts</li><li>Articles</li><li>Reading comprehension</li></ul><button class="btn" onclick="window.startActivity('reading')">Start Reading</button></div>
+<div class="card"><h3>🎤 Speaking Practice</h3><ul><li>Pronunciation trainer</li><li>AI conversation</li><li>Role play</li></ul><button class="btn" onclick="window.startActivity('speaking')">Start Speaking</button></div>
+<div class="card"><h3>✍️ Writing Practice</h3><ul><li>Sentence builder</li><li>Paragraph writing</li><li>AI correction</li></ul><button class="btn" onclick="window.startActivity('writing')">Start Writing</button></div>
 
 <div class="card">
-
-<h3>📖 Reading Practice</h3>
-
-<ul>
-<li>Short texts</li>
-<li>Articles</li>
-<li>Reading comprehension</li>
-</ul>
-
-<button class="btn">Start Reading</button>
-
-</div>
-
-
-<!-- SPEAKING -->
-
-<div class="card">
-
-<h3>🎤 Speaking Practice</h3>
-
-<ul>
-<li>Pronunciation trainer</li>
-<li>AI conversation</li>
-<li>Role play</li>
-</ul>
-
-<button class="btn">Start Speaking</button>
-
-</div>
-
-
-<!-- WRITING -->
-
-<div class="card">
-
-<h3>✍️ Writing Practice</h3>
-
-<ul>
-<li>Sentence builder</li>
-<li>Paragraph writing</li>
-<li>AI correction</li>
-</ul>
-
-<button class="btn">Start Writing</button>
-
-</div>
-
-
-<!-- AI CONVERSATION -->
-
-<div class="card">
-
 <h3>AI Conversation Practice</h3>
-
 <p>Write your answer in English and receive automatic feedback.</p>
-
-<textarea id="aiInput"
-placeholder="Write your answer in English..."
-style="width:100%; height:120px; margin-top:15px;"></textarea>
-
-<button class="btn" onclick="analyzeAnswer()">
-Analyze with AI
-</button>
-
+<textarea id="aiInput" placeholder="Write your answer in English..."></textarea>
+<button class="btn" onclick="window.analyzeAnswer()">Analyze with AI</button>
 <div id="aiFeedback" style="margin-top:20px;"></div>
-
 </div>
 
-
-<!-- AI HINT -->
-
-<div class="card">
-
-<h3>💡 AI Hint (-20 points)</h3>
-
-<p>Get an advanced suggestion.</p>
-
-<button class="btn" onclick="useHint()">
-Use Hint
-</button>
-
-</div>
-
-
-<!-- PRONUNCIATION -->
-
-<div class="card">
-
-<h3>🔊 Slow Pronunciation (-30 points)</h3>
-
-<p>Guided pronunciation simulation.</p>
-
-<button class="btn" onclick="slowPronunciation()">
-Activate
-</button>
-
-</div>
-
+<div class="card"><h3>💡 AI Hint (-20 points)</h3><p>Get an advanced suggestion.</p><button class="btn" onclick="window.useHint()">Use Hint</button></div>
+<div class="card"><h3>🔊 Slow Pronunciation (-30 points)</h3><p>Guided pronunciation simulation.</p><button class="btn" onclick="window.slowPronunciation()">Activate</button></div>
 </section>
-
 </main>
-
 </div>
 
-
+<!-- UI SCRIPT -->
 <script>
-
-/* USER */
-
-const user = JSON.parse(localStorage.getItem("novaUser"));
-
-if(!user){
-window.location.href="../index.html";
-}
-
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
-/* POINT SYSTEM */
-
-let points = parseInt(localStorage.getItem("novaPoints")) || 100;
-
-function updatePoints(value){
-points += value;
-localStorage.setItem("novaPoints", points);
-}
-
-/* SAVE HISTORY */
-function saveHistory(type){
-let history = JSON.parse(localStorage.getItem("novaHistory")) || [];
-history.push({ type:type, date:new Date() });
-localStorage.setItem("novaHistory", JSON.stringify(history));
-}
-
-/* AI ANALYSIS */
-
-function analyzeAnswer(){
-
-const input=document.getElementById("aiInput").value.trim();
-
-if(input===""){
-alert("Write an answer first.");
-return;
-}
-
-let feedback=```
-<strong>AI Feedback:</strong><br>
-✔️ Good structure.<br>
-📚 Correct vocabulary.<br>
-⚠️ Check verb tenses if referring to the past.<br><br>
-⭐️ +10 points earned.
-`;
-
-document.getElementById("aiFeedback").innerHTML=feedback;
-
-updatePoints(10);
-saveHistory("speaking");
-
-}
-
-/* HINT */
-
-function useHint(){
-
-if(points < 20){
-alert("Not enough points.");
-return;
-}
-
-updatePoints(-20);
-
-alert("AI Hint activated (-20 points).");
-
-}
-
-/* PRONUNCIATION */
-
-function slowPronunciation(){
-
-if(points < 30){
-alert("Not enough points.");
-return;
-}
-
-updatePoints(-30);
-
-alert("Slow pronunciation activated (-30 points).");
-
-saveHistory("listening");
-
-}
-
-/* SIDEBAR MOBILE */
-
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
-
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
-});
-
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
-/* DARK MODE */
-
+const menuBtn=document.querySelector(".menu-btn"), sidebar=document.querySelector(".sidebar"), overlay=document.querySelector(".overlay");
+menuBtn.addEventListener("click",()=>{ sidebar.classList.toggle("show"); overlay.classList.toggle("show"); });
+overlay.addEventListener("click",()=>{ sidebar.classList.remove("show"); overlay.classList.remove("show"); });
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
 let btn=document.getElementById("darkBtn");
-
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-
-}
-
-function loadMode(){
-
-let saved=localStorage.getItem("novaMode");
-
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
-}
-
-}
-
-loadMode();
-
-/* ACTIVE MENU */
-
+if(localStorage.getItem("novaMode")==="dark"){ document.body.classList.add("dark"); document.getElementById("darkBtn").textContent="☀️"; }
 const currentPage = window.location.pathname.split("/").pop();
-
-document.querySelectorAll(".sidebar a").forEach(link => {
-
-if(link.getAttribute("href") === currentPage){
-link.parentElement.classList.add("active");
-}
-
-});
-
+document.querySelectorAll(".sidebar a").forEach(link => { if(link.getAttribute("href") === currentPage) link.parentElement.classList.add("active"); });
 </script>
 
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { auth, db } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc, updateDoc, increment, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let studentId = null, studentPoints = 0;
+
+onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = "../index.html"; return; }
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists() && userDoc.data().role === "student") {
+        studentId = user.uid;
+        studentPoints = userDoc.data().points || 100;
+        updatePointsDisplay();
+    } else { window.location.href = "../index.html"; }
+});
+
+function updatePointsDisplay() {
+    document.getElementById("pointsDisplay").textContent = `⭐️ Points: ${studentPoints}`;
+}
+
+async function updatePoints(change, activity) {
+    studentPoints += change;
+    await updateDoc(doc(db, "users", studentId), { points: increment(change) });
+    await setDoc(doc(db, "skill_history", studentId), {
+        activities: { [activity]: increment(1) },
+        lastActive: serverTimestamp()
+    }, { merge: true });
+    updatePointsDisplay();
+}
+
+window.startActivity = (type) => {
+    alert(`${type} activity started! +5 points`);
+    updatePoints(5, type);
+};
+
+window.analyzeAnswer = async () => {
+    const input = document.getElementById("aiInput").value.trim();
+    if (!input) { alert("Write an answer first."); return; }
+    
+    const feedback = `<strong>AI Feedback:</strong><br>✔️ Good structure.<br>📚 Correct vocabulary.<br>⚠️ Check verb tenses.<br><br>⭐️ +10 points earned.`;
+    document.getElementById("aiFeedback").innerHTML = feedback;
+    document.getElementById("aiInput").value = "";
+    updatePoints(10, 'speaking');
+};
+
+window.useHint = () => {
+    if (studentPoints < 20) { alert("Not enough points."); return; }
+    updatePoints(-20, 'hint');
+    alert("AI Hint activated (-20 points).");
+};
+
+window.slowPronunciation = () => {
+    if (studentPoints < 30) { alert("Not enough points."); return; }
+    updatePoints(-30, 'pronunciation');
+    alert("Slow pronunciation activated (-30 points).");
+};
+
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
+});
+</script>
 </body>
 </html>

@@ -1,187 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Settings | NOVA PRIME ADMIN</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-body{
-margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:#f1f5f9;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-.dashboard{
-display:flex;
-min-height:100vh;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-width:260px;
-background:linear-gradient(180deg,#0f172a,#020617);
-color:white;
-padding:20px;
-}
-
-.sidebar h2{
-margin-bottom:30px;
-}
-
-.sidebar ul{
-list-style:none;
-padding:0;
-}
-
-.sidebar li{
-margin-bottom:10px;
-}
-
-.sidebar a{
-color:white;
-text-decoration:none;
-padding:10px;
-display:block;
-border-radius:8px;
-transition:0.2s;
-}
-
-.sidebar a:hover{
-background:#1e293b;
-}
-
-.sidebar a.active{
-background:#2563eb;
-}
-
-/* CONTENT */
-
-.content{
-flex:1;
-padding:30px;
-}
-
-/* TOPBAR */
-
-.topbar{
-display:flex;
-align-items:center;
-margin-bottom:25px;
-}
-
-.menu-btn{
-font-size:22px;
-cursor:pointer;
-margin-right:15px;
-}
-
-.dark-toggle{
-margin-left:auto;
-cursor:pointer;
-font-size:20px;
-}
-
-/* SETTINGS GRID */
-
-.settings-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-gap:20px;
-}
-
-/* CARD */
-
-.card{
-background:white;
-padding:20px;
-border-radius:12px;
-box-shadow:0 8px 20px rgba(0,0,0,0.05);
-}
-
-body.dark .card{
-background:#1e293b;
-}
-
-.card h3{
-margin-top:0;
-}
-
-/* FORM */
-
-.card input,
-.card select{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:6px;
-border:1px solid #ccc;
-}
-
-.save{
-margin-top:15px;
-padding:10px 14px;
-background:#22c55e;
-color:white;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-.danger{
-background:#ef4444;
-}
-
-/* MOBILE */
-
+body{margin:0; font-family:Arial, Helvetica, sans-serif; background:#f1f5f9;}
+body.dark{background:#0f172a; color:#e5e7eb;}
+.dashboard{display:flex; min-height:100vh;}
+.sidebar{width:260px; background:linear-gradient(180deg,#0f172a,#020617); color:white; padding:20px;}
+.sidebar h2{margin-bottom:30px;}
+.sidebar ul{list-style:none; padding:0;}
+.sidebar li{margin-bottom:10px;}
+.sidebar a{color:white; text-decoration:none; padding:10px; display:block; border-radius:8px; transition:0.2s;}
+.sidebar a:hover{background:#1e293b;}
+.sidebar a.active{background:#2563eb;}
+.content{flex:1; padding:30px;}
+.topbar{display:flex; align-items:center; margin-bottom:25px;}
+.menu-btn{font-size:22px; cursor:pointer; margin-right:15px;}
+.dark-toggle{margin-left:auto; cursor:pointer; font-size:20px;}
+.settings-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:20px;}
+.card{background:white; padding:20px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.05);}
+body.dark .card{background:#1e293b;}
+.card h3{margin-top:0;}
+.card input, .card select{width:100%; padding:10px; margin-top:10px; border-radius:6px; border:1px solid #ccc;}
+.save{margin-top:15px; padding:10px 14px; background:#22c55e; color:white; border:none; border-radius:6px; cursor:pointer;}
+.danger{background:#ef4444;}
 @media(max-width:900px){
-
-.sidebar{
-position:fixed;
-left:-260px;
-top:0;
-height:100%;
-transition:0.3s;
-z-index:1000;
+.sidebar{position:fixed; left:-260px; top:0; height:100%; transition:0.3s; z-index:1000;}
+.sidebar.show{left:0;}
+.content{padding:20px;}
 }
-
-.sidebar.show{
-left:0;
-}
-
-.content{
-padding:20px;
-}
-
-}
-
 </style>
-
 </head>
-
 <body>
-
 <div class="dashboard">
-
-<!-- SIDEBAR -->
-
 <aside class="sidebar" id="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="dashboard.html">🏠 Dashboard</a></li>
 <li><a href="users.html">👥 Users</a></li>
 <li><a href="teachers.html">👨‍🏫 Teachers</a></li>
@@ -197,145 +54,162 @@ padding:20px;
 <li><a href="donations.html">💰 Payments</a></li>
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="banner-manager.html">📢 Banner Manager</a></li>
-
 <li><a href="settings.html" class="active">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logout()">🚪 Logout</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Logout</a></li>
 </ul>
-
 </aside>
 
-<!-- CONTENT -->
-
 <main class="content">
-
 <header class="topbar">
-
-<div class="menu-btn">☰</div>
-
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
 <h1>Platform Settings</h1>
-
-<div class="dark-toggle" onclick="toggleMode()">🌙</div>
-
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
 </header>
 
 <div class="settings-grid">
-
 <div class="card">
 <h3>Platform Settings</h3>
-<input type="text" placeholder="Platform Name" value="NOVA PRIME">
-<input type="text" placeholder="Support Email" value="support@nova.com">
-<input type="text" placeholder="Admin Contact">
-<button class="save">Save Settings</button>
+<input type="text" id="platformName" placeholder="Platform Name" value="NOVA PRIME">
+<input type="text" id="supportEmail" placeholder="Support Email" value="support@nova.com">
+<input type="text" id="adminContact" placeholder="Admin Contact">
+<button class="save" onclick="window.saveSettings('platform')">Save Settings</button>
 </div>
 
 <div class="card">
 <h3>Email Settings</h3>
-<input type="text" placeholder="SMTP Server">
-<input type="text" placeholder="SMTP Email">
-<input type="password" placeholder="SMTP Password">
-<button class="save">Save Email Settings</button>
+<input type="text" id="smtpServer" placeholder="SMTP Server">
+<input type="text" id="smtpEmail" placeholder="SMTP Email">
+<input type="password" id="smtpPassword" placeholder="SMTP Password">
+<button class="save" onclick="window.saveSettings('email')">Save Email Settings</button>
 </div>
 
 <div class="card">
 <h3>Notifications</h3>
-<select>
-<option>Email Notifications</option>
-<option>Enabled</option>
-<option>Disabled</option>
-</select>
-
-<select>
-<option>System Alerts</option>
-<option>Enabled</option>
-<option>Disabled</option>
-</select>
-
-<button class="save">Save Notification Settings</button>
+<select id="emailNotif"><option>Enabled</option><option>Disabled</option></select>
+<select id="systemAlerts"><option>Enabled</option><option>Disabled</option></select>
+<button class="save" onclick="window.saveSettings('notifications')">Save Notification Settings</button>
 </div>
+
 <div class="card">
 <h3>Security</h3>
-<input type="password" placeholder="New Admin Password">
-<input type="password" placeholder="Confirm Password">
-<button class="save">Update Password</button>
+<input type="password" id="newPassword" placeholder="New Admin Password">
+<input type="password" id="confirmPassword" placeholder="Confirm Password">
+<button class="save" onclick="window.updatePassword()">Update Password</button>
 </div>
 
 <div class="card">
 <h3>Appearance</h3>
-<select>
-<option>Default Theme</option>
-<option>Light</option>
-<option>Dark</option>
-</select>
-
-<select>
-<option>Language</option>
-<option>English</option>
-<option>Spanish</option>
-<option>French</option>
-</select>
-
-<button class="save">Save Appearance</button>
+<select id="defaultTheme"><option>Light</option><option>Dark</option></select>
+<select id="language"><option>English</option><option>Spanish</option><option>French</option></select>
+<button class="save" onclick="window.saveSettings('appearance')">Save Appearance</button>
 </div>
 
 <div class="card">
 <h3>System Tools</h3>
-<button class="save danger">Clear Cache</button>
-<button class="save danger">Maintenance Mode</button>
+<button class="save danger" onclick="window.clearCache()">Clear Cache</button>
+<button class="save danger" onclick="window.toggleMaintenance()">Maintenance Mode</button>
 </div>
-
 </div>
-
 </main>
-
 </div>
 
+<!-- UI SCRIPT -->
 <script>
-
-/* DARK MODE */
-
-if(localStorage.getItem("nova-theme")==="dark"){
-document.body.classList.add("dark");
-}
-
+if(localStorage.getItem("isAdminLoggedIn") !== "true"){ window.location.href = "../admin-login.html"; }
+function toggleMenu(){ document.getElementById("sidebar").classList.toggle("show"); }
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
-if(document.body.classList.contains("dark")){
-localStorage.setItem("nova-theme","dark");
-}else{
-localStorage.setItem("nova-theme","light");
+let btn=document.getElementById("darkBtn");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-
-}
-
-/* MENU TOGGLE */
-
-document.addEventListener("DOMContentLoaded",function(){
-
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector("#sidebar");
-
-menuBtn.addEventListener("click",function(){
-
-sidebar.classList.toggle("show");
-
+if(localStorage.getItem("novaMode")==="dark"){ document.body.classList.add("dark"); document.getElementById("darkBtn").textContent="☀️"; }
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("isAdminLoggedIn");
+    window.location.href = "../admin-login.html";
 });
-
-});
-
-/* LOGOUT */
-
-function logout(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
 </script>
 
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { auth, db } from "../firebase.js";
+import { updatePassword, EmailAuthProvider, reauthenticateWithCredential } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+loadSettings();
+
+async function loadSettings() {
+    const docSnap = await getDoc(doc(db, "settings", "platform"));
+    if (docSnap.exists()) {
+        const data = docSnap.data();
+        document.getElementById("platformName").value = data.platformName || "NOVA PRIME";
+        document.getElementById("supportEmail").value = data.supportEmail || "";
+        document.getElementById("adminContact").value = data.adminContact || "";
+        document.getElementById("smtpServer").value = data.smtpServer || "";
+        document.getElementById("smtpEmail").value = data.smtpEmail || "";
+        document.getElementById("emailNotif").value = data.emailNotif || "Enabled";
+        document.getElementById("systemAlerts").value = data.systemAlerts || "Enabled";
+        document.getElementById("defaultTheme").value = data.defaultTheme || "Light";
+        document.getElementById("language").value = data.language || "English";
+    }
+}
+
+window.saveSettings = async (section) => {
+    try {
+        const data = {
+            platformName: document.getElementById("platformName").value,
+            supportEmail: document.getElementById("supportEmail").value,
+            adminContact: document.getElementById("adminContact").value,
+            smtpServer: document.getElementById("smtpServer").value,
+            smtpEmail: document.getElementById("smtpEmail").value,
+            emailNotif: document.getElementById("emailNotif").value,
+            systemAlerts: document.getElementById("systemAlerts").value,
+            defaultTheme: document.getElementById("defaultTheme").value,
+            language: document.getElementById("language").value,
+            updatedAt: serverTimestamp()
+        };
+        await setDoc(doc(db, "settings", "platform"), data, { merge: true });
+        alert(`${section} settings saved!`);
+    } catch (e) { alert("Error: " + e.message); }
+};
+
+window.updatePassword = async () => {
+    const newPass = document.getElementById("newPassword").value;
+    const confirm = document.getElementById("confirmPassword").value;
+    if (newPass !== confirm) { alert("Passwords do not match"); return; }
+    if (newPass.length < 6) { alert("Password must be at least 6 characters"); return; }
+    
+    try {
+        const user = auth.currentUser;
+        if (user) {
+            await updatePassword(user, newPass);
+            alert("Password updated!");
+            document.getElementById("newPassword").value = "";
+            document.getElementById("confirmPassword").value = "";
+        }
+    } catch (e) {
+        if (e.code === 'auth/requires-recent-login') {
+            alert("Please login again to update password");
+        } else {
+            alert("Error: " + e.message);
+        }
+    }
+};
+
+window.clearCache = () => {
+    localStorage.clear();
+    alert("Cache cleared!");
+    location.reload();
+};
+
+window.toggleMaintenance = async () => {
+    const docSnap = await getDoc(doc(db, "settings", "platform"));
+    const current = docSnap.exists() ? docSnap.data().maintenance : false;
+    await setDoc(doc(db, "settings", "platform"), { maintenance: !current }, { merge: true });
+    alert(`Maintenance mode: ${!current ? 'ON' : 'OFF'}`);
+};
+</script>
 </body>
 </html>

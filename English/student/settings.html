@@ -4,77 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Settings | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-display:flex;
-align-items:center;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.dark-toggle{
-margin-left:auto;
-cursor:pointer;
-font-size:20px;
-}
-
-.settings-box{
-border:1px solid #e5e7eb;
-border-radius:16px;
-padding:25px;
-margin-bottom:20px;
-background:#f9fafb;
-}
-
-body.dark .settings-box{
-background:#111827;
-color:white;
-}
-
-.settings-box input{
-width:100%;
-padding:10px;
-border-radius:8px;
-border:1px solid #ccc;
-margin-bottom:10px;
-}
-
-.settings-box button{
-padding:10px 20px;
-}
-
-.toggle{
-display:flex;
-align-items:center;
-gap:10px;
-}
-
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px; display:flex; align-items:center;}
+body.dark .topbar{background:#1e293b;}
+.dark-toggle{margin-left:auto; cursor:pointer; font-size:20px;}
+.settings-box{border:1px solid #e5e7eb; border-radius:16px; padding:25px; margin-bottom:20px; background:#f9fafb;}
+body.dark .settings-box{background:#111827; color:white;}
+.settings-box input{width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; margin-bottom:10px;}
+.settings-box button{padding:10px 20px;}
+.toggle{display:flex; align-items:center; gap:10px;}
+.btn{background:#3b82f6; color:white; border:none; border-radius:8px; cursor:pointer;}
 </style>
-
 </head>
-
 <body class="student-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="index.html">🏠 Dashboard</a></li>
 <li><a href="courses.html">📚 My Courses</a></li>
 <li><a href="lessons.html">🎓 Level / Lesson</a></li>
@@ -92,209 +41,139 @@ gap:10px;
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="support.html">❓ Help / Support</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Log out</a></li>
 </ul>
-
 </aside>
 
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
 <h1>⚙️ Settings</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
 
 <section class="cards">
-
-<!-- PROFILE -->
-
 <div class="settings-box">
-
 <h3>Profile</h3>
-
 <input type="text" id="userNameInput" placeholder="Your name">
-
 <input type="email" id="userEmailInput" placeholder="Email" disabled>
-
-<button class="btn" onclick="saveProfile()">Save Profile</button>
-
+<button class="btn" onclick="window.saveProfile()">Save Profile</button>
 </div>
 
-<!-- PASSWORD -->
-
 <div class="settings-box">
-
 <h3>Change Password</h3>
-
-<input type="password" placeholder="New Password">
-<input type="password" placeholder="Confirm Password">
-
-<button class="btn">Update Password</button>
-
+<input type="password" id="newPassword" placeholder="New Password">
+<input type="password" id="confirmPassword" placeholder="Confirm Password">
+<button class="btn" onclick="window.updatePassword()">Update Password</button>
 </div>
 
-<!-- NOTIFICATIONS -->
-
 <div class="settings-box">
-
 <h3>Notifications</h3>
-
-<div class="toggle">
-<input type="checkbox" id="notifToggle">
-<label for="notifToggle">Enable notifications</label>
+<div class="toggle"><input type="checkbox" id="notifToggle"> <label for="notifToggle">Enable notifications</label></div>
+<button class="btn" onclick="window.saveNotifications()" style="margin-top:10px;">Save Preferences</button>
 </div>
-
-</div>
-
-<!-- PLAN -->
 
 <div class="settings-box">
-
 <h3>Plan & Billing</h3>
-
 <p>Current Plan: <strong id="planName">Free</strong></p>
-
-<button onclick="upgradePlan()">Upgrade Plan</button>
-
+<button class="btn" onclick="window.upgradePlan()">Upgrade Plan</button>
 </div>
-
-<!-- DONATION -->
 
 <div class="settings-box">
-
 <h3>Support the Project</h3>
-
 <p>If you like NOVA PRIME you can support development.</p>
-
-<button onclick="donate()">Donate ❤️</button>
-
+<button class="btn" onclick="window.donate()">Donate ❤️</button>
 </div>
-
 </section>
-
 </main>
-
 </div>
 
+<!-- UI SCRIPT -->
 <script>
-
-const user = JSON.parse(localStorage.getItem("novaUser"));
-
-if(!user){
-window.location.href="../index.html";
-}
-
-document.getElementById("userNameInput").value=user.name || "";
-document.getElementById("userEmailInput").value=user.email || "";
-
-/* SAVE PROFILE */
-
-function saveProfile(){
-
-let name=document.getElementById("userNameInput").value;
-
-user.name=name;
-
-localStorage.setItem("novaUser",JSON.stringify(user));
-
-alert("Profile updated");
-
-}
-
-/* PLAN */
-
-let plan=localStorage.getItem("novaPlan") || "Free";
-
-document.getElementById("planName").innerText=plan;
-
-function upgradePlan(){
-
-alert("Upgrade system will connect to payment gateway.");
-
-}
-
-/* DONATE */
-
-function donate(){
-
-alert("Thank you for supporting the project ❤️");
-
-}
-
-/* LOGOUT */
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
-/* DARK MODE */
-
+const menuBtn=document.querySelector(".menu-btn"), sidebar=document.querySelector(".sidebar"), overlay=document.querySelector(".overlay");
+menuBtn.addEventListener("click",()=>{ sidebar.classList.toggle("show"); overlay.classList.toggle("show"); });
+overlay.addEventListener("click",()=>{ sidebar.classList.remove("show"); overlay.classList.remove("show"); });
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
 let btn=document.getElementById("darkBtn");
-
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-
-}
-
-function loadMode(){
-
-let saved=localStorage.getItem("novaMode");
-
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
-}
-
-}
-
-loadMode();
-
-/* MOBILE SIDEBAR FIX */
-
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
-
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
-});
-
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
-/* ACTIVE MENU */
-
+if(localStorage.getItem("novaMode")==="dark"){ document.body.classList.add("dark"); document.getElementById("darkBtn").textContent="☀️"; }
 const currentPage = window.location.pathname.split("/").pop();
-
-document.querySelectorAll(".sidebar a").forEach(link=>{
-if(link.getAttribute("href")===currentPage){
-link.parentElement.classList.add("active");
-}
-});
-
+document.querySelectorAll(".sidebar a").forEach(link => { if(link.getAttribute("href") === currentPage) link.parentElement.classList.add("active"); });
 </script>
 
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { auth, db } from "../firebase.js";
+import { onAuthStateChanged, signOut, updatePassword, EmailAuthProvider, reauthenticateWithCredential } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc, updateDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let studentId = null, currentUser = null;
+
+onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = "../index.html"; return; }
+    currentUser = user;
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists() && userDoc.data().role === "student") {
+        studentId = user.uid;
+        loadProfile(userDoc.data());
+        loadSettings();
+    } else { window.location.href = "../index.html"; }
+});
+
+function loadProfile(data) {
+    document.getElementById("userNameInput").value = data.name || "";
+    document.getElementById("userEmailInput").value = data.email || currentUser.email || "";
+    document.getElementById("planName").textContent = data.plan || "Free";
+}
+
+async function loadSettings() {
+    const docSnap = await getDoc(doc(db, "settings", studentId));
+    if (docSnap.exists()) {
+        document.getElementById("notifToggle").checked = docSnap.data().notifications || false;
+    }
+}
+
+window.saveProfile = async () => {
+    const name = document.getElementById("userNameInput").value.trim();
+    if (!name) { alert("Name cannot be empty"); return; }
+    await updateDoc(doc(db, "users", studentId), { name, updatedAt: serverTimestamp() });
+    alert("Profile saved!");
+};
+
+window.updatePassword = async () => {
+    const newPass = document.getElementById("newPassword").value;
+    const confirm = document.getElementById("confirmPassword").value;
+    if (newPass !== confirm) { alert("Passwords do not match"); return; }
+    if (newPass.length < 6) { alert("Password must be at least 6 characters"); return; }
+    
+    try {
+        await updatePassword(currentUser, newPass);
+        alert("Password updated!");
+        document.getElementById("newPassword").value = "";
+        document.getElementById("confirmPassword").value = "";
+    } catch (e) {
+        if (e.code === 'auth/requires-recent-login') alert("Please login again to update password");
+        else alert("Error: " + e.message);
+    }
+};
+
+window.saveNotifications = async () => {
+    const enabled = document.getElementById("notifToggle").checked;
+    await setDoc(doc(db, "settings", studentId), { notifications: enabled, updatedAt: serverTimestamp() }, { merge: true });
+    alert("Preferences saved!");
+};
+
+window.upgradePlan = () => alert("Upgrade system will connect to payment gateway.");
+window.donate = () => alert("Thank you for supporting the project ❤️");
+
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
+});
+</script>
 </body>
 </html>

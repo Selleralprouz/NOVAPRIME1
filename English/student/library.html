@@ -4,67 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Library | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.dark-toggle{
-cursor:pointer;
-font-size:20px;
-margin-left:auto;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-body.dark .card{
-background:#1e293b;
-color:#e5e7eb;
-}
-
-.search-box{
-margin-bottom:20px;
-}
-
-.search-box input{
-width:100%;
-padding:10px;
-border-radius:8px;
-border:1px solid #d1d5db;
-}
-
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px;}
+body.dark .topbar{background:#1e293b;}
+.dark-toggle{cursor:pointer; font-size:20px; margin-left:auto;}
+body.dark{background:#0f172a; color:#e5e7eb;}
+body.dark .card{background:#1e293b; color:#e5e7eb;}
+.search-box{margin-bottom:20px;}
+.search-box input{width:100%; padding:10px; border-radius:8px; border:1px solid #d1d5db;}
+.btn{background:#3b82f6; color:white; border:none; padding:10px 16px; border-radius:8px; cursor:pointer; margin-top:10px;}
 </style>
-
 </head>
-
 <body class="student-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
-<!-- SIDEBAR -->
-
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="index.html">🏠 Dashboard</a></li>
 <li><a href="courses.html">📚 My Courses</a></li>
 <li><a href="lessons.html">🎓 Level / Lesson</a></li>
@@ -82,181 +40,117 @@ border:1px solid #d1d5db;
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="support.html">❓ Help / Support</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Log out</a></li>
 </ul>
-
 </aside>
 
-
-<!-- MAIN -->
-
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
-
 <h1>📖 Learning Library</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
-
-<!-- SEARCH -->
 
 <div class="search-box">
 <input type="text" id="searchInput" placeholder="Search materials...">
 </div>
 
-
 <section class="cards" id="libraryCards">
-
-<div class="card">
-<h3>📄 Grammar Guides</h3>
-<p>Access essential grammar explanations and study materials.</p>
-<button class="btn">Open Material</button>
-</div>
-
-<div class="card">
-<h3>📚 Vocabulary Lists</h3>
-<p>Study important vocabulary and common phrases.</p>
-<button class="btn">Open Vocabulary</button>
-</div>
-
-<div class="card">
-<h3>🗣 Pronunciation Guides</h3>
-<p>Learn correct pronunciation with examples and exercises.</p>
-<button class="btn">Start Practice</button>
-</div>
-
-<div class="card">
-<h3>📑 Study PDFs</h3>
-<p>Download study sheets and printable materials.</p>
-<button class="btn">Download PDF</button>
-</div>
-
-<div class="card">
-<h3>🎧 Audio Materials</h3>
-<p>Improve listening with curated audio lessons.</p>
-<button class="btn">Start Listening</button>
-</div>
-
-<div class="card">
-<h3>📖 Extra Reading</h3>
-<p>Additional reading texts to improve comprehension.</p>
-<button class="btn">Start Reading</button>
-</div>
-
+    <p>Loading materials...</p>
 </section>
-
 </main>
-
 </div>
 
-
+<!-- UI SCRIPT -->
 <script>
-
-/* USER */
-
-const user = JSON.parse(localStorage.getItem("novaUser"));
-
-if(!user){
-window.location.href="../index.html";
-}
-
-/* LOGOUT */
-
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
-/* SIDEBAR */
-
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
-
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
-});
-
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
-/* DARK MODE */
-
+const menuBtn=document.querySelector(".menu-btn"), sidebar=document.querySelector(".sidebar"), overlay=document.querySelector(".overlay");
+menuBtn.addEventListener("click",()=>{ sidebar.classList.toggle("show"); overlay.classList.toggle("show"); });
+overlay.addEventListener("click",()=>{ sidebar.classList.remove("show"); overlay.classList.remove("show"); });
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
 let btn=document.getElementById("darkBtn");
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-
-}
-
-function loadMode(){
-
-let saved=localStorage.getItem("novaMode");
-
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
-}
-
-}
-
-loadMode();
-
-/* SEARCH FUNCTION */
-
-const searchInput = document.getElementById("searchInput");
-const cards = document.querySelectorAll("#libraryCards .card");
-
-searchInput.addEventListener("keyup", function(){
-
-let filter = searchInput.value.toLowerCase();
-
-cards.forEach(card => {
-
-let text = card.innerText.toLowerCase();
-
-card.style.display = text.includes(filter) ? "block" : "none";
-
-});
-
-});
-
-</script>
-
-<script>
-
+if(localStorage.getItem("novaMode")==="dark"){ document.body.classList.add("dark"); document.getElementById("darkBtn").textContent="☀️"; }
 const currentPage = window.location.pathname.split("/").pop();
-
-document.querySelectorAll(".sidebar a").forEach(link => {
-
-if(link.getAttribute("href") === currentPage){
-link.parentElement.classList.add("active");
-}
-
-});
-
+document.querySelectorAll(".sidebar a").forEach(link => { if(link.getAttribute("href") === currentPage) link.parentElement.classList.add("active"); });
 </script>
 
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { auth, db } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc, collection, getDocs, updateDoc, increment, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let studentId = null, allMaterials = [];
+
+onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = "../index.html"; return; }
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists() && userDoc.data().role === "student") {
+        studentId = user.uid;
+        loadMaterials();
+    } else { window.location.href = "../index.html"; }
+});
+
+async function loadMaterials() {
+    const container = document.getElementById("libraryCards");
+    container.innerHTML = "<p>Loading materials...</p>";
+    
+    const snap = await getDocs(collection(db, "library_materials"));
+    allMaterials = [];
+    snap.forEach(doc => allMaterials.push({ id: doc.id, ...doc.data() }));
+    renderMaterials();
+}
+
+function renderMaterials() {
+    const container = document.getElementById("libraryCards");
+    const filter = document.getElementById("searchInput").value.toLowerCase();
+    
+    let filtered = allMaterials.filter(m => 
+        (m.title || "").toLowerCase().includes(filter) || 
+        (m.description || "").toLowerCase().includes(filter)
+    );
+    
+    container.innerHTML = filtered.length ? "" : "<p>No materials found.</p>";
+    
+    filtered.forEach(m => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+            <h3>${m.icon || '📄'} ${m.title}</h3>
+            <p>${m.description || ''}</p>
+            <button class="btn" onclick="window.openMaterial('${m.id}', '${m.type}')">${m.buttonText || 'Open Material'}</button>
+        `;
+        container.appendChild(card);
+    });
+}
+
+window.openMaterial = async (id, type) => {
+    const material = allMaterials.find(m => m.id === id);
+    if (!material) return;
+    
+    // Foydalanish statistikasi
+    await updateDoc(doc(db, "library_materials", id), { views: increment(1) });
+    await setDoc(doc(db, "library_usage", `${studentId}_${id}`), {
+        studentId, materialId: id, viewedAt: serverTimestamp()
+    }, { merge: true });
+    
+    if (material.fileUrl) {
+        window.open(material.fileUrl, '_blank');
+    } else {
+        alert(`${material.title} opened!`);
+    }
+};
+
+document.getElementById("searchInput").addEventListener("keyup", renderMaterials);
+
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
+});
+</script>
 </body>
 </html>

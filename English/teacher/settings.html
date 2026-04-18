@@ -1,82 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Teacher Settings | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.dark-toggle{
-cursor:pointer;
-font-size:20px;
-margin-left:auto;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-body.dark .card{
-background:#1e293b;
-color:#e5e7eb;
-}
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-display:flex;
-align-items:center;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.settings-form input{
-width:100%;
-padding:10px;
-margin-top:6px;
-margin-bottom:12px;
-border-radius:8px;
-border:1px solid #e5e7eb;
-}
-
-body.dark .settings-form input{
-background:#0f172a;
-border:1px solid #334155;
-color:#fff;
-}
-
-.permission-list li{
-margin-bottom:6px;
-}
-
+.dark-toggle{cursor:pointer; font-size:20px; margin-left:auto;}
+body.dark{background:#0f172a; color:#e5e7eb;}
+body.dark .card{background:#1e293b; color:#e5e7eb;}
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px; display:flex; align-items:center;}
+body.dark .topbar{background:#1e293b;}
+.settings-form input{width:100%; padding:10px; margin-top:6px; margin-bottom:12px; border-radius:8px; border:1px solid #e5e7eb;}
+body.dark .settings-form input{background:#0f172a; border:1px solid #334155; color:#fff;}
+.permission-list li{margin-bottom:6px;}
 </style>
-
 </head>
-
 <body class="teacher-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
-<!-- SIDEBAR -->
-
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="dashboard.html">🏠 Dashboard</a></li>
 <li><a href="students.html">👨‍🎓 My Students</a></li>
 <li><a href="content.html">📚 My Content</a></li>
@@ -86,131 +32,69 @@ margin-bottom:6px;
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="analytics.html">📊 My Analytics</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Log out</a></li>
 </ul>
-
 </aside>
 
-
-<!-- MAIN -->
-
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
-
 <h1>Teacher Settings</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
 
-
 <section class="cards">
-
 <div class="card">
-
 <h3>Profile Settings</h3>
-
-<form class="settings-form">
-
+<form class="settings-form" id="profileForm">
 <label>Name</label>
-<input type="text" placeholder="Teacher Name">
-
+<input type="text" id="teacherName" placeholder="Teacher Name">
 <label>Email</label>
-<input type="email" placeholder="teacher@email.com">
-
-<button class="btn">Save Profile</button>
-
+<input type="email" id="teacherEmail" placeholder="teacher@email.com">
+<button type="submit" class="btn">Save Profile</button>
 </form>
-
 </div>
 
-
 <div class="card">
-
 <h3>Change Password</h3>
-
-<form class="settings-form">
-
+<form class="settings-form" id="passwordForm">
 <label>Current Password</label>
-<input type="password">
-
+<input type="password" id="currentPassword">
 <label>New Password</label>
-<input type="password">
-
+<input type="password" id="newPassword">
 <label>Confirm Password</label>
-<input type="password">
-
-<button class="btn">Update Password</button>
-
+<input type="password" id="confirmPassword">
+<button type="submit" class="btn">Update Password</button>
 </form>
-
 </div>
-
 </section>
 
-
 <section class="cards">
-
 <div class="card">
-
 <h3>Notification Settings</h3>
-
-<label>
-<input type="checkbox"> Email notifications
-</label><br>
-
-<label>
-<input type="checkbox"> Student activity alerts
-</label><br>
-
-<label>
-<input type="checkbox"> Message approvals
-</label><br>
-
-<button class="btn" style="margin-top:10px;">
-Save Preferences
-</button>
-
+<label><input type="checkbox" id="emailNotif"> Email notifications</label><br>
+<label><input type="checkbox" id="activityAlerts"> Student activity alerts</label><br>
+<label><input type="checkbox" id="messageNotif"> Message approvals</label><br>
+<button class="btn" style="margin-top:10px;" id="saveNotifBtn">Save Preferences</button>
 </div>
-
 </section>
 
-
 <section class="cards">
-
 <div class="card">
-
 <h3>External Teacher Permissions</h3>
-<p style="margin-bottom:10px; opacity:0.8;">
-External teachers have limited access. They can only manage their own students, content and assessments.
-</p>
-
+<p style="margin-bottom:10px; opacity:0.8;">External teachers have limited access. They can only manage their own students, content and assessments.</p>
 <ul class="permission-list">
-
 <li>✔ Manage own students</li>
 <li>✔ Manage own content</li>
 <li>✔ Manage own assessments</li>
 <li>✔ Approved messages</li>
 <li>✔ View student analytics</li>
-
 </ul>
-
 </div>
-
-
 <div class="card">
-
 <h3>Restricted Access</h3>
-
 <ul class="permission-list">
-
 <li>❌ Payments</li>
 <li>❌ Donations</li>
 <li>❌ Adult content</li>
@@ -222,51 +106,32 @@ External teachers have limited access. They can only manage their own students, 
 <li>❌ Global analytics</li>
 <li>❌ Platform configuration</li>
 <li>❌ Admin courses</li>
-
 </ul>
-
 </div>
-
 </section>
-
 </main>
-
 </div>
 
-
+<!-- UI SCRIPT (O'ZGARMAYDI) -->
 <script>
-
-/* LOGOUT */
-
 function logoutUser(){
 localStorage.removeItem("novaUser");
 window.location.href="../index.html";
 }
-
-/* SIDEBAR MOBILE */
-
 const menuBtn=document.querySelector(".menu-btn");
 const sidebar=document.querySelector(".sidebar");
 const overlay=document.querySelector(".overlay");
-
 menuBtn.addEventListener("click",()=>{
 sidebar.classList.toggle("show");
 overlay.classList.toggle("show");
 });
-
 overlay.addEventListener("click",()=>{
 sidebar.classList.remove("show");
 overlay.classList.remove("show");
 });
-
-
-/* DARK MODE */
-
 function toggleMode(){
-
 document.body.classList.toggle("dark");
 let btn=document.getElementById("darkBtn");
-
 if(document.body.classList.contains("dark")){
 btn.textContent="☀️";
 localStorage.setItem("novaMode","dark");
@@ -274,37 +139,139 @@ localStorage.setItem("novaMode","dark");
 btn.textContent="🌙";
 localStorage.setItem("novaMode","light");
 }
-
 }
-
 function loadMode(){
-
 let saved=localStorage.getItem("novaMode");
-
 let btn=document.getElementById("darkBtn");
-
 if(saved==="dark"){
 document.body.classList.add("dark");
 btn.textContent="☀️";
 }
-
 }
-
 loadMode();
-
-
-/* ACTIVE MENU */
-
 const currentPage = window.location.pathname.split("/").pop();
-
 document.querySelectorAll(".sidebar a").forEach(link => {
-
 if(link.getAttribute("href") === currentPage){
 link.parentElement.classList.add("active");
 }
+});
+</script>
 
+<!-- FIREBASE SCRIPT (YANGI QO'SHILDI) -->
+<script type="module">
+import { auth, db } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc, updateDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { updatePassword, EmailAuthProvider, reauthenticateWithCredential } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+let currentUser = null;
+
+onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+        window.location.href = "../index.html";
+    } else {
+        currentUser = user;
+        loadUserProfile();
+        loadNotificationSettings();
+    }
 });
 
+async function loadUserProfile() {
+    const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+    if (userDoc.exists()) {
+        const data = userDoc.data();
+        document.getElementById("teacherName").value = data.name || data.displayName || "";
+        document.getElementById("teacherEmail").value = data.email || currentUser.email || "";
+    } else {
+        document.getElementById("teacherEmail").value = currentUser.email || "";
+    }
+}
+
+async function loadNotificationSettings() {
+    const settingsDoc = await getDoc(doc(db, "settings", currentUser.uid));
+    if (settingsDoc.exists()) {
+        const data = settingsDoc.data();
+        document.getElementById("emailNotif").checked = data.emailNotifications || false;
+        document.getElementById("activityAlerts").checked = data.activityAlerts || false;
+        document.getElementById("messageNotif").checked = data.messageNotifications || false;
+    }
+}
+
+document.getElementById("profileForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("teacherName").value.trim();
+    
+    if (!name) {
+        alert("Name cannot be empty");
+        return;
+    }
+    
+    try {
+        await setDoc(doc(db, "users", currentUser.uid), {
+            name: name,
+            email: currentUser.email,
+            role: "teacher",
+            updatedAt: serverTimestamp()
+        }, { merge: true });
+        
+        alert("Profile saved!");
+    } catch (error) {
+        alert("Error: " + error.message);
+    }
+});
+
+document.getElementById("passwordForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const currentPass = document.getElementById("currentPassword").value;
+    const newPass = document.getElementById("newPassword").value;
+    const confirmPass = document.getElementById("confirmPassword").value;
+    
+    if (newPass !== confirmPass) {
+        alert("New passwords do not match");
+        return;
+    }
+    if (newPass.length < 6) {
+        alert("Password must be at least 6 characters");
+        return;
+    }
+    
+    try {
+        const credential = EmailAuthProvider.credential(currentUser.email, currentPass);
+        await reauthenticateWithCredential(currentUser, credential);
+        await updatePassword(currentUser, newPass);
+        
+        document.getElementById("currentPassword").value = "";
+        document.getElementById("newPassword").value = "";
+        document.getElementById("confirmPassword").value = "";
+        alert("Password updated!");
+    } catch (error) {
+        alert("Error: " + error.message);
+    }
+});
+
+document.getElementById("saveNotifBtn").addEventListener("click", async () => {
+    const emailNotif = document.getElementById("emailNotif").checked;
+    const activityAlerts = document.getElementById("activityAlerts").checked;
+    const messageNotif = document.getElementById("messageNotif").checked;
+    
+    try {
+        await setDoc(doc(db, "settings", currentUser.uid), {
+            emailNotifications: emailNotif,
+            activityAlerts: activityAlerts,
+            messageNotifications: messageNotif,
+            updatedAt: serverTimestamp()
+        });
+        
+        alert("Preferences saved!");
+    } catch (error) {
+        alert("Error: " + error.message);
+    }
+});
+
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
+});
 </script>
 
 </body>

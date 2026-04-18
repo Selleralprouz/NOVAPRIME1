@@ -4,85 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Practice with AI | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.dark-toggle{
-cursor:pointer;
-margin-left:auto;
-font-size:20px;
-}
-
-.ai-box{
-border:1px solid #e5e7eb;
-border-radius:16px;
-padding:25px;
-background:#f9fafb;
-}
-
-body.dark .ai-box{
-background:#111827;
-color:#fff;
-}
-
-.ai-box textarea{
-width:100%;
-padding:12px;
-border-radius:8px;
-border:1px solid #ccc;
-margin-top:10px;
-margin-bottom:10px;
-}
-
-.ai-result{
-margin-top:15px;
-font-size:16px;
-line-height:1.6;
-}
-
-.scenario{
-margin-bottom:10px;
-}
-
-.scenario select{
-padding:8px;
-border-radius:6px;
-}
-
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px; display:flex; align-items:center; gap:10px;}
+body.dark .topbar{background:#1e293b;}
+.dark-toggle{cursor:pointer; margin-left:auto; font-size:20px;}
+.ai-box{border:1px solid #e5e7eb; border-radius:16px; padding:25px; background:#f9fafb;}
+body.dark .ai-box{background:#111827; color:#fff;}
+.ai-box textarea{width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:10px; margin-bottom:10px;}
+.ai-result{margin-top:15px; font-size:16px; line-height:1.6;}
+.scenario{margin-bottom:10px;}
+.scenario select{padding:8px; border-radius:6px;}
+.btn{background:#3b82f6; color:white; border:none; padding:10px 16px; border-radius:8px; cursor:pointer;}
+.points-display{font-size:18px; font-weight:bold; margin-bottom:10px; color:#f59e0b;}
 </style>
-
 </head>
-
 <body class="student-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
-<!-- SIDEBAR -->
-
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="index.html">🏠 Dashboard</a></li>
 <li><a href="courses.html">📚 My Courses</a></li>
 <li><a href="lessons.html">🎓 Level / Lesson</a></li>
@@ -100,35 +43,23 @@ border-radius:6px;
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="support.html">❓ Help / Support</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Log out</a></li>
 </ul>
-
 </aside>
 
-<!-- MAIN -->
-
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
-
 <h1>🤖 Practice with AI</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
 
+<div class="points-display" id="pointsDisplay">⭐️ Points: 0</div>
+
 <section class="cards">
-
 <div class="ai-box">
-
 <h3>Practice English with AI</h3>
-
 <div class="scenario">
 <label>Scenario:</label>
 <select id="scenario">
@@ -138,134 +69,87 @@ border-radius:6px;
 <option>Academic English</option>
 </select>
 </div>
-
-<p>
-Example: "Yesterday I went to the market and bought fruits."
-</p>
-
-<textarea id="aiInput" rows="5"
-placeholder="Write your English sentence here..."></textarea>
-
-<button class="btn" onclick="checkAI()">Analyze</button>
-
+<p>Example: "Yesterday I went to the market and bought fruits."</p>
+<textarea id="aiInput" rows="5" placeholder="Write your English sentence here..."></textarea>
+<button class="btn" onclick="window.checkAI()">Analyze</button>
 <div class="ai-result" id="aiResult"></div>
-
 </div>
-
 </section>
-
 </main>
-
 </div>
 
+<!-- UI SCRIPT -->
 <script>
-
-/* USER */
-
-const user = JSON.parse(localStorage.getItem("novaUser"));
-
-if(!user){
-window.location.href="../index.html";
-}
-
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
-/* AI SIMULATION */
-
-function checkAI(){
-
-let text=document.getElementById("aiInput").value.trim();
-let scenario=document.getElementById("scenario").value;
-
-if(text===""){
-alert("Write something first.");
-return;
-}
-
-let feedback="";
-
-feedback += "Scenario: <strong>"+scenario+"</strong><br><br>";
-
-feedback += "✅ Good sentence structure.<br>";
-feedback += "📚 Vocabulary looks correct.<br>";
-feedback += "⚠️ Check verb tense if talking about the past.<br><br>";
-feedback += "⭐️ +10 points earned";
-
-document.getElementById("aiResult").innerHTML=feedback;
-
-/* POINT SYSTEM */
-
-let points=parseInt(localStorage.getItem("novaPoints")) || 0;
-
-points += 10;
-
-localStorage.setItem("novaPoints",points);
-
-}
-
-/* SIDEBAR MOBILE */
-
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
-});
-
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
-/* DARK MODE */
-
+const menuBtn=document.querySelector(".menu-btn"), sidebar=document.querySelector(".sidebar"), overlay=document.querySelector(".overlay");
+menuBtn.addEventListener("click",()=>{ sidebar.classList.toggle("show"); overlay.classList.toggle("show"); });
+overlay.addEventListener("click",()=>{ sidebar.classList.remove("show"); overlay.classList.remove("show"); });
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
 let btn=document.getElementById("darkBtn");
-
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-
-}
-
-function loadMode(){
-
-let saved=localStorage.getItem("novaMode");
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
-}
-
-}
-
-loadMode();
-
-/* ACTIVE MENU AUTO */
-
+if(localStorage.getItem("novaMode")==="dark"){ document.body.classList.add("dark"); document.getElementById("darkBtn").textContent="☀️"; }
 const currentPage = window.location.pathname.split("/").pop();
-
-document.querySelectorAll(".sidebar a").forEach(link=>{
-
-if(link.getAttribute("href")===currentPage){
-link.parentElement.classList.add("active");
-}
-
-});
-
+document.querySelectorAll(".sidebar a").forEach(link => { if(link.getAttribute("href") === currentPage) link.parentElement.classList.add("active"); });
 </script>
 
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { auth, db } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc, updateDoc, increment, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let studentId = null, studentPoints = 0;
+
+onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = "../index.html"; return; }
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists() && userDoc.data().role === "student") {
+        studentId = user.uid;
+        studentPoints = userDoc.data().points || 100;
+        updatePointsDisplay();
+    } else { window.location.href = "../index.html"; }
+});
+
+function updatePointsDisplay() {
+    document.getElementById("pointsDisplay").textContent = `⭐️ Points: ${studentPoints}`;
+}
+
+async function updatePoints(change) {
+    studentPoints += change;
+    await updateDoc(doc(db, "users", studentId), { points: increment(change) });
+    await setDoc(doc(db, "ai_practice_history", studentId), {
+        lastPractice: serverTimestamp(),
+        totalPractices: increment(1)
+    }, { merge: true });
+    updatePointsDisplay();
+}
+
+window.checkAI = async () => {
+    const text = document.getElementById("aiInput").value.trim();
+    const scenario = document.getElementById("scenario").value;
+    if (!text) { alert("Write something first."); return; }
+    
+    let feedback = `Scenario: <strong>${scenario}</strong><br><br>`;
+    feedback += "✅ Good sentence structure.<br>";
+    feedback += "📚 Vocabulary looks correct.<br>";
+    feedback += "⚠️ Check verb tense if talking about the past.<br><br>";
+    feedback += "⭐️ +10 points earned";
+    
+    document.getElementById("aiResult").innerHTML = feedback;
+    document.getElementById("aiInput").value = "";
+    await updatePoints(10);
+    
+    await setDoc(doc(db, "ai_practice_sessions", `${studentId}_${Date.now()}`), {
+        studentId, scenario, text, feedback, createdAt: serverTimestamp()
+    });
+};
+
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
+});
+</script>
 </body>
 </html>

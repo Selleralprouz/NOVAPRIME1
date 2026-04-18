@@ -1,365 +1,1055 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>My Content | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.dark-toggle{
-cursor:pointer;
-font-size:20px;
-margin-left:auto;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-body.dark .card{
-background:#1e293b;
-color:#e5e7eb;
-}
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-display:flex;
-align-items:center;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.content-table{
-width:100%;
-border-collapse:collapse;
-margin-top:10px;
-table-layout:fixed;
-}
-
-.content-table th,
-.content-table td{
-padding:10px;
-border-bottom:1px solid #e5e7eb;
-text-align:left;
-vertical-align:top;
-}
-
-body.dark .content-table th,
-body.dark .content-table td{
-border-bottom:1px solid #334155;
-}
-
-/* FIX */
-
-.actions{
-display:flex;
-flex-direction:column;
-gap:6px;
-}
-
-.actions .btn{
-padding:6px 10px;
-font-size:12px;
-border-radius:8px;
-}
-
+    /* Active menyu */
+    .sidebar ul li.active a {
+        background: #2563eb !important;
+        color: white !important;
+        font-weight: 600;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    }
+    
+    .sidebar ul li a {
+        display: block;
+        padding: 10px 14px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+    }
+    
+    .sidebar ul li a:hover {
+        background: #1e293b;
+        color: white;
+    }
+    
+    /* NOVA PRIME - o'zgarmaydi */
+    .sidebar h2,
+    body.dark .sidebar h2,
+    body:not(.dark) .sidebar h2 {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        letter-spacing: 1px !important;
+    }
+    
+    /* Light mode */
+    body:not(.dark) {
+        background: #f4f6f9 !important;
+        color: #111827 !important;
+    }
+    
+    body:not(.dark) .card {
+        background: white !important;
+        color: #111827 !important;
+        border: 1px solid #e5e7eb !important;
+    }
+    
+    body:not(.dark) .topbar {
+        background: #f1f5f9 !important;
+    }
+    
+    body:not(.dark) h1,
+    body:not(.dark) h2,
+    body:not(.dark) h3,
+    body:not(.dark) p,
+    body:not(.dark) label {
+        color: #111827 !important;
+    }
+    
+    body:not(.dark) input,
+    body:not(.dark) select,
+    body:not(.dark) textarea {
+        background: white !important;
+        color: #111827 !important;
+        border: 1px solid #cbd5e1 !important;
+    }
+    
+    body:not(.dark) .wizard-content {
+        background: white !important;
+        color: #111827 !important;
+    }
+    
+    /* Dark mode */
+    body.dark {
+        background: #0f172a !important;
+        color: #e5e7eb !important;
+    }
+    
+    body.dark .card {
+        background: #1e293b !important;
+        color: #f1f5f9 !important;
+        border: 1px solid #334155 !important;
+    }
+    
+    body.dark .topbar {
+        background: #1e293b !important;
+    }
+    
+    body.dark h1,
+    body.dark h2,
+    body.dark h3,
+    body.dark p,
+    body.dark label {
+        color: #ffffff !important;
+    }
+    
+    body.dark input,
+    body.dark select,
+    body.dark textarea {
+        background: #0f172a !important;
+        color: white !important;
+        border: 1px solid #475569 !important;
+    }
+    
+    body.dark .wizard-content {
+        background: #1e293b !important;
+        color: white !important;
+    }
+    
+    body.dark .content-table th,
+    body.dark .content-table td {
+        border-bottom: 1px solid #334155 !important;
+    }
+    
+    body.dark .wizard-footer {
+        border-top-color: #334155 !important;
+    }
+    
+    body.dark .text-editor-toolbar {
+        background: #0f172a !important;
+        border-color: #334155 !important;
+    }
+    
+    body.dark .toolbar-btn {
+        background: #1e293b !important;
+        color: white !important;
+    }
+    
+    body.dark .toolbar-btn:hover {
+        background: #334155 !important;
+    }
+    
+    body.dark .toolbar-select {
+        background: #1e293b !important;
+        color: white !important;
+        border-color: #334155 !important;
+    }
+    
+    body.dark .game-word-item {
+        background: #0f172a !important;
+    }
+    
+    body.dark .close-btn {
+        color: #9ca3af !important;
+    }
+    
+    /* Umumiy stillar */
+    .dark-toggle {
+        cursor: pointer;
+        font-size: 20px;
+        margin-left: auto;
+    }
+    
+    .topbar {
+        padding: 12px 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .topbar h1 {
+        flex: 1;
+        margin: 0 15px;
+        font-size: 20px;
+    }
+    
+    .content-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    
+    .content-table th,
+    .content-table td {
+        padding: 10px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    .btn-primary {
+        background: #3b82f6;
+        color: white;
+    }
+    
+    .btn-success {
+        background: #10b981;
+        color: white;
+    }
+    
+    .btn-danger {
+        background: #ef4444;
+        color: white;
+    }
+    
+    .btn-outline {
+        background: transparent;
+        border: 2px solid #3b82f6;
+        color: #3b82f6;
+    }
+    
+    body.dark .btn-outline {
+        color: #60a5fa;
+        border-color: #60a5fa;
+    }
+    
+    .btn-secondary {
+        background: #6b7280;
+        color: white;
+    }
+    
+    /* Wizard */
+    .wizard-modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(5px);
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .wizard-modal.show {
+        display: flex !important;
+    }
+    
+    .wizard-content {
+        padding: 30px;
+        border-radius: 24px;
+        width: 90%;
+        max-width: 700px;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .wizard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .wizard-header h2 {
+        margin: 0;
+        font-size: 24px;
+    }
+    
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+        padding: 0 10px;
+        color: #6b7280;
+        transition: 0.3s;
+    }
+    
+    .close-btn:hover {
+        color: #ef4444;
+    }
+    
+    .wizard-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 10px 5px;
+    }
+    
+    .wizard-step {
+        display: none;
+    }
+    
+    .wizard-step.active {
+        display: block;
+    }
+    
+    .wizard-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #e5e7eb;
+    }
+    
+    .wizard-footer button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: 0.2s;
+    }
+    
+    .back-arrow {
+        color: #6b7280;
+    }
+    
+    .back-arrow:hover {
+        background: #e5e7eb;
+    }
+    
+    body.dark .back-arrow:hover {
+        background: #334155;
+    }
+    
+    .next-arrow {
+        background: #3b82f6;
+        color: white;
+    }
+    
+    .next-arrow:hover {
+        background: #2563eb;
+    }
+    
+    .save-btn {
+        background: #10b981;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 10px;
+        font-size: 16px;
+    }
+    
+    .save-btn:hover {
+        background: #059669;
+    }
+    
+    /* Text editor */
+    .text-editor-toolbar {
+        display: flex;
+        gap: 5px;
+        padding: 8px 12px;
+        background: #f8fafc;
+        border-radius: 12px 12px 0 0;
+        border: 1px solid #e5e7eb;
+        border-bottom: none;
+        flex-wrap: wrap;
+    }
+    
+    .toolbar-btn {
+        width: 36px;
+        height: 36px;
+        border: none;
+        background: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    
+    .toolbar-select {
+        padding: 6px 10px;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        background: white;
+    }
+    
+    .color-picker {
+        width: 40px;
+        height: 36px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    
+    .big-textarea {
+        width: 100%;
+        min-height: 200px;
+        padding: 16px;
+        border: 1px solid #e5e7eb;
+        border-radius: 0 0 12px 12px;
+        font-size: 16px;
+        line-height: 1.6;
+        resize: vertical;
+    }
+    
+    /* Quiz va Game */
+    .option-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 10px 0;
+    }
+    
+    .option-row label {
+        font-weight: bold;
+        min-width: 30px;
+        font-size: 18px;
+    }
+    
+    .option-row input {
+        flex: 1;
+        padding: 10px;
+        border-radius: 8px;
+    }
+    
+    .option-delete {
+        background: none;
+        border: none;
+        color: #ef4444;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    
+    .game-words-list {
+        margin: 15px 0;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    
+    .game-word-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px;
+        background: #f8fafc;
+        border-radius: 8px;
+        margin: 5px 0;
+    }
+    
+    .game-word-item span {
+        flex: 1;
+        font-size: 16px;
+    }
+    
+    /* Input va select */
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 8px;
+        outline: none;
+    }
+    
+    label {
+        font-weight: 600;
+        margin-top: 10px;
+        display: block;
+    }
+    
+    hr {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        margin: 15px 0;
+    }
+    
+    .cards {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .card {
+        padding: 20px;
+        border-radius: 12px;
+    }
 </style>
-
 </head>
 
 <body class="teacher-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
 <aside class="sidebar">
-
-<h2>NOVA PRIME</h2>
-
-<ul>
-
-<li><a href="dashboard.html">🏠 Dashboard</a></li>
-<li><a href="students.html">👨‍🎓 My Students</a></li>
-<li><a href="content.html">📚 My Content</a></li>
-<li><a href="activity-builder.html">🛠 Activity Builder</a></li>
-<li><a href="assessments.html">🧠 My Assessments</a></li>
-<li><a href="practice-tools.html">🎧 Practice Tools</a></li>
-<li><a href="messages.html">💬 Messages</a></li>
-<li><a href="analytics.html">📊 My Analytics</a></li>
-<li><a href="settings.html">⚙️ Settings</a></li>
-
-<hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
-</ul>
-
+    <h2>NOVA PRIME</h2>
+    <ul>
+        <li><a href="dashboard.html">🏠 Dashboard</a></li>
+        <li><a href="students.html">👨‍🎓 My Students</a></li>
+        <li class="active"><a href="content.html">📚 My Content</a></li>
+        <li><a href="activity-builder.html">🛠 Activity Builder</a></li>
+        <li><a href="assessments.html">🧠 My Assessments</a></li>
+        <li><a href="practice-tools.html">🎧 Practice Tools</a></li>
+        <li><a href="messages.html">💬 Messages</a></li>
+        <li><a href="analytics.html">📊 My Analytics</a></li>
+        <li><a href="settings.html">⚙️ Settings</a></li>
+        <hr>
+        <li><a href="#" id="logoutBtn">🚪 Log out</a></li>
+    </ul>
 </aside>
 
 <main class="content">
+    <header class="topbar">
+        <button class="menu-btn">☰</button>
+        <h1>📚 My Content</h1>
+        <div class="dark-toggle" id="darkBtn">🌙</div>
+    </header>
 
-<header class="topbar">
-
-<button class="menu-btn">☰</button>
-
-<h1>My Content</h1>
-
-<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
-</header>
-
-<section class="cards">
-
-<div class="card">
-
-<h3>My Courses</h3>
-
-<table class="content-table">
-
-<thead>
-<tr>
-<th>Course</th>
-<th>Lessons</th>
-<th>Students</th>
-<th>Actions</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr>
-<td>Basic English</td>
-<td>12</td>
-<td>20</td>
-<td class="actions">
-<button class="btn">Edit</button>
-<button class="btn">Duplicate</button>
-<button class="btn">Move</button>
-</td>
-</tr>
-
-<tr>
-<td>Intermediate English</td>
-<td>18</td>
-<td>15</td>
-<td class="actions">
-<button class="btn">Edit</button>
-<button class="btn">Duplicate</button>
-<button class="btn">Move</button>
-</td>
-</tr>
-
-</tbody>
-
-</table>
-
-<button class="btn" style="margin-top:10px;">Create Course</button>
-
-</div>
-
-<div class="card">
-
-<h3>My Levels</h3>
-
-<table class="content-table">
-
-<thead>
-<tr>
-<th>Level</th>
-<th>Description</th>
-<th>Actions</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr>
-<td>A1</td>
-<td>Beginner</td>
-<td class="actions">
-<button class="btn">Edit</button>
-<button class="btn">Duplicate</button>
-<button class="btn">Move</button>
-</td>
-</tr>
-
-<tr>
-<td>A2</td>
-<td>Elementary</td>
-<td class="actions">
-<button class="btn">Edit</button>
-<button class="btn">Duplicate</button>
-<button class="btn">Move</button>
-</td>
-</tr>
-
-</tbody>
-
-</table>
-
-<button class="btn" style="margin-top:10px;">Create Level</button>
-
-</div>
-
-<div class="card">
-
-<h3>My Lessons</h3>
-
-<table class="content-table">
-
-<thead>
-<tr>
-<th>Lesson</th>
-<th>Level</th>
-<th>Duration</th>
-<th>Actions</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr>
-<td>Lesson 1</td>
-<td>A1</td>
-<td>15 min</td>
-<td class="actions">
-<button class="btn">Edit</button>
-<button class="btn">Duplicate</button>
-<button class="btn">Move</button>
-</td>
-</tr>
-
-<tr>
-<td>Lesson 2</td>
-<td>A1</td>
-<td>20 min</td>
-<td class="actions">
-<button class="btn">Edit</button>
-<button class="btn">Duplicate</button>
-<button class="btn">Move</button>
-</td>
-</tr>
-
-</tbody>
-
-</table>
-
-<button class="btn" style="margin-top:10px;">Create Lesson</button>
-
-</div>
-
-</section>
-
-<section class="cards">
-
-<div class="card">
-
-<h3>Permissions</h3>
-
-<ul>
-
-<li>✔ Create content</li>
-<li>✔ Edit own content</li>
-<li>✔ Duplicate lessons</li>
-<li>✔ Move lessons</li>
-</ul>
-
-</div>
-
-<div class="card">
-
-<h3>Restrictions</h3>
-
-<ul>
-
-<li>❌ Cannot edit official admin courses</li>
-<li>❌ Cannot delete admin content</li>
-
-</ul>
-
-</div>
-
-</section>
-
+    <section class="cards">
+        <div class="card">
+            <h3>📁 My Courses</h3>
+            <table class="content-table">
+                <thead><tr><th>Course</th><th>Description</th><th>Actions</th></tr></thead>
+                <tbody id="coursesTableBody"></tbody>
+            </table>
+            <button class="btn btn-primary" onclick="window.showSimpleModal('courses')" style="margin-top:15px;">➕ Create Course</button>
+        </div>
+        
+        <div class="card">
+            <h3>📊 My Levels</h3>
+            <table class="content-table">
+                <thead><tr><th>Level</th><th>Description</th><th>Actions</th></tr></thead>
+                <tbody id="levelsTableBody"></tbody>
+            </table>
+            <button class="btn btn-primary" onclick="window.showSimpleModal('levels')" style="margin-top:15px;">➕ Create Level</button>
+        </div>
+        
+        <div class="card">
+            <h3>📖 My Lessons</h3>
+            <table class="content-table">
+                <thead><tr><th>Lesson</th><th>Level</th><th>Actions</th></tr></thead>
+                <tbody id="lessonsTableBody"></tbody>
+            </table>
+            <button class="btn btn-success" onclick="window.startLessonWizard()" style="margin-top:15px;">➕ Create New Lesson</button>
+        </div>
+    </section>
 </main>
-
 </div>
 
-<script>
+<!-- Simple Modal -->
+<div id="simpleModal" class="wizard-modal">
+    <div class="wizard-content" style="width:450px; height:auto;">
+        <div class="wizard-header">
+            <h3 id="simpleModalTitle"></h3>
+            <button class="close-btn" onclick="window.closeSimpleModal()">✕</button>
+        </div>
+        <input type="text" id="simpleMainInput" placeholder="Name/Title">
+        <input type="text" id="simpleSubInput" placeholder="Description">
+        <div class="wizard-footer">
+            <button class="btn btn-success" onclick="window.saveSimpleContent()">Save</button>
+            <button class="btn btn-secondary" onclick="window.closeSimpleModal()">Cancel</button>
+        </div>
+    </div>
+</div>
 
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
+<!-- Lesson Wizard Modal -->
+<div id="lessonWizardModal" class="wizard-modal">
+    <div class="wizard-content">
+        <div class="wizard-header">
+            <h2>📝 Create New Lesson</h2>
+            <button class="close-btn" onclick="window.closeWizard()">✕</button>
+        </div>
+        <div class="wizard-body">
+            <!-- Step 1 -->
+            <div class="wizard-step active" id="step1">
+                <h3>Step 1: Basic Information</h3>
+                <label>Lesson Title *</label>
+                <input type="text" id="wizTitle" placeholder="e.g., Greetings">
+                <label>Select Level *</label>
+                <select id="wizLevel"></select>
+                <label>Duration (minutes)</label>
+                <input type="number" id="wizDuration" value="15">
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="wizard-step" id="step2">
+                <h3>Step 2: Lesson Content</h3>
+                <div class="text-editor-toolbar">
+                    <select class="toolbar-select" id="fontFamily" onchange="window.formatText('fontName', this.value)">
+                        <option value="Arial">Arial</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                    </select>
+                    <select class="toolbar-select" id="fontSize" onchange="window.formatText('fontSize', this.value)">
+                        <option value="3">Small</option>
+                        <option value="4" selected>Normal</option>
+                        <option value="5">Large</option>
+                    </select>
+                    <input type="color" class="color-picker" id="textColor" onchange="window.formatText('foreColor', this.value)" value="#000000">
+                    <button class="toolbar-btn" onclick="window.formatText('bold')"><b>B</b></button>
+                    <button class="toolbar-btn" onclick="window.formatText('italic')"><i>I</i></button>
+                    <button class="toolbar-btn" onclick="window.formatText('underline')"><u>U</u></button>
+                </div>
+                <textarea id="wizText" class="big-textarea" placeholder="Write your lesson content here..."></textarea>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="wizard-step" id="step3">
+                <h3>Step 3: Quiz Questions</h3>
+                <div id="quizQuestionsList"></div>
+                <button class="btn btn-outline" onclick="window.openQuizEditor(-1)">➕ Add Question</button>
+                <p><span id="quizCount">0</span>/15 questions</p>
+            </div>
+            
+            <!-- Step 4 -->
+            <div class="wizard-step" id="step4">
+                <h3>Step 4: Audio</h3>
+                <div style="border:2px dashed #ccc; border-radius:16px; padding:30px; text-align:center; cursor:pointer;" onclick="document.getElementById('wizAudioFile').click()">
+                    <span style="font-size:48px;">🎵</span>
+                    <p>Click to upload audio</p>
+                    <div id="audioPreview"></div>
+                </div>
+                <input type="file" id="wizAudioFile" accept="audio/*" style="display:none;">
+                <label>Audio Question (Optional)</label>
+                <input type="text" id="wizAudioQuestion" placeholder="e.g., What did you hear?">
+            </div>
+            
+            <!-- Step 5 -->
+            <div class="wizard-step" id="step5">
+                <h3>Step 5: Word Scramble Game</h3>
+                <label>Game Name</label>
+                <input type="text" id="wizGameName" placeholder="e.g., Animals">
+                <div class="game-words-list" id="gameWordsList"></div>
+                <button class="btn btn-outline" onclick="window.addGameWord()">➕ Add Word</button>
+                <p><span id="wordCount">0</span>/20 words</p>
+            </div>
+            
+            <!-- Step 6 -->
+            <div class="wizard-step" id="step6">
+                <h3>Step 6: Save & Audience</h3>
+                <div style="background:#f1f5f9; padding:20px; border-radius:16px; margin-bottom:20px;">
+                    <p><strong>📛 Name:</strong> <span id="summaryTitle"></span></p>
+                    <p><strong>📊 Level:</strong> <span id="summaryLevel"></span></p>
+                    <p><strong>📝 Text:</strong> <span id="summaryText"></span> | <strong>❓ Quiz:</strong> <span id="summaryQuiz"></span> | <strong>🎵 Audio:</strong> <span id="summaryAudio"></span> | <strong>🎮 Game:</strong> <span id="summaryGame"></span></p>
+                </div>
+                <label>Who can see this?</label>
+                <select id="wizAudienceType" onchange="window.toggleAudienceSelect()">
+                    <option value="all">All Students</option>
+                    <option value="group">Specific Group</option>
+                    <option value="user">Specific Students</option>
+                </select>
+                <div id="audienceGroupSelect" style="display:none;">
+                    <select id="wizGroup">
+                        <option value="1A">1A</option>
+                        <option value="1B">1B</option>
+                    </select>
+                </div>
+                <div id="audienceUserSelect" style="display:none;">
+                    <div id="studentsCheckboxList" style="max-height:200px; overflow-y:auto;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="wizard-footer" id="wizardFooter">
+            <button class="back-arrow" id="wizBackBtn" onclick="window.prevStep()" style="visibility: hidden;">← Back</button>
+            <button class="next-arrow" id="wizNextBtn" onclick="window.nextStep()">Next →</button>
+        </div>
+    </div>
+</div>
 
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
+<!-- Quiz Editor Modal -->
+<div id="quizEditorModal" class="wizard-modal">
+    <div class="wizard-content" style="width:550px; height:auto;">
+        <div class="wizard-header">
+            <h3 id="quizEditorTitle">Add Question</h3>
+            <button class="close-btn" onclick="window.closeQuizEditor()">✕</button>
+        </div>
+        <input type="text" id="editQuestionText" placeholder="Question">
+        <div id="editOptionsList"></div>
+        <button class="btn btn-outline" onclick="window.addOption()">➕ Add Option</button>
+        <label>Correct Answer</label>
+        <select id="editCorrectOption"></select>
+        <div class="wizard-footer">
+            <button class="btn btn-success" onclick="window.saveQuizQuestion()">Save</button>
+            <button class="btn btn-secondary" onclick="window.closeQuizEditor()">Cancel</button>
+        </div>
+    </div>
+</div>
 
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
+<script type="module">
+import { db, auth, storage } from "../firebase.js";
+import { collection, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+let teacherId = '', currentStep = 1, editingQuizIndex = -1;
+let lessonData = { title: '', level: '', duration: 15, text: '', audioUrl: '', audioQuestion: '', questions: [], gameName: '', gameWords: [], audience: { type: 'all', group: '', users: [] } };
+
+// Auth
+onAuthStateChanged(auth, (user) => { 
+    if (user) { 
+        teacherId = user.uid; 
+        initData(); 
+    } else {
+        window.location.href = "../index.html";
+    }
 });
 
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
+// Logout
+document.getElementById("logoutBtn").addEventListener("click", async (e) => {
+    e.preventDefault();
+    await signOut(auth);
+    window.location.href = "../index.html";
 });
 
-function toggleMode(){
-
-document.body.classList.toggle("dark");
-
-let btn=document.getElementById("darkBtn");
-
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
+async function initData() {
+    onSnapshot(collection(db, "levels"), (snap) => { 
+        let b = document.getElementById("levelsTableBody"); 
+        b.innerHTML = ""; 
+        snap.forEach(d => { 
+            let data = d.data(); 
+            b.innerHTML += `<tr><td>${data.name||'-'}</td><td>${data.description||'-'}</td><td><button class='btn btn-danger' onclick='window.deleteItem("levels","${d.id}")'>Delete</button></td></tr>`; 
+        }); 
+    });
+    
+    onSnapshot(collection(db, "lessons"), async (snap) => { 
+        let b = document.getElementById("lessonsTableBody"); 
+        b.innerHTML = ""; 
+        let lvl = await getDocs(collection(db, "levels")), map = {}; 
+        lvl.forEach(d => map[d.id] = d.data().name); 
+        snap.forEach(d => { 
+            let data = d.data(); 
+            b.innerHTML += `<tr><td>${data.title||'-'}</td><td>${map[data.level]||'-'}</td><td><button class='btn btn-danger' onclick='window.deleteItem("lessons","${d.id}")'>Delete</button></td></tr>`; 
+        }); 
+    });
+    
+    onSnapshot(collection(db, "courses"), (snap) => { 
+        let b = document.getElementById("coursesTableBody"); 
+        b.innerHTML = ""; 
+        snap.forEach(d => { 
+            let data = d.data(); 
+            b.innerHTML += `<tr><td>${data.title||'-'}</td><td>${data.description||'-'}</td><td><button class='btn btn-danger' onclick='window.deleteItem("courses","${d.id}")'>Delete</button></td></tr>`; 
+        }); 
+    });
 }
 
+function showModal(id) { 
+    let m = document.getElementById(id); 
+    m.style.display = "flex"; 
+    m.classList.add("show"); 
 }
 
-function loadMode(){
-
-let saved=localStorage.getItem("novaMode");
-
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
+function hideModal(id) { 
+    let m = document.getElementById(id); 
+    m.style.display = "none"; 
+    m.classList.remove("show"); 
 }
 
+window.showSimpleModal = async (type) => { 
+    document.getElementById("simpleModalTitle").innerText = `Create ${type === 'courses' ? 'Course' : 'Level'}`; 
+    showModal("simpleModal"); 
+    window.currentSimpleType = type; 
+};
+
+window.closeSimpleModal = () => hideModal("simpleModal");
+
+window.saveSimpleContent = async () => { 
+    let title = document.getElementById("simpleMainInput").value.trim(); 
+    if(!title) return alert("Title required"); 
+    let data = { teacherId, createdAt: serverTimestamp() }; 
+    if(window.currentSimpleType === 'courses'){ 
+        data.title = title; 
+        data.description = document.getElementById("simpleSubInput").value; 
+    } else { 
+        data.name = title; 
+        data.description = document.getElementById("simpleSubInput").value; 
+    } 
+    await addDoc(collection(db, window.currentSimpleType), data); 
+    hideModal("simpleModal"); 
+    document.getElementById("simpleMainInput").value = ''; 
+    document.getElementById("simpleSubInput").value = ''; 
+};
+
+window.startLessonWizard = async () => {
+    lessonData = { title: '', level: '', duration: 15, text: '', audioUrl: '', audioQuestion: '', questions: [], gameName: '', gameWords: [], audience: { type: 'all', group: '', users: [] } };
+    currentStep = 1;
+    let s = document.getElementById("wizLevel"); 
+    s.innerHTML = '<option value="">Select Level</option>';
+    (await getDocs(collection(db, "levels"))).forEach(d => s.innerHTML += `<option value="${d.id}">${d.data().name||d.id}</option>`);
+    let list = document.getElementById("studentsCheckboxList"); 
+    list.innerHTML = '';
+    (await getDocs(query(collection(db, "users"), where("role", "==", "student")))).forEach(d => { 
+        let data = d.data(); 
+        list.innerHTML += `<label><input type="checkbox" value="${d.id}"> ${data.name||data.email}</label><br>`; 
+    });
+    showStep(1);
+    showModal("lessonWizardModal");
+};
+
+window.closeWizard = () => hideModal("lessonWizardModal");
+
+function showStep(step) {
+    document.querySelectorAll('.wizard-step').forEach(el => el.classList.remove('active'));
+    document.getElementById(`step${step}`).classList.add('active');
+    
+    let backBtn = document.getElementById("wizBackBtn");
+    let nextBtn = document.getElementById("wizNextBtn");
+    let footer = document.querySelector("#lessonWizardModal .wizard-footer");
+    
+    if (step === 6) {
+        footer.innerHTML = `
+            <button class="back-arrow" onclick="window.prevStep()">← Back</button>
+            <button class="save-btn" onclick="window.saveCompleteLesson()">💾 Save Lesson</button>
+        `;
+    } else {
+        footer.innerHTML = `
+            <button class="back-arrow" id="wizBackBtn" onclick="window.prevStep()" style="visibility: ${step === 1 ? 'hidden' : 'visible'};">← Back</button>
+            <button class="next-arrow" id="wizNextBtn" onclick="window.nextStep()">Next →</button>
+        `;
+    }
+    
+    currentStep = step;
+    if(step === 6) updateSummary();
 }
 
-loadMode();
+window.prevStep = () => { if (currentStep > 1) showStep(currentStep - 1); };
 
-const currentPage = window.location.pathname.split("/").pop();
+window.nextStep = () => {
+    if(currentStep === 1){ 
+        lessonData.title = document.getElementById("wizTitle").value.trim(); 
+        lessonData.level = document.getElementById("wizLevel").value; 
+        lessonData.duration = parseInt(document.getElementById("wizDuration").value) || 15;
+        if(!lessonData.title || !lessonData.level) return alert("Title and Level required"); 
+    }
+    if(currentStep === 2) lessonData.text = document.getElementById("wizText").value;
+    if(currentStep < 6) showStep(currentStep + 1);
+};
 
-document.querySelectorAll(".sidebar a").forEach(link => {
+window.formatText = (cmd, val) => {
+    const textarea = document.getElementById("wizText");
+    const start = textarea.selectionStart, end = textarea.selectionEnd;
+    const selectedText = textarea.value.substring(start, end);
+    let formattedText = selectedText;
+    
+    if (cmd === 'bold') formattedText = `<b>${selectedText}</b>`;
+    else if (cmd === 'italic') formattedText = `<i>${selectedText}</i>`;
+    else if (cmd === 'underline') formattedText = `<u>${selectedText}</u>`;
+    else if (cmd === 'foreColor') formattedText = `<span style="color:${val}">${selectedText}</span>`;
+    else if (cmd === 'fontName') formattedText = `<span style="font-family:${val}">${selectedText}</span>`;
+    else if (cmd === 'fontSize') formattedText = `<span style="font-size:${val}">${selectedText}</span>`;
+    
+    textarea.value = textarea.value.substring(0, start) + formattedText + textarea.value.substring(end);
+    textarea.focus();
+};
 
-if(link.getAttribute("href") === currentPage){
-link.parentElement.classList.add("active");
-}
-
+document.getElementById("wizAudioFile").addEventListener("change", (e) => { 
+    let file = e.target.files[0]; 
+    if(file) { 
+        lessonData.audioFile = file; 
+        document.getElementById("audioPreview").innerHTML = `🎵 ${file.name}`; 
+    } 
 });
 
+window.currentOptions = ['', ''];
+window.currentCorrect = 0;
+
+window.openQuizEditor = (index) => { 
+    editingQuizIndex = index; 
+    document.getElementById("quizEditorTitle").innerText = index >= 0 ? "Edit Question" : "Add Question"; 
+    if(index >= 0){ 
+        let q = lessonData.questions[index]; 
+        document.getElementById("editQuestionText").value = q.question; 
+        window.currentOptions = [...q.options]; 
+        window.currentCorrect = q.correct; 
+    } else { 
+        document.getElementById("editQuestionText").value = ''; 
+        window.currentOptions = ['', '']; 
+        window.currentCorrect = 0; 
+    } 
+    renderOptionsEditor(); 
+    showModal("quizEditorModal"); 
+};
+
+window.renderOptionsEditor = () => { 
+    let c = document.getElementById("editOptionsList"); 
+    c.innerHTML = window.currentOptions.map((o, i) => `
+        <div class="option-row">
+            <label>${String.fromCharCode(65+i)})</label>
+            <input value="${o}" onchange="window.updateOption(${i}, this.value)">
+            <button class="option-delete" onclick="window.removeOption(${i})">✕</button>
+        </div>
+    `).join(''); 
+    let s = document.getElementById("editCorrectOption"); 
+    s.innerHTML = window.currentOptions.map((_, i) => `<option value="${i}">${String.fromCharCode(65+i)}</option>`).join(''); 
+    s.value = window.currentCorrect; 
+};
+
+window.addOption = () => { 
+    if(window.currentOptions.length >= 5) return alert("Max 5 options"); 
+    window.currentOptions.push(''); 
+    renderOptionsEditor(); 
+};
+
+window.removeOption = (i) => { 
+    if(window.currentOptions.length <= 2) return alert("Min 2 options"); 
+    window.currentOptions.splice(i, 1); 
+    if(window.currentCorrect >= window.currentOptions.length) window.currentCorrect = 0; 
+    renderOptionsEditor(); 
+};
+
+window.updateOption = (i, v) => { window.currentOptions[i] = v; };
+
+window.saveQuizQuestion = () => { 
+    let q = document.getElementById("editQuestionText").value.trim(); 
+    if(!q) return alert("Enter question"); 
+    if(window.currentOptions.some(o => !o.trim())) return alert("All options required"); 
+    let question = { 
+        question: q, 
+        options: [...window.currentOptions], 
+        correct: parseInt(document.getElementById("editCorrectOption").value) 
+    }; 
+    if(editingQuizIndex >= 0) lessonData.questions[editingQuizIndex] = question; 
+    else lessonData.questions.push(question); 
+    hideModal("quizEditorModal"); 
+    renderQuizList(); 
+};
+
+window.closeQuizEditor = () => hideModal("quizEditorModal");
+
+function renderQuizList(){ 
+    let c = document.getElementById("quizQuestionsList"); 
+    c.innerHTML = lessonData.questions.map((q, i) => `
+        <div style="border:1px solid #e5e7eb; padding:15px; margin:10px 0; border-radius:12px;">
+            <strong>${i+1}. ${q.question}</strong><br>
+            ${q.options.map((o, j) => `${String.fromCharCode(65+j)}) ${o}`).join(' | ')}<br>
+            ✅ Correct: ${String.fromCharCode(65+q.correct)} 
+            <button onclick="window.openQuizEditor(${i})" style="margin-left:10px;">Edit</button>
+            <button onclick="window.removeQuizQuestion(${i})">Delete</button>
+        </div>
+    `).join(''); 
+    document.getElementById("quizCount").textContent = lessonData.questions.length; 
+}
+
+window.removeQuizQuestion = (i) => { lessonData.questions.splice(i, 1); renderQuizList(); };
+
+window.addGameWord = () => { 
+    let w = prompt("Enter word:"); 
+    if(w) { 
+        lessonData.gameWords.push(w); 
+        renderGameWords(); 
+    } 
+};
+
+function renderGameWords(){ 
+    let c = document.getElementById("gameWordsList"); 
+    c.innerHTML = lessonData.gameWords.map((w, i) => `
+        <div class="game-word-item">
+            <span>${w}</span>
+            <button class="option-delete" onclick="window.removeGameWord(${i})">✕</button>
+        </div>
+    `).join(''); 
+    document.getElementById("wordCount").textContent = lessonData.gameWords.length; 
+}
+
+window.removeGameWord = (i) => { lessonData.gameWords.splice(i, 1); renderGameWords(); };
+
+window.toggleAudienceSelect = () => { 
+    let type = document.getElementById("wizAudienceType").value; 
+    document.getElementById("audienceGroupSelect").style.display = type === 'group' ? 'block' : 'none'; 
+    document.getElementById("audienceUserSelect").style.display = type === 'user' ? 'block' : 'none'; 
+};
+
+function updateSummary(){ 
+    document.getElementById("summaryTitle").textContent = lessonData.title || '-'; 
+    document.getElementById("summaryLevel").textContent = lessonData.level || '-'; 
+    document.getElementById("summaryText").textContent = lessonData.text ? '✓' : '✗'; 
+    document.getElementById("summaryQuiz").textContent = lessonData.questions.length; 
+    document.getElementById("summaryAudio").textContent = lessonData.audioFile ? '✓' : '✗'; 
+    document.getElementById("summaryGame").textContent = lessonData.gameWords.length; 
+}
+
+window.saveCompleteLesson = async () => { 
+    lessonData.audience.type = document.getElementById("wizAudienceType").value; 
+    if (lessonData.audience.type === 'group') lessonData.audience.group = document.getElementById("wizGroup")?.value || ''; 
+    else if (lessonData.audience.type === 'user') { 
+        lessonData.audience.users = []; 
+        document.querySelectorAll('#studentsCheckboxList input:checked').forEach(cb => lessonData.audience.users.push(cb.value)); 
+    }
+    
+    if(lessonData.audioFile){ 
+        let r = ref(storage, `lessons/audio/${Date.now()}_${lessonData.audioFile.name}`); 
+        await uploadBytesResumable(r, lessonData.audioFile); 
+        lessonData.audioUrl = await getDownloadURL(r); 
+    }
+    
+    let blocks = [];
+    if(lessonData.text) blocks.push({ type: 'text', content: lessonData.text });
+    if(lessonData.questions.length) lessonData.questions.forEach(q => blocks.push({ type: 'quiz', ...q }));
+    if(lessonData.audioUrl) blocks.push({ type: 'audio', content: lessonData.audioUrl, question: document.getElementById("wizAudioQuestion").value });
+    if(lessonData.gameWords.length) blocks.push({ type: 'game', name: document.getElementById("wizGameName").value || 'Game', words: lessonData.gameWords, correct: lessonData.gameWords[0] });
+    
+    await addDoc(collection(db, "lessons"), { 
+        title: lessonData.title, 
+        level: lessonData.level, 
+        duration: lessonData.duration, 
+        teacherId, 
+        blocks, 
+        audience: lessonData.audience, 
+        createdAt: serverTimestamp(),
+        courseId: lessonData.level
+    }); 
+    alert("Lesson saved!"); 
+    hideModal("lessonWizardModal"); 
+};
+
+window.deleteItem = async (c, id) => { 
+    if(confirm("Delete permanently?")) await deleteDoc(doc(db, c, id)); 
+};
 </script>
 
+<script>
+function toggleMode(){ 
+    document.body.classList.toggle("dark"); 
+    let b = document.getElementById("darkBtn"); 
+    b.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙"; 
+    localStorage.setItem("novaMode", document.body.classList.contains("dark") ? "dark" : "light"); 
+}
+
+(function loadMode(){ 
+    let saved = localStorage.getItem("novaMode"); 
+    if(saved === "dark"){ 
+        document.body.classList.add("dark"); 
+        document.getElementById("darkBtn").textContent = "☀️"; 
+    } 
+})();
+
+const menuBtn = document.querySelector(".menu-btn");
+const sidebar = document.querySelector(".sidebar");
+const overlay = document.querySelector(".overlay");
+
+menuBtn.addEventListener("click", () => { 
+    sidebar.classList.toggle("show"); 
+    overlay.classList.toggle("show"); 
+});
+
+overlay.addEventListener("click", () => { 
+    sidebar.classList.remove("show"); 
+    overlay.classList.remove("show"); 
+});
+
+// Active menyu
+const currentPage = window.location.pathname.split("/").pop() || "content.html";
+document.querySelectorAll(".sidebar a").forEach(link => { 
+    const href = link.getAttribute("href");
+    if (href === currentPage || (currentPage === "content.html" && href === "content.html")) {
+        link.parentElement.classList.add("active");
+    }
+});
+</script>
 </body>
 </html>

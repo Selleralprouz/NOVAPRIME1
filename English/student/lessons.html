@@ -1,426 +1,527 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Lessons | NOVA PRIME</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.lesson-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:15px;
-}
-
-.lesson-status{
-font-size:14px;
-font-weight:600;
-}
-
-.completed{color:#10b981;}
-.progress{color:#f59e0b;}
-.locked{color:#ef4444;}
-
-.skill-grid{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-margin-top:10px;
-}
-
-.skill-grid .btn{
-flex:1 1 30%;
-min-width:110px;
-}
-
-.card{
-transition:0.3s ease;
-border:1px solid #e5e7eb;
-}
-
-.card:hover{
-transform:translateY(-4px);
-box-shadow:0 8px 18px rgba(0,0,0,0.08);
-}
-
-.progress-bar{
-background:#e5e7eb;
-height:8px;
-border-radius:10px;
-overflow:hidden;
-margin:8px 0;
-}
-
-.progress-fill{
-background:#3b82f6;
-height:100%;
-}
-
-.top-stats{
-display:flex;
-gap:20px;
-margin-bottom:20px;
-flex-wrap:wrap;
-}
-
-.stat-box{
-background:#111827;
-color:#fff;
-padding:10px 15px;
-border-radius:10px;
-font-size:14px;
-}
-
-/* DARK MODE FIX */
-
-body.dark .card{
-background:#1e293b;
-color:#f1f5f9;
-border:1px solid #334155;
-}
-
-body.dark h1,
-body.dark h2,
-body.dark h3{
-color:#ffffff;
-}
-
-body.dark .stat-box{
-background:#0f172a;
-}
-
-.dark-toggle{
-cursor:pointer;
-font-size:20px;
-margin-left:auto;
-}
-
-.topbar h1{
-color:#111827;
-font-weight:700;
-}
-
-body.dark .topbar h1{
-color:#ffffff;
-}
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
+    /* Active menyu - ko'k yonish */
+    .sidebar ul li.active a {
+        background: #2563eb !important;
+        color: white !important;
+        font-weight: 600;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    }
+    
+    .sidebar ul li a {
+        display: block;
+        padding: 10px 14px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+    }
+    
+    .sidebar ul li a:hover {
+        background: #1e293b;
+        color: white;
+    }
+    
+    /* NOVA PRIME - HECH QACHON O'ZGARMAYDI */
+    .sidebar h2,
+    body.dark .sidebar h2,
+    body:not(.dark) .sidebar h2 {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        letter-spacing: 1px !important;
+    }
+    
+    /* Light mode */
+    body:not(.dark) {
+        background: #f4f6f9 !important;
+        color: #111827 !important;
+    }
+    
+    body:not(.dark) .card {
+        background: white !important;
+        color: #111827 !important;
+        border: 1px solid #e5e7eb !important;
+    }
+    
+    body:not(.dark) .topbar {
+        background: #f1f5f9 !important;
+    }
+    
+    body:not(.dark) h1,
+    body:not(.dark) h2,
+    body:not(.dark) h3,
+    body:not(.dark) p {
+        color: #111827 !important;
+    }
+    
+    body:not(.dark) .stat-box {
+        background: #111827 !important;
+        color: white !important;
+    }
+    
+    body:not(.dark) input {
+        background: white !important;
+        color: #111827 !important;
+        border: 1px solid #cbd5e1 !important;
+    }
+    
+    body:not(.dark) .btn {
+        background: #3b82f6 !important;
+        color: white !important;
+    }
+    
+    /* Dark mode */
+    body.dark {
+        background: #0f172a !important;
+        color: #e5e7eb !important;
+    }
+    
+    body.dark .card {
+        background: #1e293b !important;
+        color: #f1f5f9 !important;
+        border: 1px solid #334155 !important;
+    }
+    
+    body.dark .topbar {
+        background: #1e293b !important;
+    }
+    
+    body.dark h1,
+    body.dark h2,
+    body.dark h3,
+    body.dark p {
+        color: #ffffff !important;
+    }
+    
+    body.dark .stat-box {
+        background: #020617 !important;
+        color: #ffffff !important;
+    }
+    
+    body.dark input {
+        background: #0f172a !important;
+        color: white !important;
+        border: 1px solid #475569 !important;
+    }
+    
+    body.dark .btn {
+        background: #2563eb !important;
+        color: white !important;
+    }
+    
+    body.dark .btn:hover {
+        background: #1d4ed8 !important;
+    }
+    
+    body.dark .option-btn {
+        background: #2563eb !important;
+        color: white !important;
+    }
+    
+    /* Umumiy stillar */
+    .card {
+        transition: 0.3s ease;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    }
+    
+    .top-stats {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .stat-box {
+        padding: 10px 15px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    
+    .dark-toggle {
+        cursor: pointer;
+        font-size: 20px;
+        margin-left: auto;
+    }
+    
+    .topbar {
+        padding: 12px 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .topbar h1 {
+        flex: 1;
+        margin: 0 15px;
+        font-size: 20px;
+    }
+    
+    .option-btn {
+        margin: 5px;
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    
+    .btn {
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    hr {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        margin: 15px 0;
+    }
+    
+    input {
+        padding: 10px;
+        border-radius: 8px;
+        width: 100%;
+        margin: 10px 0;
+        outline: none;
+    }
 </style>
 </head>
-
 <body class="student-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
 <!-- SIDEBAR -->
-
 <aside class="sidebar">
-
-<h2>NOVA PRIME</h2>
-
-<ul>
-
-<li><a href="index.html">🏠 Dashboard</a></li>
-
-<li><a href="courses.html">📚 My Courses</a></li>
-
-<li><a href="lessons.html">🎓 Level / Lesson</a></li>
-
-<li><a href="agenda.html">📅 My Agenda</a></li>
-
-<li><a href="library.html">📖 Library</a></li>
-
-<li><a href="ai.html">🧠 Skill Lab</a></li>
-
-<li><a href="homework.html">📝 Tasks</a></li>
-
-<li><a href="quiz.html">🧠 Assessments (Quiz)</a></li>
-
-<li><a href="ai-practice.html">🤖 Practice with AI</a></li>
-
-<li><a href="live.html">🎙 Live Practice Challenge</a></li>
-
-<li><a href="panic.html">🚨 Panic Button – Speak</a></li>
-
-<li><a href="progress.html">📊 My Progress</a></li>
-
-<li><a href="game.html">🎮 Educational Games</a></li>
-
-<li><a href="certificates.html">🏆 Certificates</a></li>
-
-<li><a href="messages.html">💬 Messages</a></li>
-
-<li><a href="support.html">❓ Help / Support</a></li>
-
-<li><a href="settings.html">⚙️ Settings</a></li>
-
-<hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
-</ul>
-
+    <h2>NOVA PRIME</h2>
+    <ul>
+        <li><a href="index.html">🏠 Dashboard</a></li>
+        <li><a href="courses.html">📚 My Courses</a></li>
+        <li class="active"><a href="lessons.html">🎓 Level / Lesson</a></li>
+        <li><a href="agenda.html">📅 My Agenda</a></li>
+        <li><a href="library.html">📖 Library</a></li>
+        <li><a href="ai.html">🧠 Skill Lab</a></li>
+        <li><a href="homework.html">📝 Tasks</a></li>
+        <li><a href="quiz.html">🧠 Assessments (Quiz)</a></li>
+        <li><a href="ai-practice.html">🤖 Practice with AI</a></li>
+        <li><a href="live.html">🎙 Live Practice Challenge</a></li>
+        <li><a href="panic.html">🚨 Panic Button – Speak</a></li>
+        <li><a href="progress.html">📊 My Progress</a></li>
+        <li><a href="game.html">🎮 Educational Games</a></li>
+        <li><a href="certificates.html">🏆 Certificates</a></li>
+        <li><a href="messages.html">💬 Messages</a></li>
+        <li><a href="support.html">❓ Help / Support</a></li>
+        <li><a href="settings.html">⚙️ Settings</a></li>
+        <li><hr></li>
+        <li><a href="#" id="logoutLink">🚪 Log out</a></li>
+    </ul>
 </aside>
 
-
-<!-- MAIN -->
-
+<!-- MAIN CONTENT -->
 <main class="content">
-
 <header class="topbar">
-
-<button class="menu-btn">☰</button>
-
-<h1>🎓 Lessons</h1>
-
-<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
+    <button class="menu-btn">☰</button>
+    <h1>🎓 Lessons</h1>
+    <div class="dark-toggle" id="darkBtn">🌙</div>
 </header>
 
-
-<!-- TOP STATS -->
-
 <div class="top-stats">
-
-<div class="stat-box">⭐ Points: 120</div>
-
-<div class="stat-box">🔥 Streak: 5 days</div>
-
-<div class="stat-box">Level: A2</div>
-
+    <div class="stat-box" id="userPoints">⭐ Points: 0</div>
+    <div class="stat-box" id="userStreak">🔥 Streak: 0 days</div>
+    <div class="stat-box" id="userLevel">📈 Level: A1</div>
 </div>
 
-
-<section class="cards">
-
-<!-- LESSON 1 -->
-
-<div class="card">
-
-<div class="lesson-header">
-<h3>Lesson 1 — Greetings</h3>
-<span class="lesson-status completed">Completed ✅</span>
-</div>
-
-<div class="progress-bar">
-<div class="progress-fill" style="width:100%"></div>
-</div>
-
-<div class="skill-grid">
-
-<button class="btn">📚 Vocabulary</button>
-<button class="btn">📖 Grammar Focus</button>
-<button class="btn">🔊 Listening Activity</button>
-<button class="btn">📖 Reading Activity</button>
-<button class="btn">🎤 Speaking Practice</button>
-<button class="btn">✍️ Writing Practice</button>
-<button class="btn">🧠 Mini Quiz</button>
-<button class="btn">🏅 Completion Badge</button>
-
-</div>
-
-<br>
-
-<p>XP gained: +50</p>
-<p>Feedback: Excellent work on greetings.</p>
-
-<button class="btn">Review Lesson</button>
-
-</div>
-
-
-
-<!-- LESSON 2 -->
-
-<div class="card">
-
-<div class="lesson-header">
-<h3>Lesson 2 — Daily Conversation</h3>
-<span class="lesson-status progress">In Progress ▶️</span>
-</div>
-
-<div class="progress-bar">
-<div class="progress-fill" style="width:60%"></div>
-</div>
-
-<div class="skill-grid">
-
-<button class="btn">📚 Vocabulary</button>
-<button class="btn">📖 Grammar Focus</button>
-<button class="btn">🔊 Listening Activity</button>
-<button class="btn">📖 Reading Activity</button>
-<button class="btn">🎤 Speaking Practice</button>
-<button class="btn">✍️ Writing Practice</button>
-<button class="btn">🧠 Mini Quiz</button>
-<button class="btn">🏅 Completion Badge</button>
-
-</div>
-
-<br>
-
-<p>XP possible: +40</p>
-<p>Feedback: Continue practicing daily conversations.</p>
-
-<button class="btn">Continue</button>
-
-</div>
-
-
-
-<!-- LESSON 3 -->
-
-<div class="card">
-
-<div class="lesson-header">
-<h3>Lesson 3 — Grammar Basics</h3>
-<span class="lesson-status locked">Locked 🔒</span>
-</div>
-
-<div class="progress-bar">
-<div class="progress-fill" style="width:0%"></div>
-</div>
-
-<div class="skill-grid">
-
-<button class="btn">🔒 Vocabulary</button>
-<button class="btn">🔒 Grammar Focus</button>
-<button class="btn">🔒 Listening Activity</button>
-<button class="btn">🔒 Reading Activity</button>
-<button class="btn">🔒 Speaking Practice</button>
-<button class="btn">🔒 Writing Practice</button>
-<button class="btn">🔒 Mini Quiz</button>
-<button class="btn">🔒 Completion Badge</button>
-
-</div>
-
-<br>
-
-<p>XP reward: +60</p>
-<p>Feedback will appear after completing previous lessons.</p>
-
-<button class="btn">Unlock</button>
-
-</div>
-
+<section class="cards" id="lessonsContainer">
+    <p style="padding:20px;">⏳ Loading lessons...</p>
 </section>
-
 </main>
-
 </div>
+
+<script type="module">
+import { auth, db } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { collection, getDocs, query, where, doc, getDoc, updateDoc, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const container = document.getElementById("lessonsContainer");
+let currentStep = 0, blocks = [], score = 0, total = 0;
+let studentId = null, studentData = null;
+let currentLessonId = null;
+let currentCourseId = null;
+
+// AUTH
+onAuthStateChanged(auth, async (user) => {
+    if (!user) { 
+        window.location.href = "../index.html"; 
+        return; 
+    }
+    studentId = user.uid;
+    const userDoc = await getDoc(doc(db, "users", studentId));
+    if (userDoc.exists()) {
+        studentData = userDoc.data();
+        updateStats();
+    }
+    
+    currentCourseId = localStorage.getItem("currentCourse");
+    loadLessons();
+});
+
+function updateStats() {
+    if (studentData) {
+        document.getElementById("userPoints").textContent = `⭐ Points: ${studentData.points || 0}`;
+        document.getElementById("userStreak").textContent = `🔥 Streak: ${studentData.streak || 0} days`;
+        document.getElementById("userLevel").textContent = `📈 Level: ${studentData.level || 'A1'}`;
+    }
+}
+
+// LOAD LESSONS
+async function loadLessons() {
+    container.innerHTML = "<p style='padding:20px;'>⏳ Loading lessons...</p>";
+    
+    try {
+        let lessonsQuery;
+        if (currentCourseId) {
+            lessonsQuery = query(collection(db, "lessons"), where("courseId", "==", currentCourseId));
+        } else {
+            lessonsQuery = collection(db, "lessons");
+        }
+        
+        const snapshot = await getDocs(lessonsQuery);
+        container.innerHTML = "";
+        
+        if (snapshot.empty) {
+            container.innerHTML = "<p style='padding:20px;'>📭 No lessons available for this course yet.</p>";
+            return;
+        }
+
+        const lessons = [];
+        snapshot.forEach(docSnap => {
+            lessons.push({ id: docSnap.id, data: docSnap.data() });
+        });
+        
+        lessons.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+        
+        lessons.forEach(item => {
+            const data = item.data;
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+                <h3>📖 ${data.title || 'Untitled Lesson'}</h3>
+                <p><strong>📊 Level:</strong> ${data.level || 'A1'}</p>
+                <p><strong>⏱️ Duration:</strong> ${data.duration || '10 min'}</p>
+                <button class="btn start-btn">🚀 Start Lesson</button>
+            `;
+            card.querySelector(".start-btn").addEventListener("click", () => startLesson(item.id, data));
+            container.appendChild(card);
+        });
+        
+    } catch (error) {
+        console.error("Error:", error);
+        container.innerHTML = `
+            <div style='padding:20px; text-align:center;'>
+                <p>❌ Error loading lessons.</p>
+                <button class='btn' onclick='location.reload()' style='margin-top:15px;'>🔄 Retry</button>
+            </div>
+        `;
+    }
+}
+
+function startLesson(lessonId, data) {
+    currentLessonId = lessonId;
+    blocks = data.blocks || [];
+    currentStep = 0;
+    score = 0;
+    total = blocks.filter(b => b.type === 'quiz' || b.type === 'game').length;
+    renderStep();
+}
+
+function renderStep() {
+    const step = blocks[currentStep];
+    if (!step) { 
+        showResult(); 
+        return; 
+    }
+    
+    container.innerHTML = `<div class="card"></div>`;
+    const card = container.querySelector(".card");
+    
+    if (step.type === "text") {
+        card.innerHTML = `
+            <h3>📝 Lesson</h3>
+            <p style="line-height:1.6;">${step.content}</p>
+            ${step.image ? `<img src="${step.image}" style="max-width:100%; border-radius:8px; margin:10px 0;">` : ''}
+            <button class="btn next" style="margin-top:15px;">Next →</button>
+        `;
+        card.querySelector(".next").onclick = nextStep;
+    }
+    
+    if (step.type === "quiz") {
+        let optionsHTML = step.options.map(opt => 
+            `<button class="btn option-btn" style="display:block; width:100%; margin:5px 0; text-align:left;">${opt}</button>`
+        ).join("");
+        card.innerHTML = `
+            <h3>❓ ${step.question}</h3>
+            <div style="margin-top:15px;">${optionsHTML}</div>
+        `;
+        card.querySelectorAll(".option-btn").forEach(btn => {
+            btn.onclick = () => {
+                if (btn.textContent === step.correct) { 
+                    score++; 
+                    btn.style.background = "#10b981";
+                } else { 
+                    btn.style.background = "#ef4444";
+                }
+                setTimeout(nextStep, 800);
+            };
+        });
+    }
+    
+    if (step.type === "audio") {
+        card.innerHTML = `
+            <h3>🔊 Listen</h3>
+            <audio controls src="${step.content}" style="width:100%; margin:15px 0;"></audio>
+            <button class="btn next">Next →</button>
+        `;
+        card.querySelector(".next").onclick = nextStep;
+    }
+    
+    if (step.type === "game") {
+        const word = step.correct;
+        const shuffled = word.split('').sort(() => Math.random() - 0.5).join('');
+        card.innerHTML = `
+            <h3>🎮 Unscramble the word</h3>
+            <p style="font-size:24px; font-weight:bold; letter-spacing:4px; margin:15px 0;">${shuffled}</p>
+            <input type="text" id="answer" placeholder="Write the word..." autocomplete="off">
+            <button class="btn check" style="margin-top:10px;">✅ Check</button>
+        `;
+        card.querySelector(".check").onclick = () => {
+            const answer = document.getElementById("answer").value.toLowerCase();
+            if (answer === word.toLowerCase()) {
+                score++; 
+                alert("✅ Correct! +10 points");
+            } else { 
+                alert(`❌ Wrong! Correct answer: ${word}`);
+            }
+            nextStep();
+        };
+    }
+}
+
+function nextStep() {
+    currentStep++;
+    renderStep();
+}
+
+async function showResult() {
+    const earnedPoints = score * 10;
+    const perfect = score === total && total > 0;
+    
+    container.innerHTML = `
+        <div class="card" style="text-align:center;">
+            <h2>${perfect ? '🏆 Perfect!' : '🎉 Lesson Completed!'}</h2>
+            <p style="font-size:18px; margin:15px 0;">Score: ${score}/${total}</p>
+            <p style="font-size:20px; color:#10b981;">+${earnedPoints} points</p>
+            <button class="btn" onclick="location.reload()" style="margin-top:20px;">← Back to Lessons</button>
+        </div>
+    `;
+    
+    if (studentId && currentLessonId) {
+        try {
+            await updateDoc(doc(db, "users", studentId), {
+                points: increment(earnedPoints),
+                streak: increment(1),
+                lastActive: serverTimestamp(),
+                [`completedLessons.${currentLessonId}`]: { 
+                    score, 
+                    total, 
+                    completedAt: serverTimestamp() 
+                }
+            });
+            
+            await updateDoc(doc(db, "lessons", currentLessonId), {
+                completions: increment(1)
+            });
+            
+            const userDoc = await getDoc(doc(db, "users", studentId));
+            studentData = userDoc.data();
+            updateStats();
+        } catch (e) { 
+            console.error("Save error:", e); 
+        }
+    }
+}
+
+// LOGOUT
+document.getElementById("logoutLink").addEventListener("click", async (e) => {
+    e.preventDefault();
+    await signOut(auth);
+    window.location.href = "../index.html";
+});
+</script>
 
 <script>
-
-/* =========================
-   🔐 AUTH + ROLE PROTECT
-========================= */
-
-function getUser(){
-  try{
-    return JSON.parse(localStorage.getItem("currentUser"));
-  }catch(e){
-    return null;
-  }
-}
-
-const currentUser = getUser();
-
-/* ❌ USER YO‘Q */
-if(!currentUser || !currentUser.email){
-  window.location.replace("../index.html");
-}
-
-/* ❌ TEACHER BU SAHIFAGA KIRA OLMAYDI */
-if(currentUser.role === "teacher"){
-  window.location.replace("../teacher/dashboard.html");
-}
-
-
-/* =========================
-   🚪 LOGOUT
-========================= */
-
-function logoutUser(){
-  localStorage.removeItem("currentUser");
-  window.location.replace("../index.html");
-}
-
-
-/* =========================
-   📱 SIDEBAR
-========================= */
-
 const menuBtn = document.querySelector(".menu-btn");
 const sidebar = document.querySelector(".sidebar");
 const overlay = document.querySelector(".overlay");
 
-menuBtn.addEventListener("click",()=>{
-  sidebar.classList.toggle("show");
-  overlay.classList.toggle("show");
+menuBtn.addEventListener("click", () => { 
+    sidebar.classList.toggle("show"); 
+    overlay.classList.toggle("show"); 
 });
 
-overlay.addEventListener("click",()=>{
-  sidebar.classList.remove("show");
-  overlay.classList.remove("show");
+overlay.addEventListener("click", () => { 
+    sidebar.classList.remove("show"); 
+    overlay.classList.remove("show"); 
 });
 
+const darkBtn = document.getElementById("darkBtn");
 
-/* =========================
-   🌙 DARK MODE
-========================= */
-
-function toggleMode(){
-  document.body.classList.toggle("dark");
-  let btn=document.getElementById("darkBtn");
-
-  if(document.body.classList.contains("dark")){
-    btn.textContent="☀️";
-    localStorage.setItem("novaMode","dark");
-  }else{
-    btn.textContent="🌙";
-    localStorage.setItem("novaMode","light");
-  }
+function toggleMode() {
+    document.body.classList.toggle("dark");
+    if (document.body.classList.contains("dark")) { 
+        darkBtn.textContent = "☀️"; 
+        localStorage.setItem("novaMode", "dark"); 
+    } else { 
+        darkBtn.textContent = "🌙"; 
+        localStorage.setItem("novaMode", "light"); 
+    }
 }
 
-function loadMode(){
-  let saved=localStorage.getItem("novaMode");
-  let btn=document.getElementById("darkBtn");
+darkBtn.addEventListener("click", toggleMode);
 
-  if(saved==="dark"){
-    document.body.classList.add("dark");
-    btn.textContent="☀️";
-  }
-}
+(function loadMode() {
+    let saved = localStorage.getItem("novaMode");
+    if (saved === "dark") { 
+        document.body.classList.add("dark"); 
+        darkBtn.textContent = "☀️"; 
+    }
+})();
 
-loadMode();
-
-
-/* =========================
-   📍 ACTIVE MENU
-========================= */
-
-const currentPage = window.location.pathname.split("/").pop();
-
-document.querySelectorAll(".sidebar a").forEach(link=>{
-  if(link.getAttribute("href") === currentPage){
-    link.parentElement.classList.add("active");
-  }
+const currentPage = window.location.pathname.split("/").pop() || "lessons.html";
+document.querySelectorAll(".sidebar a").forEach(link => { 
+    const href = link.getAttribute("href");
+    if (href === currentPage) {
+        link.parentElement.classList.add("active");
+    }
 });
-
 </script>
 </body>
 </html>

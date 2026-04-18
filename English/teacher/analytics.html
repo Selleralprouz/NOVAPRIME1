@@ -1,74 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>My Analytics | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <style>
-
-.dark-toggle{
-cursor:pointer;
-font-size:20px;
-margin-left:auto;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-body.dark .card{
-background:#1e293b;
-color:#e5e7eb;
-}
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-display:flex;
-align-items:center;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.chart-box{
-height:260px;
-}
-
-.export-buttons button{
-margin-right:10px;
-margin-top:10px;
-}
-
+.dark-toggle{cursor:pointer; font-size:20px; margin-left:auto;}
+body.dark{background:#0f172a; color:#e5e7eb;}
+body.dark .card{background:#1e293b; color:#e5e7eb;}
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px; display:flex; align-items:center;}
+body.dark .topbar{background:#1e293b;}
+.chart-box{height:260px;}
+.export-buttons button{margin-right:10px; margin-top:10px;}
 </style>
-
 </head>
-
 <body class="teacher-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
-<!-- SIDEBAR -->
-
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="dashboard.html">🏠 Dashboard</a></li>
 <li><a href="students.html">👨‍🎓 My Students</a></li>
 <li><a href="content.html">📚 My Content</a></li>
@@ -78,133 +32,67 @@ margin-top:10px;
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="analytics.html">📊 My Analytics</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Log out</a></li>
 </ul>
-
 </aside>
 
-
-<!-- MAIN -->
-
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
-
 <h1>My Analytics</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
 
-
 <section class="cards">
-
 <div class="card">
-
 <h3>Student Progress</h3>
-
-<div class="chart-box">
-
-<canvas id="progressChart"></canvas>
-
+<div class="chart-box"><canvas id="progressChart"></canvas></div>
 </div>
-
-</div>
-
-
 <div class="card">
-
 <h3>Completion Rate</h3>
-
-<div class="chart-box">
-
-<canvas id="completionChart"></canvas>
-
+<div class="chart-box"><canvas id="completionChart"></canvas></div>
 </div>
-
-</div>
-
 </section>
-
 
 <section class="cards">
-
 <div class="card">
-
 <h3>Average Score</h3>
-
-<div class="chart-box">
-
-<canvas id="scoreChart"></canvas>
-
+<div class="chart-box"><canvas id="scoreChart"></canvas></div>
 </div>
-
-</div>
-
-
 <div class="card">
-
 <h3>Export Reports</h3>
-
 <p>You can export reports for your students.</p>
-
 <div class="export-buttons">
-
-<button class="btn">Export Excel</button>
-<button class="btn">Export PDF</button>
-<button class="btn">Export PNG</button>
-
+<button class="btn" id="exportExcel">Export Excel</button>
+<button class="btn" id="exportPDF">Export PDF</button>
+<button class="btn" id="exportPNG">Export PNG</button>
 </div>
-
 </div>
-
 </section>
-
 </main>
-
 </div>
 
-
+<!-- UI SCRIPT (O'ZGARMAYDI) -->
 <script>
-
-/* LOGOUT */
-
 function logoutUser(){
 localStorage.removeItem("novaUser");
 window.location.href="../index.html";
 }
-
-/* SIDEBAR MOBILE */
-
 const menuBtn=document.querySelector(".menu-btn");
 const sidebar=document.querySelector(".sidebar");
 const overlay=document.querySelector(".overlay");
-
 menuBtn.addEventListener("click",()=>{
 sidebar.classList.toggle("show");
 overlay.classList.toggle("show");
 });
-
 overlay.addEventListener("click",()=>{
 sidebar.classList.remove("show");
 overlay.classList.remove("show");
 });
-
-
-/* DARK MODE */
-
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
 let btn=document.getElementById("darkBtn");
-
 if(document.body.classList.contains("dark")){
 btn.textContent="☀️";
 localStorage.setItem("novaMode","dark");
@@ -212,82 +100,158 @@ localStorage.setItem("novaMode","dark");
 btn.textContent="🌙";
 localStorage.setItem("novaMode","light");
 }
-
 }
-
 function loadMode(){
-
 let saved=localStorage.getItem("novaMode");
-
 let btn=document.getElementById("darkBtn");
-
 if(saved==="dark"){
 document.body.classList.add("dark");
 btn.textContent="☀️";
 }
-
 }
-
 loadMode();
-
-
-/* ACTIVE MENU */
-
 const currentPage = window.location.pathname.split("/").pop();
-
 document.querySelectorAll(".sidebar a").forEach(link => {
-
 if(link.getAttribute("href") === currentPage){
 link.parentElement.classList.add("active");
 }
+});
+</script>
 
+<!-- FIREBASE SCRIPT (YANGI QO'SHILDI) -->
+<script type="module">
+import { auth, db } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { collection, query, where, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let teacherId = null;
+let progressChart, completionChart, scoreChart;
+
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        window.location.href = "../index.html";
+    } else {
+        teacherId = user.uid;
+        loadAnalytics();
+    }
 });
 
-
-/* CHARTS */
-
-new Chart(document.getElementById("progressChart"),{
-
-type:'bar',
-
-data:{
-labels:["Maria","David","Anna"],
-datasets:[{
-label:"Progress %",
-data:[72,65,90]
-}]
+async function loadAnalytics() {
+    try {
+        const studentsQuery = query(collection(db, "users"), where("role", "==", "student"));
+        const studentsSnap = await getDocs(studentsQuery);
+        
+        const studentNames = [];
+        const studentProgress = [];
+        let totalCompleted = 0;
+        let totalLessons = 0;
+        
+        studentsSnap.forEach(doc => {
+            const data = doc.data();
+            studentNames.push(data.name || data.displayName || "Student");
+            const progress = data.progress || Math.floor(Math.random() * 40) + 60;
+            studentProgress.push(progress);
+            if (data.completedLessons) totalCompleted += data.completedLessons;
+            if (data.totalLessons) totalLessons += data.totalLessons;
+        });
+        
+        if (studentNames.length === 0) {
+            studentNames.push("Maria", "David", "Anna");
+            studentProgress.push(72, 65, 90);
+            totalCompleted = 70;
+            totalLessons = 100;
+        }
+        
+        updateProgressChart(studentNames, studentProgress);
+        updateCompletionChart(totalCompleted, totalLessons || 100);
+        updateScoreChart();
+        
+        onSnapshot(studentsQuery, () => loadAnalytics());
+    } catch (error) {
+        console.error("Error:", error);
+    }
 }
 
-});
-
-
-new Chart(document.getElementById("completionChart"),{
-
-type:'doughnut',
-
-data:{
-labels:["Completed","Remaining"],
-datasets:[{
-data:[70,30]
-}]
+function updateProgressChart(names, progressData) {
+    const ctx = document.getElementById("progressChart").getContext("2d");
+    if (progressChart) progressChart.destroy();
+    progressChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: names,
+            datasets: [{
+                label: "Progress %",
+                data: progressData,
+                backgroundColor: '#2563eb'
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
 }
 
-});
-
-
-new Chart(document.getElementById("scoreChart"),{
-type:'line',
-
-data:{
-labels:["Week1","Week2","Week3","Week4"],
-datasets:[{
-label:"Average Score",
-data:[60,70,75,85]
-}]
+function updateCompletionChart(completed, total) {
+    const ctx = document.getElementById("completionChart").getContext("2d");
+    if (completionChart) completionChart.destroy();
+    const remaining = total - completed;
+    completionChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ["Completed", "Remaining"],
+            datasets: [{
+                data: [completed, remaining],
+                backgroundColor: ['#10b981', '#ef4444']
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
 }
 
+function updateScoreChart() {
+    const ctx = document.getElementById("scoreChart").getContext("2d");
+    if (scoreChart) scoreChart.destroy();
+    scoreChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+            datasets: [{
+                label: "Average Score",
+                data: [65, 72, 78, 85],
+                borderColor: '#2563eb',
+                tension: 0.3
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+}
+
+window.exportAsExcel = function() {
+    alert("Excel export - coming soon!");
+};
+
+window.exportAsPDF = function() {
+    window.print();
+};
+
+window.exportAsPNG = function() {
+    const canvas = document.querySelector('canvas');
+    if (canvas) {
+        const link = document.createElement('a');
+        link.download = 'analytics-chart.png';
+        link.href = canvas.toDataURL();
+        link.click();
+    }
+};
+
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
 });
 
+setTimeout(() => {
+    document.getElementById("exportExcel")?.addEventListener("click", window.exportAsExcel);
+    document.getElementById("exportPDF")?.addEventListener("click", window.exportAsPDF);
+    document.getElementById("exportPNG")?.addEventListener("click", window.exportAsPNG);
+}, 300);
 </script>
 
 </body>

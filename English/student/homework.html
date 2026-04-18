@@ -5,106 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tasks | NOVA PRIME</title>
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-display:flex;
-align-items:center;
-gap:15px;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.dark-toggle{
-margin-left:auto;
-cursor:pointer;
-font-size:20px;
-}
-
-/* STATUS */
-
-.status{
-font-weight:600;
-font-size:14px;
-}
-
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px; display:flex; align-items:center; gap:15px;}
+body.dark .topbar{background:#1e293b;}
+.dark-toggle{margin-left:auto; cursor:pointer; font-size:20px;}
+.status{font-weight:600; font-size:14px;}
 .pending{color:#f59e0b;}
 .progress{color:#3b82f6;}
 .submitted{color:#6366f1;}
 .completed{color:#10b981;}
-
-.card{
-border:1px solid #e5e7eb;
-transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-4px);
-box-shadow:0 6px 16px rgba(0,0,0,0.08);
-}
-
-body.dark .card{
-background:#1e293b;
-color:#e5e7eb;
-border:1px solid #334155;
-}
-
-textarea{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:6px;
-border:1px solid #ddd;
-}
-
-.file-input{
-margin-top:10px;
-}
-
-/* FILTER */
-
-.filters{
-margin-bottom:20px;
-display:flex;
-gap:10px;
-}
-
-.filters button{
-padding:6px 12px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-background:#e5e7eb;
-}
-
-.filters button:hover{
-background:#cbd5f5;
-}
-
+.card{border:1px solid #e5e7eb; transition:0.3s; padding:20px; border-radius:12px; margin-bottom:20px;}
+.card:hover{transform:translateY(-4px); box-shadow:0 6px 16px rgba(0,0,0,0.08);}
+body.dark .card{background:#1e293b; color:#e5e7eb; border:1px solid #334155;}
+textarea{width:100%; padding:10px; margin-top:10px; border-radius:6px; border:1px solid #ddd;}
+.file-input{margin-top:10px;}
+.filters{margin-bottom:20px; display:flex; gap:10px;}
+.filters button{padding:6px 12px; border:none; border-radius:6px; cursor:pointer; background:#e5e7eb;}
+.btn{background:#3b82f6; color:white; border:none; padding:8px 14px; border-radius:6px; cursor:pointer; margin-top:10px;}
 </style>
 </head>
-
 <body class="student-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
-<!-- SIDEBAR -->
-
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="index.html">🏠 Dashboard</a></li>
 <li><a href="courses.html">📚 My Courses</a></li>
 <li><a href="lessons.html">🎓 Level / Lesson</a></li>
@@ -122,246 +48,139 @@ background:#cbd5f5;
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="support.html">❓ Help / Support</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Log out</a></li>
 </ul>
-
 </aside>
 
-<!-- MAIN -->
-
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
-
 <h1>📝 Tasks</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
 
-<!-- FILTERS -->
-
 <div class="filters">
-
-<button onclick="filterTasks('all')">All</button>
-<button onclick="filterTasks('pending')">Pending</button>
-<button onclick="filterTasks('completed')">Completed</button>
-
+<button onclick="window.filterTasks('all')">All</button>
+<button onclick="window.filterTasks('pending')">Pending</button>
+<button onclick="window.filterTasks('completed')">Completed</button>
 </div>
 
 <section class="cards" id="taskContainer">
-
-<!-- TASK 1 -->
-
-<div class="card task pending">
-
-<h3>Writing Task #1</h3>
-
-<p>Write 10 sentences about your daily routine.</p>
-
-<p class="status pending" id="task1">Status: Pending ⏳</p>
-
-<textarea placeholder="Write your task here..."></textarea>
-
-<button class="btn" onclick="submitTask('task1')">
-Submit task
-</button>
-
-<p><strong>Teacher feedback:</strong> Waiting for review</p>
-
-</div>
-
-
-<!-- TASK 2 -->
-
-<div class="card task pending">
-
-<h3>Speaking Task #2</h3>
-
-<p>Record yourself reading the text aloud.</p>
-
-<p class="status pending" id="task2">Status: Pending ⏳</p>
-
-<input type="file" class="file-input">
-
-<button class="btn" onclick="submitTask('task2')">
-Upload recording
-</button>
-
-<p><strong>Teacher feedback:</strong> Waiting for review</p>
-
-</div>
-
-
-<!-- TASK 3 -->
-
-<div class="card task pending">
-
-<h3>Grammar Task #3</h3>
-
-<p>Complete grammar exercises (Unit 3).</p>
-
-<p class="status pending" id="task3">Status: Pending ⏳</p>
-
-<button class="btn" onclick="startTask('task3')">
-Start task
-</button>
-
-<p><strong>Teacher feedback:</strong> Waiting for review</p>
-
-</div>
-
+    <p>Loading tasks...</p>
 </section>
-
 </main>
-
 </div>
 
+<!-- UI SCRIPT -->
 <script>
-
-/* USER */
-
-const user = JSON.parse(localStorage.getItem("novaUser"));
-if(!user){
-window.location.href="../index.html";
-}
-
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
-/* TASK FUNCTIONS */
-
-function submitTask(id){
-
-let status=document.getElementById(id);
-
-status.textContent="Status: Submitted 📤";
-status.className="status submitted";
-
-localStorage.setItem(id,"submitted");
-
-}
-
-function startTask(id){
-
-let status=document.getElementById(id);
-
-status.textContent="Status: In progress ▶️";
-status.className="status progress";
-
-localStorage.setItem(id,"progress");
-
-}
-
-/* LOAD STATUS */
-
-["task1","task2","task3"].forEach(id=>{
-
-let saved=localStorage.getItem(id);
-
-if(saved==="submitted"){
-document.getElementById(id).textContent="Status: Submitted 📤";
-document.getElementById(id).className="status submitted";
-}
-
-if(saved==="progress"){
-document.getElementById(id).textContent="Status: In progress ▶️";
-document.getElementById(id).className="status progress";
-}
-
-});
-
-/* FILTER */
-
-function filterTasks(type){
-
-let tasks=document.querySelectorAll(".task");
-
-tasks.forEach(task=>{
-
-if(type==="all"){
-task.style.display="block";
-}
-else if(type==="pending"){
-task.style.display=task.classList.contains("pending") ? "block":"none";
-}
-else if(type==="completed"){
-task.style.display=task.classList.contains("completed") ? "block":"none";
-}
-
-});
-
-}
-
-/* DARK MODE */
-
+const menuBtn=document.querySelector(".menu-btn"), sidebar=document.querySelector(".sidebar"), overlay=document.querySelector(".overlay");
+menuBtn.addEventListener("click",()=>{ sidebar.classList.toggle("show"); overlay.classList.toggle("show"); });
+overlay.addEventListener("click",()=>{ sidebar.classList.remove("show"); overlay.classList.remove("show"); });
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
 let btn=document.getElementById("darkBtn");
-
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-
-}
-
-function loadMode(){
-
-let saved=localStorage.getItem("novaMode");
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
-}
-
-}
-
-loadMode();
-
-/* SIDEBAR MOBILE */
-
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
-
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
-});
-
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
-/* ACTIVE MENU */
-
+if(localStorage.getItem("novaMode")==="dark"){ document.body.classList.add("dark"); document.getElementById("darkBtn").textContent="☀️"; }
 const currentPage = window.location.pathname.split("/").pop();
-
-document.querySelectorAll(".sidebar a").forEach(link => {
-
-if(link.getAttribute("href") === currentPage){
-link.parentElement.classList.add("active");
-}
-
-});
-
+document.querySelectorAll(".sidebar a").forEach(link => { if(link.getAttribute("href") === currentPage) link.parentElement.classList.add("active"); });
 </script>
 
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { auth, db, storage } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc, collection, getDocs, setDoc, updateDoc, serverTimestamp, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+let studentId = null, allTasks = [];
+
+onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = "../index.html"; return; }
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists() && userDoc.data().role === "student") {
+        studentId = user.uid;
+        loadTasks();
+    } else { window.location.href = "../index.html"; }
+});
+
+function loadTasks() {
+    const container = document.getElementById("taskContainer");
+    onSnapshot(collection(db, "homework"), (snap) => {
+        allTasks = [];
+        snap.forEach(d => allTasks.push({ id: d.id, ...d.data() }));
+        renderTasks();
+    });
+}
+
+function renderTasks() {
+    const container = document.getElementById("taskContainer");
+    container.innerHTML = allTasks.length ? "" : "<p>No tasks assigned yet.</p>";
+    
+    allTasks.forEach(task => {
+        const status = task.studentStatus?.[studentId] || "pending";
+        const card = document.createElement("div");
+        card.className = `card task ${status}`;
+        card.id = `task-${task.id}`;
+        
+        card.innerHTML = `
+            <h3>${task.title}</h3>
+            <p>${task.description || ''}</p>
+            <p class="status ${status}" id="status-${task.id}">Status: ${status === 'pending' ? 'Pending ⏳' : status === 'submitted' ? 'Submitted 📤' : status === 'progress' ? 'In progress ▶️' : 'Completed ✅'}</p>
+            ${task.type === 'writing' ? `<textarea id="text-${task.id}" placeholder="Write your task here..."></textarea>` : ''}
+            ${task.type === 'speaking' ? `<input type="file" id="file-${task.id}" class="file-input" accept="audio/*,video/*">` : ''}
+            ${task.type !== 'speaking' ? `<button class="btn" onclick="window.submitTask('${task.id}')">Submit task</button>` : `<button class="btn" onclick="window.uploadTask('${task.id}')">Upload recording</button>`}
+            <button class="btn" onclick="window.startTask('${task.id}')" style="background:#f59e0b;">Start task</button>
+            <p><strong>Teacher feedback:</strong> ${task.feedback?.[studentId] || 'Waiting for review'}</p>
+        `;
+        container.appendChild(card);
+    });
+}
+
+window.filterTasks = (type) => {
+    document.querySelectorAll(".task").forEach(card => {
+        if (type === 'all') card.style.display = "block";
+        else card.style.display = card.classList.contains(type) ? "block" : "none";
+    });
+};
+
+window.startTask = async (taskId) => {
+    await updateDoc(doc(db, "homework", taskId), {
+        [`studentStatus.${studentId}`]: "progress"
+    });
+};
+
+window.submitTask = async (taskId) => {
+    const text = document.getElementById(`text-${taskId}`)?.value.trim();
+    await updateDoc(doc(db, "homework", taskId), {
+        [`studentStatus.${studentId}`]: "submitted",
+        [`submissions.${studentId}`]: { text, submittedAt: serverTimestamp() }
+    });
+    alert("Task submitted!");
+};
+
+window.uploadTask = async (taskId) => {
+    const file = document.getElementById(`file-${taskId}`)?.files[0];
+    if (!file) { alert("Select a file first"); return; }
+    
+    const storageRef = ref(storage, `homework/${studentId}/${taskId}_${Date.now()}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on('state_changed', null, null, async () => {
+        const url = await getDownloadURL(uploadTask.snapshot.ref);
+        await updateDoc(doc(db, "homework", taskId), {
+            [`studentStatus.${studentId}`]: "submitted",
+            [`submissions.${studentId}`]: { fileUrl: url, submittedAt: serverTimestamp() }
+        });
+        alert("Recording uploaded!");
+    });
+};
+
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
+});
+</script>
 </body>
 </html>

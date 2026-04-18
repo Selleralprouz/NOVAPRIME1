@@ -2741,3 +2741,19 @@ color:#e5e7eb !important;
 body.dark h2{
 color:#e5e7eb !important;
 }
+
+
+/* Chap pastdagi oq joyni yo'qotish */
+.sidebar {
+    height: 100vh !important;
+    background: #0f172a !important;
+}
+
+.dashboard {
+    display: flex !important;
+    min-height: 100vh !important;
+}
+
+.content {
+    background: #f4f6f9 !important;
+}

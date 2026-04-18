@@ -4,85 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Educational Games | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.dark-toggle{
-cursor:pointer;
-font-size:20px;
-margin-left:auto;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-body.dark .card{
-background:#1e293b;
-color:#e5e7eb;
-}
-
-.game-box{
-border:1px solid #e5e7eb;
-border-radius:16px;
-padding:25px;
-margin-bottom:20px;
-transition:0.3s;
-}
-
-.game-box:hover{
-transform:translateY(-5px);
-box-shadow:0 12px 25px rgba(0,0,0,0.08);
-}
-
-.level-badge{
-background:#111827;
-color:#fff;
-padding:6px 12px;
-border-radius:20px;
-font-size:12px;
-display:inline-block;
-margin-bottom:10px;
-}
-
-.score{
-font-size:18px;
-font-weight:600;
-}
-
-.game-list li{
-margin:4px 0;
-}
-
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px;}
+body.dark .topbar{background:#1e293b;}
+.dark-toggle{cursor:pointer; font-size:20px; margin-left:auto;}
+body.dark{background:#0f172a; color:#e5e7eb;}
+body.dark .card{background:#1e293b; color:#e5e7eb;}
+.game-box{border:1px solid #e5e7eb; border-radius:16px; padding:25px; margin-bottom:20px; transition:0.3s;}
+.game-box:hover{transform:translateY(-5px); box-shadow:0 12px 25px rgba(0,0,0,0.08);}
+.level-badge{background:#111827; color:#fff; padding:6px 12px; border-radius:20px; font-size:12px; display:inline-block; margin-bottom:10px;}
+.score{font-size:18px; font-weight:600;}
+.game-list li{margin:4px 0; cursor:pointer; padding:5px; border-radius:6px;}
+.game-list li:hover{background:#e5e7eb;}
+.btn{background:#3b82f6; color:white; border:none; padding:10px 16px; border-radius:8px; cursor:pointer; margin-top:10px;}
+.active-game{background:#3b82f6; color:white;}
 </style>
 </head>
-
 <body class="student-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="index.html">🏠 Dashboard</a></li>
 <li><a href="courses.html">📚 My Courses</a></li>
 <li><a href="lessons.html">🎓 Level / Lesson</a></li>
@@ -100,307 +45,192 @@ margin:4px 0;
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="support.html">❓ Help / Support</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Log out</a></li>
 </ul>
-
 </aside>
 
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
-
 <h1>🎮 English Challenge Arena</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
 
 <section class="cards">
-
 <div class="game-box">
-
-<div class="level-badge">
-Nivel <span id="levelValue">1</span>
+<div class="level-badge">Nivel <span id="levelValue">1</span></div>
+<p class="score">Puntos actuales: <span id="pointValue">0</span></p>
 </div>
 
-<p class="score">
-Puntos actuales: <span id="pointValue">0</span>
-</p>
-
-</div>
-
-
-<!-- CLIENT REQUEST: GAME TYPES -->
-
 <div class="game-box">
-
 <h3>Available Games</h3>
-
-<ul class="game-list">
-
-<li>Word Search</li>
-<li>Word Connect</li>
-<li>Memory Game</li>
-<li>Sentence Builder</li>
-<li>Speed Translation</li>
-<li>Vocabulary Race</li>
-<li>Listening Challenge</li>
-<li>Hangman</li>
-
-</ul>
-
+<ul class="game-list" id="gameList"></ul>
 </div>
 
-
 <div class="game-box">
-
-<h3 id="questionText"></h3>
-
-<p>
-⏱️ Tiempo: <span id="timer">10</span>s
-</p>
-
-<input
-type="text"
-id="answerInput"
-style="width:100%;padding:10px;"
-placeholder="Write the translation">
-
-<button class="btn" onclick="submitAnswer()">
-Responder
-</button>
-
+<h3 id="gameTitle">Speed Translation</h3>
+<h4 id="questionText">Loading...</h4>
+<p>⏱️ Tiempo: <span id="timer">10</span>s</p>
+<input type="text" id="answerInput" style="width:100%; padding:10px;" placeholder="Write the translation">
+<button class="btn" onclick="window.submitAnswer()">Responder</button>
 <div id="resultArea" style="margin-top:15px;"></div>
-
 </div>
-
-
-<!-- CLIENT REQUEST: LEADERBOARD -->
 
 <div class="game-box">
-
 <h3>Leaderboard</h3>
-
-<ol>
-
-<li>Maria — 250 XP</li>
-<li>David — 210 XP</li>
-<li>You — <span id="pointValue">0</span> XP</li>
-
-</ol>
-
+<ol id="leaderboardList"><li>Loading...</li></ol>
 </div>
-
-
 </section>
-
 </main>
-
 </div>
 
+<!-- UI SCRIPT -->
 <script>
-
-/* USER */
-
-const user = JSON.parse(localStorage.getItem("novaUser"));
-
-if(!user){
-window.location.href="../index.html";
-}
-
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
-/* GAME DATA */
-
-let plan = localStorage.getItem("novaPlan") || "free";
-let points = parseInt(localStorage.getItem("novaPoints")) || 0;
-let level = parseInt(localStorage.getItem("novaGameLevel")) || 1;
-
-document.getElementById("pointValue").textContent = points;
-document.getElementById("levelValue").textContent = level;
-
-/* QUESTIONS */
-const questions = [
-{q:"Hello",a:"hola"},
-{q:"Good night",a:"buenas noches"},
-{q:"Thank you",a:"gracias"},
-{q:"See you",a:"hasta luego"},
-{q:"How are you?",a:"como estas"},
-{q:"Good morning",a:"buenos dias"},
-{q:"Please",a:"por favor"}
-];
-
-let currentQuestion;
-let timer;
-let timeLeft = 10;
-
-function startGame(){
-
-currentQuestion = questions[Math.floor(Math.random()*questions.length)];
-
-document.getElementById("questionText").textContent = currentQuestion.q;
-
-document.getElementById("resultArea").innerHTML = "";
-
-document.getElementById("answerInput").value="";
-
-timeLeft = 10;
-
-clearInterval(timer);
-
-timer = setInterval(()=>{
-
-timeLeft--;
-
-document.getElementById("timer").textContent = timeLeft;
-
-if(timeLeft<=0){
-
-clearInterval(timer);
-
-document.getElementById("resultArea").innerHTML="⛔️ Tiempo terminado";
-
-}
-
-},1000);
-
-}
-
-function submitAnswer(){
-
-let ans = document.getElementById("answerInput").value.trim().toLowerCase();
-
-if(timeLeft<=0) return;
-
-clearInterval(timer);
-
-if(ans === currentQuestion.a){
-
-let reward = 10 * level;
-
-if(plan === "pro" || plan === "premium"){
-reward *= 2;
-}
-
-points += reward;
-
-localStorage.setItem("novaPoints",points);
-
-document.getElementById("pointValue").textContent = points;
-
-saveHistory("vocab");
-
-document.getElementById("resultArea").innerHTML =
-"✅ Correcto +" + reward + " XP";
-
-if(points >= level * 100){
-
-level++;
-
-localStorage.setItem("novaGameLevel",level);
-document.getElementById("levelValue").textContent = level;
-
-document.getElementById("resultArea").innerHTML +=
-"<br>🎉 ¡Nivel subido!";
-
-}
-
-}else{
-
-document.getElementById("resultArea").innerHTML="❌ Incorrecto";
-
-}
-
-setTimeout(startGame,1500);
-
-}
-
-function saveHistory(type){
-
-let history = JSON.parse(localStorage.getItem("novaHistory")) || [];
-
-history.push({
-type:type,
-date:new Date()
-});
-
-localStorage.setItem("novaHistory",JSON.stringify(history));
-
-}
-
-startGame();
-
-/* SIDEBAR MOBILE */
-
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
-
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
-});
-
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
-/* DARK MODE */
-
+const menuBtn=document.querySelector(".menu-btn"), sidebar=document.querySelector(".sidebar"), overlay=document.querySelector(".overlay");
+menuBtn.addEventListener("click",()=>{ sidebar.classList.toggle("show"); overlay.classList.toggle("show"); });
+overlay.addEventListener("click",()=>{ sidebar.classList.remove("show"); overlay.classList.remove("show"); });
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
 let btn=document.getElementById("darkBtn");
-
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-
-}
-
-function loadMode(){
-
-let saved=localStorage.getItem("novaMode");
-
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
-}
-
-}
-
-loadMode();
-
-/* ACTIVE MENU AUTO */
-
+if(localStorage.getItem("novaMode")==="dark"){ document.body.classList.add("dark"); document.getElementById("darkBtn").textContent="☀️"; }
 const currentPage = window.location.pathname.split("/").pop();
-
-document.querySelectorAll(".sidebar a").forEach(link => {
-
-if(link.getAttribute("href") === currentPage){
-link.parentElement.classList.add("active");
-}
-
-});
-
+document.querySelectorAll(".sidebar a").forEach(link => { if(link.getAttribute("href") === currentPage) link.parentElement.classList.add("active"); });
 </script>
 
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { auth, db } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc, updateDoc, increment, collection, query, orderBy, limit, getDocs, onSnapshot, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let studentId = null, studentData = null, studentName = "";
+let points = 0, level = 1;
+let currentGame = null, allGames = [];
+let timer, timeLeft = 10;
+let questions = [
+    {q:"Hello", a:"hola"}, {q:"Good night", a:"buenas noches"}, {q:"Thank you", a:"gracias"},
+    {q:"See you", a:"hasta luego"}, {q:"How are you?", a:"como estas"}, {q:"Good morning", a:"buenos dias"},
+    {q:"Please", a:"por favor"}, {q:"Welcome", a:"bienvenido"}, {q:"Friend", a:"amigo"}, {q:"Family", a:"familia"}
+];
+let currentQuestion;
+
+onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = "../index.html"; return; }
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists() && userDoc.data().role === "student") {
+        studentId = user.uid;
+        studentData = userDoc.data();
+        studentName = studentData.name || "Student";
+        points = studentData.points || 0;
+        level = studentData.gameLevel || 1;
+        updateUI();
+        loadGames();
+        loadLeaderboard();
+    } else { window.location.href = "../index.html"; }
+});
+
+function updateUI() {
+    document.getElementById("pointValue").textContent = points;
+    document.getElementById("levelValue").textContent = level;
+}
+
+async function updatePoints(change) {
+    points += change;
+    await updateDoc(doc(db, "users", studentId), { points: increment(change) });
+    if (points >= level * 100) {
+        level++;
+        await updateDoc(doc(db, "users", studentId), { gameLevel: level });
+        document.getElementById("resultArea").innerHTML += "<br>🎉 ¡Nivel subido!";
+    }
+    updateUI();
+    await setDoc(doc(db, "game_scores", `${studentId}_${Date.now()}`), {
+        studentId, studentName, points, level, createdAt: serverTimestamp()
+    });
+}
+
+async function loadGames() {
+    const list = document.getElementById("gameList");
+    const snap = await getDocs(collection(db, "games"));
+    allGames = [];
+    list.innerHTML = "";
+    snap.forEach(doc => {
+        const game = doc.data();
+        if (game.status === "Active") {
+            allGames.push(game);
+            const li = document.createElement("li");
+            li.textContent = game.name;
+            li.onclick = () => selectGame(game);
+            list.appendChild(li);
+        }
+    });
+    if (allGames.length) selectGame(allGames[0]);
+}
+
+function selectGame(game) {
+    currentGame = game;
+    document.getElementById("gameTitle").textContent = game.name;
+    startGame();
+}
+
+function startGame() {
+    currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+    document.getElementById("questionText").textContent = currentQuestion.q;
+    document.getElementById("resultArea").innerHTML = "";
+    document.getElementById("answerInput").value = "";
+    timeLeft = 10;
+    document.getElementById("timer").textContent = timeLeft;
+    clearInterval(timer);
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").textContent = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            document.getElementById("resultArea").innerHTML = "⛔️ Tiempo terminado";
+            setTimeout(startGame, 1500);
+        }
+    }, 1000);
+}
+
+window.submitAnswer = async () => {
+    const ans = document.getElementById("answerInput").value.trim().toLowerCase();
+    if (timeLeft <= 0) return;
+    clearInterval(timer);
+    
+    if (ans === currentQuestion.a) {
+        let reward = 10 * level;
+        await updatePoints(reward);
+        document.getElementById("resultArea").innerHTML = `✅ Correcto +${reward} XP`;
+        await setDoc(doc(db, "game_history", `${studentId}_${Date.now()}`), {
+            studentId, game: currentGame?.name, question: currentQuestion.q, correct: true, points: reward, createdAt: serverTimestamp()
+        });
+    } else {
+        document.getElementById("resultArea").innerHTML = "❌ Incorrecto";
+    }
+    setTimeout(startGame, 1500);
+};
+
+async function loadLeaderboard() {
+    const q = query(collection(db, "game_scores"), orderBy("points", "desc"), limit(10));
+    onSnapshot(q, (snap) => {
+        const list = document.getElementById("leaderboardList");
+        list.innerHTML = "";
+        let rank = 1;
+        snap.forEach(doc => {
+            const data = doc.data();
+            list.innerHTML += `<li>${data.studentName} — ${data.points} XP (Level ${data.level})</li>`;
+        });
+        if (snap.empty) list.innerHTML = "<li>No scores yet</li>";
+    });
+}
+
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
+});
+</script>
 </body>
 </html>

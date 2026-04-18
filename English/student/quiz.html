@@ -4,79 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Assessments | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.dark-toggle{
-cursor:pointer;
-margin-left:auto;
-font-size:20px;
-}
-
-.quiz-box{
-border:1px solid #e5e7eb;
-border-radius:16px;
-padding:25px;
-margin-bottom:20px;
-background:#f9fafb;
-}
-
-body.dark .quiz-box{
-background:#111827;
-color:#fff;
-}
-
-.quiz-option{
-display:block;
-margin:10px 0;
-padding:10px;
-border-radius:8px;
-border:1px solid #ccc;
-cursor:pointer;
-}
-
-.quiz-option:hover{
-background:#e5e7eb;
-}
-
-body.dark .quiz-option:hover{
-background:#374151;
-}
-
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px; display:flex; align-items:center; gap:10px;}
+body.dark .topbar{background:#1e293b;}
+.dark-toggle{cursor:pointer; margin-left:auto; font-size:20px;}
+.quiz-box{border:1px solid #e5e7eb; border-radius:16px; padding:25px; margin-bottom:20px; background:#f9fafb;}
+body.dark .quiz-box{background:#111827; color:#fff;}
+.quiz-option{display:block; margin:10px 0; padding:10px; border-radius:8px; border:1px solid #ccc; cursor:pointer;}
+.quiz-option:hover{background:#e5e7eb;}
+body.dark .quiz-option:hover{background:#374151;}
+.quiz-select{margin-bottom:20px; padding:10px; width:100%; border-radius:8px;}
+.btn{background:#3b82f6; color:white; border:none; padding:12px 24px; border-radius:8px; cursor:pointer;}
 </style>
-
 </head>
-
 <body class="student-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
-<!-- SIDEBAR -->
-
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="index.html">🏠 Dashboard</a></li>
 <li><a href="courses.html">📚 My Courses</a></li>
 <li><a href="lessons.html">🎓 Level / Lesson</a></li>
@@ -94,190 +42,129 @@ background:#374151;
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="support.html">❓ Help / Support</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Log out</a></li>
 </ul>
-
 </aside>
 
-<!-- MAIN -->
-
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
-
 <h1>🧠 Assessments</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
 
-<section class="cards">
+<select id="quizSelect" class="quiz-select"><option value="">Select a quiz...</option></select>
 
-<div class="quiz-box">
-
-<h3>Question 1</h3>
-
-<p><strong>Hello</strong> = ?</p>
-
-<label class="quiz-option">
-<input type="radio" name="q1" value="hola"> Hola
-</label>
-
-<label class="quiz-option">
-<input type="radio" name="q1" value="adios"> Adiós
-</label>
-
-<label class="quiz-option">
-<input type="radio" name="q1" value="gracias"> Gracias
-</label>
-
-</div>
-
-
-<div class="quiz-box">
-
-<h3>Question 2</h3>
-
-<p>True or False: "Goodbye" means "Adiós"</p>
-
-<label class="quiz-option">
-<input type="radio" name="q2" value="true"> True
-</label>
-
-<label class="quiz-option">
-<input type="radio" name="q2" value="false"> False
-</label>
-
-</div>
-
-
-<div class="quiz-box">
-
-<h3>Question 3</h3>
-
-<p>Write the translation of <strong>Thank you</strong></p>
-
-<input type="text" id="q3" placeholder="Your answer">
-
-</div>
-
-
-<button class="btn" onclick="checkQuiz()">Submit Quiz</button>
-
-<h3 id="quizResult"></h3>
-
+<section class="cards" id="quizContainer">
+    <p>Select a quiz to start</p>
 </section>
-
 </main>
-
 </div>
 
+<!-- UI SCRIPT -->
 <script>
-
-/* USER */
-
-const user = JSON.parse(localStorage.getItem("novaUser"));
-
-if(!user){
-window.location.href="../index.html";
-}
-
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
-/* QUIZ */
-
-function checkQuiz(){
-
-let score=0;
-
-let q1=document.querySelector('input[name="q1"]:checked');
-let q2=document.querySelector('input[name="q2"]:checked');
-let q3=document.getElementById("q3").value.toLowerCase();
-
-if(q1 && q1.value==="hola") score++;
-
-if(q2 && q2.value==="true") score++;
-
-if(q3==="gracias") score++;
-
-document.getElementById("quizResult").innerHTML=
-"Score: "+score+" / 3";
-
-}
-
-/* SIDEBAR */
-
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
-});
-
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
-/* DARK MODE */
-
+const menuBtn=document.querySelector(".menu-btn"), sidebar=document.querySelector(".sidebar"), overlay=document.querySelector(".overlay");
+menuBtn.addEventListener("click",()=>{ sidebar.classList.toggle("show"); overlay.classList.toggle("show"); });
+overlay.addEventListener("click",()=>{ sidebar.classList.remove("show"); overlay.classList.remove("show"); });
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
 let btn=document.getElementById("darkBtn");
-
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-
-}
-
-function loadMode(){
-
-let saved=localStorage.getItem("novaMode");
-
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
-}
-
-}
-
-loadMode();
-
+if(localStorage.getItem("novaMode")==="dark"){ document.body.classList.add("dark"); document.getElementById("darkBtn").textContent="☀️"; }
+const currentPage = window.location.pathname.split("/").pop();
+document.querySelectorAll(".sidebar a").forEach(link => { if(link.getAttribute("href") === currentPage) link.parentElement.classList.add("active"); });
 </script>
 
-<script>
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { auth, db } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc, collection, getDocs, addDoc, updateDoc, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const currentPage = window.location.pathname.split("/").pop();
+let studentId = null, currentQuiz = null;
 
-document.querySelectorAll(".sidebar a").forEach(link => {
-
-if(link.getAttribute("href") === currentPage){
-link.parentElement.classList.add("active");
-}
-
+onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = "../index.html"; return; }
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists() && userDoc.data().role === "student") {
+        studentId = user.uid;
+        loadQuizzes();
+    } else { window.location.href = "../index.html"; }
 });
 
+async function loadQuizzes() {
+    const select = document.getElementById("quizSelect");
+    const snap = await getDocs(collection(db, "assessments"));
+    snap.forEach(d => {
+        const data = d.data();
+        select.innerHTML += `<option value="${d.id}">${data.title}</option>`;
+    });
+    select.addEventListener("change", () => loadQuiz(select.value));
+}
+
+async function loadQuiz(quizId) {
+    if (!quizId) return;
+    const quizDoc = await getDoc(doc(db, "assessments", quizId));
+    if (!quizDoc.exists()) return;
+    
+    currentQuiz = { id: quizId, ...quizDoc.data() };
+    const container = document.getElementById("quizContainer");
+    container.innerHTML = "";
+    
+    (currentQuiz.questions || []).forEach((q, i) => {
+        const box = document.createElement("div");
+        box.className = "quiz-box";
+        box.innerHTML = `<h3>Question ${i+1}</h3><p><strong>${q.question}</strong></p>`;
+        
+        if (q.type === 'multiple') {
+            q.options.forEach(opt => {
+                box.innerHTML += `<label class="quiz-option"><input type="radio" name="q${i}" value="${opt}"> ${opt}</label>`;
+            });
+        } else if (q.type === 'truefalse') {
+            box.innerHTML += `<label class="quiz-option"><input type="radio" name="q${i}" value="true"> True</label>
+                             <label class="quiz-option"><input type="radio" name="q${i}" value="false"> False</label>`;
+        } else {
+            box.innerHTML += `<input type="text" id="q${i}" placeholder="Your answer" style="width:100%; padding:10px;">`;
+        }
+        container.appendChild(box);
+    });
+    
+    container.innerHTML += `<button class="btn" onclick="window.submitQuiz()">Submit Quiz</button><h3 id="quizResult"></h3>`;
+}
+
+window.submitQuiz = async () => {
+    if (!currentQuiz) return;
+    let score = 0, total = currentQuiz.questions?.length || 0;
+    
+    currentQuiz.questions.forEach((q, i) => {
+        let answer;
+        if (q.type === 'multiple' || q.type === 'truefalse') {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            answer = selected?.value;
+        } else {
+            answer = document.getElementById(`q${i}`).value.trim().toLowerCase();
+        }
+        if (answer === q.correct || answer === 'true' && q.correct === true) score++;
+    });
+    
+    document.getElementById("quizResult").innerHTML = `Score: ${score} / ${total}`;
+    
+    await addDoc(collection(db, "quiz_results"), {
+        studentId, quizId: currentQuiz.id, quizTitle: currentQuiz.title, score, total, createdAt: serverTimestamp()
+    });
+    await updateDoc(doc(db, "users", studentId), { points: increment(score * 5) });
+    await addDoc(collection(db, "activity_log"), {
+        studentId, type: `Quiz: ${currentQuiz.title} (${score}/${total})`, createdAt: serverTimestamp()
+    });
+};
+
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
+});
 </script>
-
-
 </body>
 </html>

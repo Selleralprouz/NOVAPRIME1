@@ -1,152 +1,131 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Registro del Tutor | NOVA PRIME</title>
-<link rel="stylesheet" href="../style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro del Tutor | NOVA PRIME</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body class="auth-page">
 
 <div class="auth-container">
+    <img src="../assets/images/nova-prime-logo.png" alt="NOVA PRIME Logo" class="logo" style="display:block; margin:0 auto 20px auto; width:140px;">
+    
+    <h2>Registro del Tutor Legal</h2>
+    <p class="subtitle">Crear cuenta como padre, madre o tutor responsable</p>
 
-<h2>Registro del Tutor Legal</h2>
-<p class="subtitle">
-Crear cuenta como padre, madre o tutor responsable
-</p>
+    <div class="form-group">
+        <input type="text" id="tutorName" placeholder="Nombre completo del tutor">
+    </div>
 
-<div class="form-group">
-<input type="text" id="tutorName" placeholder="Nombre completo del tutor">
-</div>
+    <div class="form-group">
+        <input type="email" id="tutorEmail" placeholder="Correo electrónico">
+    </div>
 
-<div class="form-group">
-<input type="email" id="tutorEmail" placeholder="Correo electrónico">
-</div>
+    <div class="form-group">
+        <input type="password" id="tutorPassword" placeholder="Crear contraseña (mínimo 6 caracteres)">
+    </div>
 
-<div class="form-group">
-<input type="password" id="tutorPassword" placeholder="Crear contraseña (mínimo 6 caracteres)">
-</div>
+    <div class="checkbox-group">
+        <label>
+            <input type="checkbox" id="confirmTutor">
+            Declaro bajo protesta que soy tutor legal.
+        </label>
+    </div>
 
-<div class="checkbox-group">
-<label>
-<input type="checkbox" id="confirmTutor">
-Declaro bajo protesta que soy tutor legal.
-</label>
-</div>
+    <div class="checkbox-group">
+        <label>
+            <input type="checkbox" id="acceptLegal">
+            Acepto el <a href="../legal.html" target="_blank">Aviso Legal</a>, la <a href="../privacy.html" target="_blank">Política de Privacidad</a> y los <a href="../terms.html" target="_blank">Términos y Condiciones</a>.
+        </label>
+    </div>
 
-<div class="checkbox-group">
-<label>
-<input type="checkbox" id="acceptLegal">
-Acepto el 
-<a href="../legal.html" target="_blank">Aviso Legal</a>, 
-la <a href="../privacy.html" target="_blank">Política de Privacidad</a> 
-y los <a href="../terms.html" target="_blank">Términos y Condiciones</a>.
-</label>
-</div>
+    <div class="info-box" style="background: #f1f5f9; padding: 10px; border-radius: 8px; font-size: 13px; color: #475569; margin-bottom: 20px;">
+        🔒 La cuenta del menor quedará vinculada a esta cuenta de tutor.
+    </div>
 
-<div class="info-box">
-🔒 La cuenta del menor quedará vinculada a esta cuenta de tutor.
-</div>
+    <button type="button" id="btnRegisterTutor" class="btn-main">
+        Crear cuenta
+    </button>
 
-<button class="btn-main" onclick="registerTutor()">
-Crear cuenta
-</button>
-
-<div class="back-link">
-<a href="age.html">← Volver</a>
-</div>
-
+    <div class="back-link">
+        <a href="age.html">← Volver</a>
+    </div>
 </div>
 
 <script type="module">
+    import { auth, db } from "../firebase.js";
+    import { createUserWithEmailAndPassword, updateProfile, signOut } 
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { setDoc, doc, serverTimestamp } 
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-import { auth, db } from "../firebase.js";
+    async function handleRegister() {
+        console.log("Iniciando proceso de registro...");
 
-import { 
-  createUserWithEmailAndPassword, 
-  updateProfile 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        const nameVal = document.getElementById("tutorName").value.trim();
+        const emailVal = document.getElementById("tutorEmail").value.trim();
+        const passVal = document.getElementById("tutorPassword").value;
+        const confirmCheck = document.getElementById("confirmTutor").checked;
+        const legalCheck = document.getElementById("acceptLegal").checked;
 
-import { 
-  setDoc, 
-  doc 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        // ✅ VALIDACIÓN (Corrected)
+        if (!nameVal || !emailVal || !passVal) {
+            alert("Por favor, rellene todos los campos.");
+            return;
+        }
 
+        if (passVal.length < 6) {
+            alert("¡La contraseña debe tener al menos 6 caracteres!");
+            return;
+        }
 
-window.registerTutor = async function(){
+        if (!confirmCheck || !legalCheck) {
+            alert("¡Debe aceptar los términos y condiciones!");
+            return;
+        }
 
-const name = document.getElementById("tutorName").value.trim();
-const email = document.getElementById("tutorEmail").value.trim();
-const pass = document.getElementById("tutorPassword").value;
-const confirmTutor = document.getElementById("confirmTutor").checked;
-const legal = document.getElementById("acceptLegal").checked;
+        try {
+            // 1. Crear usuario en Firebase Auth
+            const userCredential = await createUserWithEmailAndPassword(auth, emailVal, passVal);
+            const user = userCredential.user;
 
-/* VALIDATION */
-if(!name || !email || !pass){
-alert("Completa todos los campos.");
-return;
-}
+            // 2. Actualizar perfil con el nombre
+            await updateProfile(user, { displayName: nameVal });
 
-if(pass.length < 6){
-alert("La contraseña debe tener mínimo 6 caracteres.");
-return;
-}
+            // 3. Guardar en Firestore - ROLNI "student" QILDIM (Adult kabi bitta joyga kirishi uchun)
+            await setDoc(doc(db, "users", user.uid), {
+                uid: user.uid,
+                name: nameVal,
+                email: emailVal,
+                role: "student", // ✅ Muhim: Adult bilan bitta dashboardga kirishi uchun
+                type: "tutor",   // Lekin turi baribir tutor bo'lib qoladi
+                createdAt: serverTimestamp()
+            });
 
-if(!confirmTutor){
-alert("Debes confirmar que eres tutor legal.");
-return;
-}
+            alert("¡Registro completado con éxito! ✅");
+ // 🔥 Tizimdan chiqaramiz va login sahifasiga yuboramiz
+            await signOut(auth);
+            window.location.href = "login.html";
 
-if(!legal){
-alert("Debes aceptar los términos.");
-return;
-}
+        } catch (error) {
+            console.error("Error:", error.code);
+            if (error.code === "auth/email-already-in-use") {
+                alert("Este correo electrónico ya está registrado.");
+            } else {
+                alert("Error: " + error.message);
+            }
+        }
+    }
 
-try{
-
-/* 🔐 CREATE USER */
-const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-
-/* 👤 SAVE NAME */
-await updateProfile(userCredential.user, {
-displayName: name
-});
-
-/* 🧠 SAVE TO FIRESTORE (ENG MUHIM) */
-await setDoc(doc(db, "users", userCredential.user.uid), {
-name: name,
-email: email,
-role: "student",   // 🔥 tutor ham student
-type: "tutor",
-createdAt: new Date()
-});
-
-/* SUCCESS */
-alert("Cuenta creada correctamente ✅");
-
-/* REDIRECT */
-window.location.href = "../student/index.html";
-
-}catch(error){
-
-if (error.code === "auth/email-already-in-use") {
-alert("Este correo ya está registrado ❗️");
-}
-else if (error.code === "auth/weak-password") {
-alert("La contraseña es muy débil ❗️");
-}
-else if (error.code === "auth/invalid-email") {
-alert("Correo inválido ❗️");
-}
-else{
-alert("Error: " + error.message);
-}
-
-}
-
-}
-
+    // Botón event listener
+    window.addEventListener("DOMContentLoaded", () => {
+        const btn = document.getElementById("btnRegisterTutor");
+        if (btn) {
+            btn.addEventListener("click", handleRegister);
+        }
+    });
 </script>
 </body>
 </html>

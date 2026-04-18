@@ -4,89 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Progress | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.dark-toggle{
-cursor:pointer;
-font-size:20px;
-margin-left:auto;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-body.dark .card{
-background:#1e293b;
-color:#e5e7eb;
-}
-
-.progress-bar{
-background:#e5e7eb;
-height:10px;
-border-radius:10px;
-overflow:hidden;
-margin:10px 0;
-}
-
-.progress-fill{
-background:#3b82f6;
-height:100%;
-}
-
-.stat-box{
-background:#111827;
-color:#fff;
-padding:12px;
-border-radius:10px;
-margin-bottom:10px;
-}
-
-.big-number{
-font-size:22px;
-font-weight:700;
-}
-
-.card{
-border:1px solid #e5e7eb;
-transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-4px);
-box-shadow:0 8px 18px rgba(0,0,0,0.08);
-}
-
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px;}
+body.dark .topbar{background:#1e293b;}
+.dark-toggle{cursor:pointer; font-size:20px; margin-left:auto;}
+body.dark{background:#0f172a; color:#e5e7eb;}
+body.dark .card{background:#1e293b; color:#e5e7eb;}
+.progress-bar{background:#e5e7eb; height:10px; border-radius:10px; overflow:hidden; margin:10px 0;}
+.progress-fill{background:#3b82f6; height:100%;}
+.stat-box{background:#111827; color:#fff; padding:12px; border-radius:10px; margin-bottom:10px;}
+.big-number{font-size:22px; font-weight:700;}
+.card{border:1px solid #e5e7eb; transition:0.3s;}
+.card:hover{transform:translateY(-4px); box-shadow:0 8px 18px rgba(0,0,0,0.08);}
 </style>
 </head>
-
 <body class="student-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="index.html">🏠 Dashboard</a></li>
 <li><a href="courses.html">📚 My Courses</a></li>
 <li><a href="lessons.html">🎓 Level / Lesson</a></li>
@@ -104,252 +43,114 @@ box-shadow:0 8px 18px rgba(0,0,0,0.08);
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="support.html">❓ Help / Support</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Log out</a></li>
 </ul>
-
 </aside>
 
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
-
 <h1>📊 My Progress</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
 
 <section class="cards">
-
-<div class="card">
-
-<h3>Overall Course Progress</h3>
-
-<div class="progress-bar">
-<div class="progress-fill" id="overallProgress" style="width:0%"></div>
-</div>
-
-<p><span id="overallText">0%</span> completed</p>
-
-</div>
-
-<div class="card">
-
-<h3>Lessons Completed</h3>
-
-<div class="stat-box">
-<div class="big-number" id="lessonsCompleted">0</div>
-Lessons finished
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Quiz Average</h3>
-
-<div class="stat-box">
-<div class="big-number" id="quizAverage">0%</div>
-Average performance
-</div>
-
-</div>
-
-<!-- CLIENT METRICS ADDED -->
-
-<div class="card">
-
-<h3>Points</h3>
-
-<div class="stat-box">
-<div class="big-number" id="pointsBox">0</div>
-Total points earned
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Streak</h3>
-
-<div class="stat-box">
-<div class="big-number" id="streakBox">0</div>
-Days learning streak
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Achievements</h3>
-
-<div class="stat-box">
-<div class="big-number" id="achievementsBox">0</div>
-Unlocked achievements
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Goals</h3>
-
-<div class="stat-box">
-Weekly goal: <span id="weeklyGoal">0</span> lessons
-</div>
-
-<div class="stat-box">
-Monthly goal: <span id="monthlyGoal">0</span> lessons
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Recent Activity</h3>
-
-<div id="recentActivity"></div>
-
-</div>
-
+<div class="card"><h3>Overall Course Progress</h3><div class="progress-bar"><div class="progress-fill" id="overallProgress" style="width:0%"></div></div><p><span id="overallText">0%</span> completed</p></div>
+<div class="card"><h3>Lessons Completed</h3><div class="stat-box"><div class="big-number" id="lessonsCompleted">0</div>Lessons finished</div></div>
+<div class="card"><h3>Quiz Average</h3><div class="stat-box"><div class="big-number" id="quizAverage">0%</div>Average performance</div></div>
+<div class="card"><h3>Points</h3><div class="stat-box"><div class="big-number" id="pointsBox">0</div>Total points earned</div></div>
+<div class="card"><h3>Streak</h3><div class="stat-box"><div class="big-number" id="streakBox">0</div>Days learning streak</div></div>
+<div class="card"><h3>Achievements</h3><div class="stat-box"><div class="big-number" id="achievementsBox">0</div>Unlocked achievements</div></div>
+<div class="card"><h3>Goals</h3><div class="stat-box">Weekly goal: <span id="weeklyGoal">5</span> lessons</div><div class="stat-box">Monthly goal: <span id="monthlyGoal">20</span> lessons</div></div>
+<div class="card"><h3>Recent Activity</h3><div id="recentActivity"></div></div>
 </section>
-
 </main>
-
 </div>
 
+<!-- UI SCRIPT -->
 <script>
-
-/* USER */
-
-const user = JSON.parse(localStorage.getItem("novaUser"));
-
-if(!user){
-window.location.href="../index.html";
-}
-
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
-/* SIDEBAR */
-
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
-});
-
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
-/* DARK MODE */
-
+const menuBtn=document.querySelector(".menu-btn"), sidebar=document.querySelector(".sidebar"), overlay=document.querySelector(".overlay");
+menuBtn.addEventListener("click",()=>{ sidebar.classList.toggle("show"); overlay.classList.toggle("show"); });
+overlay.addEventListener("click",()=>{ sidebar.classList.remove("show"); overlay.classList.remove("show"); });
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
 let btn=document.getElementById("darkBtn");
-
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-
-}
-
-function loadMode(){
-
-let saved=localStorage.getItem("novaMode");
-
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
-}
-
-}
-
-loadMode();
-
-/* ACTIVE MENU */
-
+if(localStorage.getItem("novaMode")==="dark"){ document.body.classList.add("dark"); document.getElementById("darkBtn").textContent="☀️"; }
 const currentPage = window.location.pathname.split("/").pop();
-document.querySelectorAll(".sidebar a").forEach(link => {
-
-if(link.getAttribute("href") === currentPage){
-link.parentElement.classList.add("active");
-}
-
-});
-
-/* PROGRESS SYSTEM */
-
-let history = JSON.parse(localStorage.getItem("novaHistory")) || [];
-
-let lessons = history.length;
-
-let quizScore = localStorage.getItem("lastQuizScore") || 0;
-
-let overall = Math.min(lessons * 5, 100);
-
-document.getElementById("overallProgress").style.width = overall + "%";
-document.getElementById("overallText").textContent = overall + "%";
-document.getElementById("lessonsCompleted").textContent = lessons;
-document.getElementById("quizAverage").textContent = quizScore + "%";
-
-/* CLIENT METRICS */
-
-let points = localStorage.getItem("novaPoints") || 0;
-document.getElementById("pointsBox").textContent = points;
-
-let streak = localStorage.getItem("novaStreak") || 1;
-document.getElementById("streakBox").textContent = streak;
-
-let achievements = localStorage.getItem("novaAchievements") || 0;
-document.getElementById("achievementsBox").textContent = achievements;
-
-document.getElementById("weeklyGoal").textContent = 5;
-document.getElementById("monthlyGoal").textContent = 20;
-
-/* RECENT ACTIVITY */
-
-let activityBox = document.getElementById("recentActivity");
-
-if(history.length === 0){
-
-activityBox.innerHTML = "<p>No recent activity.</p>";
-
-}else{
-
-history.slice(-5).reverse().forEach(item=>{
-
-activityBox.innerHTML += `
-<div style="padding:6px 0;border-bottom:1px solid #eee;">
-Activity: ${item.type} — ${new Date(item.date).toLocaleDateString()}
-</div>
-`;
-
-});
-
-}
-
+document.querySelectorAll(".sidebar a").forEach(link => { if(link.getAttribute("href") === currentPage) link.parentElement.classList.add("active"); });
 </script>
 
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { auth, db } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc, collection, query, where, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let studentId = null;
+
+onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = "../index.html"; return; }
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists() && userDoc.data().role === "student") {
+        studentId = user.uid;
+        loadProgress(userDoc.data());
+    } else { window.location.href = "../index.html"; }
+});
+
+async function loadProgress(userData) {
+    // Asosiy statistika
+    const completedLessons = userData.completedLessons ? Object.keys(userData.completedLessons).length : 0;
+    const points = userData.points || 0;
+    const streak = userData.streak || 0;
+    const achievements = userData.achievements || 0;
+    const level = userData.level || 'A1';
+    
+    // Overall progress (level bo'yicha)
+    const levelProgress = { 'A1': 25, 'A2': 50, 'B1': 75, 'B2': 100 };
+    const overall = levelProgress[level] || Math.min(completedLessons * 5, 100);
+    
+    document.getElementById("overallProgress").style.width = overall + "%";
+    document.getElementById("overallText").textContent = overall + "%";
+    document.getElementById("lessonsCompleted").textContent = completedLessons;
+    document.getElementById("pointsBox").textContent = points;
+    document.getElementById("streakBox").textContent = streak;
+    document.getElementById("achievementsBox").textContent = achievements;
+    
+    // Quiz average
+    const quizSnap = await getDocs(query(collection(db, "quiz_results"), where("studentId", "==", studentId)));
+    let totalScore = 0, count = 0;
+    quizSnap.forEach(d => { totalScore += d.data().score || 0; count++; });
+    const avg = count > 0 ? Math.round(totalScore / count) : 0;
+    document.getElementById("quizAverage").textContent = avg + "%";
+    
+    // Goals
+    const weekLessons = completedLessons % 5;
+    document.getElementById("weeklyGoal").textContent = weekLessons + "/5";
+    document.getElementById("monthlyGoal").textContent = completedLessons + "/20";
+    
+    // Recent Activity
+    const activityBox = document.getElementById("recentActivity");
+    activityBox.innerHTML = "";
+    
+    const activitySnap = await getDocs(query(collection(db, "activity_log"), where("studentId", "==", studentId), orderBy("createdAt", "desc"), limit(5)));
+    if (activitySnap.empty) {
+        activityBox.innerHTML = "<p>No recent activity.</p>";
+    } else {
+        activitySnap.forEach(d => {
+            const data = d.data();
+            activityBox.innerHTML += `<div style="padding:6px 0;border-bottom:1px solid #eee;">${data.type} — ${data.createdAt?.toDate().toLocaleDateString() || 'Today'}</div>`;
+        });
+    }
+}
+
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
+});
+</script>
 </body>
 </html>

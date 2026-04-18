@@ -1,379 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Activity Builder | NOVA PRIME ADMIN</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-body{
-margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:#f1f5f9;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-.dashboard{
-display:flex;
-min-height:100vh;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-width:260px;
-background:linear-gradient(180deg,#0f172a,#020617);
-color:white;
-padding:20px;
-}
-
-.sidebar h2{
-margin-bottom:30px;
-}
-
-.sidebar ul{
-list-style:none;
-padding:0;
-}
-
-.sidebar li{
-margin-bottom:10px;
-}
-
-.sidebar a{
-color:white;
-text-decoration:none;
-padding:10px;
-display:block;
-border-radius:8px;
-transition:0.2s;
-}
-
-.sidebar a:hover{
-background:#1e293b;
-}
-
-/* ACTIVE MENU */
-
-.sidebar a.active{
-background:#2563eb;
-}
-
-/* CONTENT */
-
-.content{
-flex:1;
-padding:30px;
-}
-
-/* TOPBAR */
-
-.topbar{
-display:flex;
-align-items:center;
-margin-bottom:25px;
-}
-
-.menu-btn{
-font-size:22px;
-cursor:pointer;
-margin-right:15px;
-}
-
-.dark-toggle{
-margin-left:auto;
-cursor:pointer;
-font-size:20px;
-}
-
-/* FILTERS */
-
-.filters{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-margin-bottom:20px;
-}
-
-.filters input,
-.filters select{
-padding:8px;
-border-radius:6px;
-border:1px solid #ccc;
-}
-
-/* BUTTON */
-
-.create{
-background:#22c55e;
-color:white;
-border:none;
-padding:8px 14px;
-border-radius:6px;
-cursor:pointer;
-margin-bottom:15px;
-}
-
-/* CONTENT BLOCKS */
-
-.blocks{
-display:flex;
-gap:10px;
-margin-bottom:20px;
-flex-wrap:wrap;
-}
-
-.blocks button{
-padding:8px 12px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-/* TABLE */
-
-.table{
-width:100%;
-border-collapse:collapse;
-background:white;
-border-radius:10px;
-overflow:hidden;
-}
-
-body.dark .table{
-background:#1e293b;
-}
-
-.table th,
-.table td{
-padding:12px;
-border-bottom:1px solid #e2e8f0;
-text-align:left;
-}
-
-.actions button{
-padding:6px 10px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-margin-right:5px;
-}
-
-.edit{background:#3b82f6;color:white;}
-.delete{background:#ef4444;color:white;}
-.preview{background:#22c55e;color:white;}
-
-/* MOBILE */
-
+body{margin:0; font-family:Arial, Helvetica, sans-serif; background:#f1f5f9;}
+body.dark{background:#0f172a; color:#e5e7eb;}
+.dashboard{display:flex; min-height:100vh;}
+.sidebar{width:260px; background:linear-gradient(180deg,#0f172a,#020617); color:white; padding:20px;}
+.sidebar h2{margin-bottom:30px;}
+.sidebar ul{list-style:none; padding:0;}
+.sidebar li{margin-bottom:10px;}
+.sidebar a{color:white; text-decoration:none; padding:10px; display:block; border-radius:8px; transition:0.2s;}
+.sidebar a:hover{background:#1e293b;}
+.sidebar a.active{background:#2563eb;}
+.content{flex:1; padding:30px;}
+.topbar{display:flex; align-items:center; margin-bottom:25px;}
+.menu-btn{font-size:22px; cursor:pointer; margin-right:15px;}
+.dark-toggle{margin-left:auto; cursor:pointer; font-size:20px;}
+.filters{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;}
+.filters input, .filters select{padding:8px; border-radius:6px; border:1px solid #ccc;}
+.create{background:#22c55e; color:white; border:none; padding:8px 14px; border-radius:6px; cursor:pointer; margin-bottom:15px;}
+.blocks{display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;}
+.blocks button{padding:8px 12px; border:none; border-radius:6px; cursor:pointer;}
+.table{width:100%; border-collapse:collapse; background:white; border-radius:10px; overflow:hidden;}
+body.dark .table{background:#1e293b;}
+.table th, .table td{padding:12px; border-bottom:1px solid #e2e8f0; text-align:left;}
+.actions button{padding:6px 10px; border:none; border-radius:6px; cursor:pointer; margin-right:5px;}
+.edit{background:#3b82f6; color:white;}
+.delete{background:#ef4444; color:white;}
+.preview{background:#22c55e; color:white;}
 @media(max-width:900px){
-
-.sidebar{
-position:fixed;
-left:-260px;
-top:0;
-height:100%;
-transition:0.3s;
+.sidebar{position:fixed; left:-260px; top:0; height:100%; transition:0.3s; z-index:1000;}
+.sidebar.show{left:0;}
 }
-
-.sidebar.show{
-left:0;
-}
-
-}
-
 </style>
-
 </head>
-
 <body>
-
 <div class="dashboard">
-
 <aside class="sidebar" id="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="dashboard.html">🏠 Dashboard</a></li>
 <li><a href="users.html">👥 Users</a></li>
 <li><a href="teachers.html">👨‍🏫 Teachers</a></li>
 <li><a href="courses.html">📚 Course Manager</a></li>
-
 <li><a href="activity-builder.html" class="active">🛠 Activity Builder</a></li>
-
 <li><a href="learning-blocks.html">🧱 Learning Blocks</a></li>
 <li><a href="skill-lab.html">🧠 Skill Lab</a></li>
 <li><a href="ai-practice.html">🤖 AI Practice</a></li>
 <li><a href="games.html">🎮 Games</a></li>
 <li><a href="assessments.html">📝 Assessments</a></li>
 <li><a href="analytics.html">📊 Analytics</a></li>
-
 <li><a href="banner-manager.html">📢 Banner Manager</a></li>
-
 <li><a href="certificates.html">🏆 Certificates</a></li>
 <li><a href="donations.html">💰 Payments</a></li>
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logout()">🚪 Logout</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Logout</a></li>
 </ul>
-
 </aside>
 
 <main class="content">
-
 <header class="topbar">
-
 <div class="menu-btn" onclick="toggleMenu()">☰</div>
-
 <h1>Activity Builder</h1>
-
-<div class="dark-toggle" onclick="toggleMode()">🌙</div>
-
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
 </header>
 
 <div class="filters">
-
-<input type="text" placeholder="Search activity...">
-
-<select>
-<option>All Types</option>
+<input type="text" id="searchInput" placeholder="Search activity...">
+<select id="typeFilter">
+<option value="">All Types</option>
 <option>Multiple Choice</option>
 <option>Drag & Drop</option>
 <option>Translation</option>
 <option>Listening</option>
-
-<!-- 🔥 QO‘SHILDI -->
 <option>True / False</option>
 <option>Scramble</option>
 <option>Reading + Questions</option>
 <option>Fill in the Blank</option>
-
 </select>
-
-<select>
-<option>All Courses</option>
-<option>Basic English</option>
-<option>Intermediate English</option>
+<select id="courseFilter">
+<option value="">All Courses</option>
 </select>
-
 </div>
 
-<button class="create">+ Create Activity</button>
+<button class="create" onclick="window.showCreateModal()">+ Create Activity</button>
+
 <h3>Content Blocks</h3>
-
 <div class="blocks">
-
 <button>Vocabulary 🔊</button>
 <button>Grammar 🔊</button>
 <button>Help 🔊</button>
-
-<!-- 🔥 QO‘SHILDI -->
 <button>True / False</button>
 <button>Scramble</button>
 <button>Reading + Q</button>
 <button>Fill Blank</button>
-
 </div>
 
 <table class="table">
-
 <thead>
-<tr>
-<th>Activity</th>
-<th>Type</th>
-<th>Course</th>
-<th>Level</th>
-<th>Actions</th>
-</tr>
+<tr><th>Activity</th><th>Type</th><th>Course</th><th>Level</th><th>Actions</th></tr>
 </thead>
-
-<tbody>
-
-<tr>
-<td>Vocabulary Match</td>
-<td>Drag & Drop</td>
-<td>Basic English</td>
-<td>A1</td>
-<td class="actions">
-<button class="preview">Preview</button>
-<button class="edit">Edit</button>
-<button class="delete">Delete</button>
-</td>
-</tr>
-
-<tr>
-<td>Grammar Quiz</td>
-<td>Multiple Choice</td>
-<td>Intermediate English</td>
-<td>B1</td>
-<td class="actions">
-<button class="preview">Preview</button>
-<button class="edit">Edit</button>
-<button class="delete">Delete</button>
-</td>
-</tr>
-
-<!-- 🔥 MISOL -->
-<tr>
-<td>Reading Practice</td>
-<td>Reading + Questions</td>
-<td>Basic English</td>
-<td>A2</td>
-<td class="actions">
-<button class="preview">Preview</button>
-<button class="edit">Edit</button>
-<button class="delete">Delete</button>
-</td>
-</tr>
-
+<tbody id="activitiesTableBody">
+<tr><td colspan="5" style="text-align:center;">Loading activities...</td></tr>
 </tbody>
-
 </table>
 
+<!-- Modal -->
+<div id="createModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2000;">
+<div style="background:white; width:400px; margin:100px auto; padding:20px; border-radius:12px;">
+<h3>Create Activity</h3>
+<input type="text" id="activityTitle" placeholder="Title" style="width:100%; padding:10px; margin:10px 0;">
+<select id="activityType" style="width:100%; padding:10px; margin:10px 0;">
+<option>Multiple Choice</option><option>Drag & Drop</option><option>Translation</option>
+<option>Listening</option><option>True / False</option><option>Scramble</option>
+<option>Reading + Questions</option><option>Fill in the Blank</option>
+</select>
+<select id="activityCourse" style="width:100%; padding:10px; margin:10px 0;"></select>
+<input type="text" id="activityLevel" placeholder="Level (A1, B1...)" style="width:100%; padding:10px; margin:10px 0;">
+<button onclick="window.createActivity()" style="background:#22c55e; color:white; padding:10px; border:none; border-radius:6px; margin-right:10px;">Save</button>
+<button onclick="window.closeModal()" style="background:#ef4444; color:white; padding:10px; border:none; border-radius:6px;">Cancel</button>
+</div>
+</div>
 </main>
-
 </div>
 
+<!-- UI SCRIPT -->
 <script>
-
-if(localStorage.getItem("nova-theme")==="dark"){
-document.body.classList.add("dark");
+// ADMIN HIMOYA
+if(localStorage.getItem("isAdminLoggedIn") !== "true"){
+    window.location.href = "../admin-login.html";
 }
 
+function toggleMenu(){ document.getElementById("sidebar").classList.toggle("show"); }
 function toggleMode(){
 document.body.classList.toggle("dark");
-
-if(document.body.classList.contains("dark")){
-localStorage.setItem("nova-theme","dark");
-}else{
-localStorage.setItem("nova-theme","light");
+let btn=document.getElementById("darkBtn");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-}
+if(localStorage.getItem("novaMode")==="dark"){ document.body.classList.add("dark"); document.getElementById("darkBtn").textContent="☀️"; }
 
-function toggleMenu(){
-document.getElementById("sidebar").classList.toggle("show");
-}
-
-function logout(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("isAdminLoggedIn");
+    window.location.href = "../admin-login.html";
+});
 </script>
 
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { db } from "../firebase.js";
+import { collection, addDoc, deleteDoc, doc, onSnapshot, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let allActivities = [];
+
+loadCourses();
+loadActivities();
+
+async function loadCourses() {
+    const courseSelect = document.getElementById("activityCourse");
+    const filterSelect = document.getElementById("courseFilter");
+    const snapshot = await getDocs(collection(db, "courses"));
+    courseSelect.innerHTML = '<option value="">Select Course</option>';
+    filterSelect.innerHTML = '<option value="">All Courses</option>';
+    snapshot.forEach(doc => {
+        const data = doc.data();
+        const option = `<option value="${doc.id}">${data.title || doc.id}</option>`;
+        courseSelect.innerHTML += option;
+        filterSelect.innerHTML += option;
+    });
+}
+
+function loadActivities() {
+    onSnapshot(collection(db, "activities"), (snapshot) => {
+        allActivities = [];
+        snapshot.forEach(doc => {
+            allActivities.push({ id: doc.id, ...doc.data() });
+        });
+        renderActivities();
+    });
+}
+
+function renderActivities() {
+    const tbody = document.getElementById("activitiesTableBody");
+    const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+    const typeFilter = document.getElementById("typeFilter").value;
+    const courseFilter = document.getElementById("courseFilter").value;
+    
+    let filtered = allActivities.filter(a => {
+        const titleMatch = (a.title || "").toLowerCase().includes(searchTerm);
+        const typeMatch = !typeFilter || a.type === typeFilter;
+        const courseMatch = !courseFilter || a.courseId === courseFilter;
+        return titleMatch && typeMatch && courseMatch;
+    });
+    
+    tbody.innerHTML = "";
+    if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No activities found</td></tr>';
+        return;
+    }
+    
+    filtered.forEach(a => {
+        tbody.innerHTML += `
+        <tr>
+            <td>${a.title || '-'}</td>
+            <td>${a.type || '-'}</td>
+            <td>${a.courseName || '-'}</td>
+            <td>${a.level || '-'}</td>
+            <td class="actions">
+                <button class="preview" onclick="window.previewActivity('${a.id}')">Preview</button>
+                <button class="delete" onclick="window.deleteActivity('${a.id}')">Delete</button>
+            </td>
+        </tr>`;
+    });
+}
+
+window.showCreateModal = () => document.getElementById("createModal").style.display = "block";
+window.closeModal = () => document.getElementById("createModal").style.display = "none";
+
+window.createActivity = async () => {
+    const title = document.getElementById("activityTitle").value.trim();
+    const type = document.getElementById("activityType").value;
+    const courseId = document.getElementById("activityCourse").value;
+    const level = document.getElementById("activityLevel").value.trim();
+    
+    if (!title || !courseId) { alert("Title and Course required"); return; }
+    
+    const courseSnap = await getDocs(collection(db, "courses"));
+    let courseName = "";
+    courseSnap.forEach(doc => { if (doc.id === courseId) courseName = doc.data().title; });
+    
+    await addDoc(collection(db, "activities"), {
+        title, type, courseId, courseName, level: level || "A1",
+        createdAt: serverTimestamp()
+    });
+    
+    window.closeModal();
+    document.getElementById("activityTitle").value = "";
+};
+
+window.deleteActivity = async (id) => {
+    if (confirm("Delete?")) await deleteDoc(doc(db, "activities", id));
+};
+
+window.previewActivity = (id) => alert("Preview ID: " + id);
+
+document.getElementById("searchInput").addEventListener("input", renderActivities);
+document.getElementById("typeFilter").addEventListener("change", renderActivities);
+document.getElementById("courseFilter").addEventListener("change", renderActivities);
+</script>
 </body>
 </html>

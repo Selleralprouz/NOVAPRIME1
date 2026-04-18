@@ -1,280 +1,313 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Courses | NOVA PRIME</title>
-<link rel="stylesheet" href="../style.css">
-
-<style>
-.dark-toggle{
-cursor:pointer;
-font-size:20px;
-margin-left:auto;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-body.dark .card{
-background:#1e293b;
-color:#e5e7eb;
-}
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses | NOVA PRIME</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* Active menyu - ko'k yonib turish */
+        .sidebar ul li.active a {
+            background: #2563eb !important;
+            color: white !important;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+        }
+        
+        .sidebar ul li a {
+            display: block;
+            padding: 10px 14px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar ul li a:hover {
+            background: #1e293b;
+            color: white;
+        }
+        
+        .dark-toggle {
+            cursor: pointer;
+            font-size: 20px;
+            margin-left: auto;
+        }
+        
+        body.dark {
+            background: #0f172a;
+            color: #e5e7eb;
+        }
+        
+        body.dark .card {
+            background: #1e293b;
+            color: #e5e7eb;
+        }
+        
+        body.dark .topbar {
+            background: #1e293b;
+        }
+        
+        .topbar {
+            background: #f1f5f9;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .progress-bar {
+            background: #e5e7eb;
+            height: 10px;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: #3b82f6;
+            height: 100%;
+            width: 0%;
+            transition: 0.3s;
+        }
+        
+        .btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        
+        .btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 15px 0;
+        }
+    </style>
 </head>
-
 <body class="student-page">
-
-<div class="overlay"></div>
-
-<div class="dashboard">
-
-<!-- SIDEBAR -->
-<aside class="sidebar">
-
-<h2>NOVA PRIME</h2>
-
-<ul>
-
-<li><a href="index.html">🏠 Dashboard</a></li>
-<li><a href="courses.html">📚 My Courses</a></li>
-<li><a href="lessons.html">🎓 Level / Lesson</a></li>
-<li><a href="agenda.html">📅 My Agenda</a></li>
-<li><a href="library.html">📖 Library</a></li>
-<li><a href="ai.html">🧠 Skill Lab</a></li>
-<li><a href="homework.html">📝 Tasks</a></li>
-<li><a href="quiz.html">🧠 Assessments (Quiz)</a></li>
-<li><a href="ai-practice.html">🤖 Practice with AI</a></li>
-<li><a href="live.html">🎙 Live Practice Challenge</a></li>
-<li><a href="panic.html">🚨 Panic Button – Speak</a></li>
-<li><a href="progress.html">📊 My Progress</a></li>
-<li><a href="game.html">🎮 Educational Games</a></li>
-<li><a href="certificates.html">🏆 Certificates</a></li>
-<li><a href="messages.html">💬 Messages</a></li>
-<li><a href="support.html">❓ Help / Support</a></li>
-<li><a href="settings.html">⚙️ Settings</a></li>
-
-<hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
-</ul>
-
-</aside>
-
-
-<!-- MAIN -->
-<main class="content">
-
-<header class="topbar">
-
-<button class="menu-btn">☰</button>
-
-<h1>📚 My Courses</h1>
-
-<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
-</header>
-
-
-<section class="cards">
-
-<!-- COURSE 1 -->
-
-<div class="card">
-
-<h3>Pre-A1 – Starter</h3>
-
-<p><strong>Curso activo:</strong> Pre-A1 – Starter</p>
-
-<p><strong>Nivel actual:</strong> Pre-A1</p>
-
-<p><strong>Descripción del curso:</strong> Basic foundations of the English language.</p>
-
-<p><strong>Profesor / Tutor:</strong> NOVA PRIME Team</p>
-
-<p><strong>20 lessons</strong></p>
-
-<div class="progress-bar">
-<div class="progress-fill" style="width:45%"></div>
-</div>
-
-<p><strong>Progreso del curso:</strong> 45%</p>
-
-<button class="btn" onclick="goLessons()">
-Enter Course
-</button>
-
-</div>
-
-
-<!-- COURSE 2 -->
-
-<div class="card">
-
-<h3>A1 – Beginner</h3>
-
-<p><strong>Curso activo:</strong> A1 – Beginner</p>
-
-<p><strong>Nivel actual:</strong> A1</p>
-
-<p><strong>Descripción del curso:</strong> Essential vocabulary and simple structures.</p>
-
-<p><strong>Profesor / Tutor:</strong> NOVA PRIME Team</p>
-
-<p><strong>25 lessons</strong></p>
-
-<div class="progress-bar">
-<div class="progress-fill" style="width:30%"></div>
-</div>
-
-<p><strong>Progreso del curso:</strong> 30%</p>
-
-<button class="btn" onclick="goLessons()">
-Enter Course
-</button>
-
-</div>
-
-
-<!-- COURSE 3 -->
-
-<div class="card">
-
-<h3>A2 – Elementary</h3>
-
-<p><strong>Curso activo:</strong> A2 – Elementary</p>
-
-<p><strong>Nivel actual:</strong> A2</p>
-
-<p><strong>Descripción del curso:</strong> Basic communication in real situations.</p>
-
-<p><strong>Profesor / Tutor:</strong> NOVA PRIME Team</p>
-
-<p><strong>30 lessons</strong></p>
-
-<div class="progress-bar">
-<div class="progress-fill" style="width:10%"></div>
-</div>
-
-<p><strong>Progreso del curso:</strong> 10%</p>
-
-<button class="btn" onclick="goLessons()">
-Enter Course
-</button>
-
-</div>
-
-</section>
-
-</main>
-</div>
-
-
-<script>
-
-/* USER CHECK */
-
-const user = JSON.parse(localStorage.getItem("novaUser"));
-
-if(!user){
-window.location.href="../index.html";
-}
-
-
-/* LOGOUT */
-
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
-
-/* SIDEBAR MOBILE */
-
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
-});
-
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
-
-/* DARK MODE */
-
-function toggleMode(){
-
-document.body.classList.toggle("dark");
-
-let btn=document.getElementById("darkBtn");
-
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
-}
-
-}
-
-function loadMode(){
-
-let saved=localStorage.getItem("novaMode");
-
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
-}
-
-}
-
-loadMode();
-
-
-/* LESSON BUTTON */
-
-function goLessons(){
-window.location.href="lessons.html";
-}
-
-</script>
-
-<script>
-
-const currentPage = window.location.pathname.split("/").pop();
-
-document.querySelectorAll(".sidebar a").forEach(link => {
-
-if(link.getAttribute("href") === currentPage){
-link.parentElement.classList.add("active");
-}
-
-});
-
-</script>
-
+    <div class="overlay"></div>
+    <div class="dashboard">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <h2>NOVA PRIME</h2>
+            <ul>
+                <li><a href="index.html">🏠 Dashboard</a></li>
+                <li class="active"><a href="courses.html">📚 My Courses</a></li>
+                <li><a href="lessons.html">🎓 Level / Lesson</a></li>
+                <li><a href="agenda.html">📅 My Agenda</a></li>
+                <li><a href="library.html">📖 Library</a></li>
+                <li><a href="ai.html">🧠 Skill Lab</a></li>
+                <li><a href="homework.html">📝 Tasks</a></li>
+                <li><a href="quiz.html">🧠 Assessments (Quiz)</a></li>
+                <li><a href="ai-practice.html">🤖 Practice with AI</a></li>
+                <li><a href="live.html">🎙 Live Practice Challenge</a></li>
+                <li><a href="panic.html">🚨 Panic Button – Speak</a></li>
+                <li><a href="progress.html">📊 My Progress</a></li>
+                <li><a href="game.html">🎮 Educational Games</a></li>
+                <li><a href="certificates.html">🏆 Certificates</a></li>
+                <li><a href="messages.html">💬 Messages</a></li>
+                <li><a href="support.html">❓ Help / Support</a></li>
+                <li><a href="settings.html">⚙️ Settings</a></li>
+                <hr>
+                <li><a href="#" id="logoutLink">🚪 Log out</a></li>
+            </ul>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="content">
+            <header class="topbar">
+                <button class="menu-btn">☰</button>
+                <h1>📚 My Courses</h1>
+                <div class="dark-toggle" id="darkBtn">🌙</div>
+            </header>
+
+            <section class="cards" id="coursesContainer">
+                <p>Loading courses...</p>
+            </section>
+        </main>
+    </div>
+
+    <!-- UI SCRIPT -->
+    <script>
+        // Mobile menu
+        const menuBtn = document.querySelector(".menu-btn");
+        const sidebar = document.querySelector(".sidebar");
+        const overlay = document.querySelector(".overlay");
+        
+        menuBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("show");
+            overlay.classList.toggle("show");
+        });
+        
+        overlay.addEventListener("click", () => {
+            sidebar.classList.remove("show");
+            overlay.classList.remove("show");
+        });
+        
+        // Dark/Light mode
+        function toggleMode() {
+            document.body.classList.toggle("dark");
+            let btn = document.getElementById("darkBtn");
+            if (document.body.classList.contains("dark")) {
+                btn.textContent = "☀️";
+                localStorage.setItem("novaMode", "dark");
+            } else {
+                btn.textContent = "🌙";
+                localStorage.setItem("novaMode", "light");
+            }
+        }
+        
+        const darkBtn = document.getElementById("darkBtn");
+        darkBtn.addEventListener("click", toggleMode);
+        
+        if (localStorage.getItem("novaMode") === "dark") {
+            document.body.classList.add("dark");
+            darkBtn.textContent = "☀️";
+        }
+        
+        // Active menyu - avtomatik
+        const currentPage = window.location.pathname.split("/").pop() || "index.html";
+        document.querySelectorAll(".sidebar a").forEach(link => {
+            const href = link.getAttribute("href");
+            if (href === currentPage) {
+                link.parentElement.classList.add("active");
+            }
+        });
+        
+        // Kursga kirish
+        window.goToLessons = function(courseId) {
+            localStorage.setItem("currentCourse", courseId);
+            window.location.href = "lessons.html";
+        };
+    </script>
+
+    <!-- FIREBASE SCRIPT -->
+    <script type="module">
+        import { auth, db } from "../firebase.js";
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        let studentId = null;
+        let studentData = null;
+
+        // Auth tekshirish
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = "../index.html";
+                return;
+            }
+            
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (userDoc.exists() && userDoc.data().role === "student") {
+                studentId = user.uid;
+                studentData = userDoc.data();
+                await loadCourses();
+            } else {
+                window.location.href = "../index.html";
+            }
+        });
+
+        // Kurslarni yuklash
+        async function loadCourses() {
+            const container = document.getElementById("coursesContainer");
+            container.innerHTML = "<p>⏳ Loading courses...</p>";
+            
+            try {
+                const coursesSnap = await getDocs(collection(db, "courses"));
+                const enrolledCourses = studentData?.enrolledCourses || {};
+                
+                container.innerHTML = "";
+                
+                if (coursesSnap.empty) {
+                    container.innerHTML = "<p>📭 No courses available yet.</p>";
+                    return;
+                }
+                
+                let hasCourses = false;
+                
+                coursesSnap.forEach(courseDoc => {
+                    const course = courseDoc.data();
+                    const courseId = courseDoc.id;
+                    
+                    // Faqat enrolled kurslarni ko'rsatish (agar enrolled bo'sh bo'lmasa)
+                    // Agar enrolledCourses bo'sh bo'lsa, hamma kurslarni ko'rsatamiz
+                    if (Object.keys(enrolledCourses).length > 0 && !enrolledCourses.hasOwnProperty(courseId)) {
+                        return;
+                    }
+                    
+                    hasCourses = true;
+                    const progress = enrolledCourses[courseId] || 0;
+                    const totalLessons = course.totalLessons || 20;
+                    const completedLessons = Math.floor(progress * totalLessons / 100);
+                    
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+                        <h3>${course.title || courseId}</h3>
+                        <p><strong>📊 Level:</strong> ${course.level || 'A1'}</p>
+                        <p><strong>📝 Description:</strong> ${course.description || 'Learn English with NOVA PRIME'}</p>
+                        <p><strong>👨‍🏫 Teacher:</strong> ${course.teacherName || 'NOVA PRIME Team'}</p>
+                        <p><strong>📚 ${totalLessons} lessons</strong> (${completedLessons} completed)</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width:${progress}%"></div>
+                        </div>
+                        <p><strong>📈 Progress:</strong> ${progress}%</p>
+                        <button class="btn" data-course-id="${courseId}">🚀 Enter Course</button>
+                    `;
+                    
+                    const btn = card.querySelector(".btn");
+                    btn.addEventListener("click", () => {
+                        localStorage.setItem("currentCourse", courseId);
+                        window.location.href = "lessons.html";
+                    });
+                    
+                    container.appendChild(card);
+                });
+                
+                if (!hasCourses) {
+                    container.innerHTML = "<p>📭 You are not enrolled in any courses yet.</p>";
+                }
+                
+            } catch (error) {
+                console.error("Error loading courses:", error);
+                container.innerHTML = "<p>❌ Error loading courses. Please try again.</p>";
+            }
+        }
+
+        // Logout
+        document.getElementById("logoutLink").addEventListener("click", (e) => {
+            e.preventDefault();
+            signOut(auth).then(() => {
+                window.location.href = "../index.html";
+            }).catch(error => {
+                console.error("Logout error:", error);
+            });
+        });
+    </script>
 </body>
 </html>

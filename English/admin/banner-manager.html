@@ -1,232 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Banner Manager | NOVA PRIME ADMIN</title>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <style>
-
-body{
-margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:#f1f5f9;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-.dashboard{
-display:flex;
-min-height:100vh;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-width:260px;
-background:linear-gradient(180deg,#0f172a,#020617);
-color:white;
-padding:20px;
-
-display:flex;
-flex-direction:column;
-height:100vh;
-}
-
-.menu-top{
-flex:1;
-overflow-y:auto;
-}
-
-.menu-bottom{
-padding-top:10px;
-border-top:1px solid rgba(255,255,255,0.15);
-margin-top:10px;
-}
-
-.sidebar h2{
-margin-bottom:30px;
-}
-
-.sidebar ul{
-list-style:none;
-padding:0;
-margin:0;
-}
-
-.sidebar li{
-margin-bottom:6px;
-}
-
-.sidebar a{
-color:white;
-text-decoration:none;
-padding:10px;
-display:block;
-border-radius:8px;
-}
-
-.sidebar a:hover{
-background:#1e293b;
-}
-
-.sidebar a.active{
-background:#2563eb;
-}
-
-/* CONTENT */
-
-.content{
-flex:1;
-padding:30px;
-}
-
-.topbar{
-display:flex;
-align-items:center;
-margin-bottom:25px;
-}
-
-.menu-btn{
-font-size:22px;
-cursor:pointer;
-margin-right:15px;
-}
-
-.dark-toggle{
-margin-left:auto;
-cursor:pointer;
-font-size:20px;
-}
-
-/* CARD */
-
-.card{
-background:white;
-padding:20px;
-border-radius:12px;
-margin-bottom:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.05);
-}
-
-body.dark .card{
-background:#1e293b;
-}
-
-/* FORM */
-
-input,select{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:6px;
-border:1px solid #ccc;
-}
-
-button{
-margin-top:15px;
-padding:10px 14px;
-background:#22c55e;
-color:white;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-.btn-blue{
-background:#3b82f6;
-}
-
-.btn-red{
-background:#ef4444;
-}
-
-/* TABLE */
-
-table{
-width:100%;
-border-collapse:collapse;
-background:white;
-border-radius:10px;
-overflow:hidden;
-}
-
-body.dark table{
-background:#1e293b;
-}
-
-th,td{
-padding:12px;
-border-bottom:1px solid #e2e8f0;
-text-align:left;
-}
-
-.status{
-background:#22c55e;
-color:white;
-padding:4px 8px;
-border-radius:6px;
-font-size:12px;
-}
-
-/* CHART */
-
-.chart-box{
-height:280px;
-}
-
-/* MOBILE */
-
+body{margin:0; font-family:Arial, Helvetica, sans-serif; background:#f1f5f9;}
+body.dark{background:#0f172a; color:#e5e7eb;}
+.dashboard{display:flex; min-height:100vh;}
+.sidebar{width:260px; background:linear-gradient(180deg,#0f172a,#020617); color:white; padding:20px; display:flex; flex-direction:column; height:100vh;}
+.menu-top{flex:1; overflow-y:auto;}
+.menu-bottom{padding-top:10px; border-top:1px solid rgba(255,255,255,0.15); margin-top:10px;}
+.sidebar h2{margin-bottom:30px;}
+.sidebar ul{list-style:none; padding:0; margin:0;}
+.sidebar li{margin-bottom:6px;}
+.sidebar a{color:white; text-decoration:none; padding:10px; display:block; border-radius:8px;}
+.sidebar a:hover{background:#1e293b;}
+.sidebar a.active{background:#2563eb;}
+.content{flex:1; padding:30px;}
+.topbar{display:flex; align-items:center; margin-bottom:25px;}
+.menu-btn{font-size:22px; cursor:pointer; margin-right:15px;}
+.dark-toggle{margin-left:auto; cursor:pointer; font-size:20px;}
+.card{background:white; padding:20px; border-radius:12px; margin-bottom:20px; box-shadow:0 10px 25px rgba(0,0,0,0.05);}
+body.dark .card{background:#1e293b;}
+input,select,textarea{width:100%; padding:10px; margin-top:10px; border-radius:6px; border:1px solid #ccc;}
+button{margin-top:15px; padding:10px 14px; background:#22c55e; color:white; border:none; border-radius:6px; cursor:pointer;}
+.btn-blue{background:#3b82f6;}
+.btn-red{background:#ef4444;}
+.btn-preview{background:#f59e0b; color:white; margin-left:5px;}
+table{width:100%; border-collapse:collapse; background:white; border-radius:10px; overflow:hidden;}
+body.dark table{background:#1e293b;}
+th,td{padding:12px; border-bottom:1px solid #e2e8f0; text-align:left;}
+.status{background:#22c55e; color:white; padding:4px 8px; border-radius:6px; font-size:12px;}
+.chart-box{height:280px;}
+.preview-modal{display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:3000; justify-content:center; align-items:center;}
+.preview-content{max-width:800px; max-height:80vh; background:white; padding:20px; border-radius:12px; overflow-y:auto;}
+.preview-content img, .preview-content video{max-width:100%; max-height:60vh; border-radius:8px;}
+.slide-item{border:1px solid #ccc; padding:10px; margin:10px 0; border-radius:8px;}
+.slide-preview{display:flex; gap:10px; align-items:center;}
+.slide-preview img{width:80px; height:60px; object-fit:cover; border-radius:6px;}
+.upload-section{border:1px solid #e2e8f0; padding:15px; border-radius:8px; margin:10px 0;}
+.upload-section h4{margin:0 0 10px 0; color:#2563eb;}
+.recommendation{font-size:12px; color:#6b7280; margin-left:10px;}
 @media(max-width:900px){
-
-.sidebar{
-position:fixed;
-left:-260px;
-top:0;
-height:100%;
-transition:.3s;
+.sidebar{position:fixed; left:-260px; top:0; height:100%; transition:.3s; z-index:1000;}
+.sidebar.show{left:0;}
+.content{padding:20px;}
+table{display:block; overflow-x:auto;}
 }
-
-.sidebar.show{
-left:0;
-}
-
-.content{
-padding:20px;
-}
-
-table{
-display:block;
-overflow-x:auto;
-}
-
-}
-
 </style>
-
 </head>
-
 <body>
-
 <div class="dashboard">
-
-<!-- SIDEBAR -->
-
 <aside class="sidebar" id="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <div class="menu-top">
-
 <ul>
-
 <li><a href="dashboard.html">🏠 Dashboard</a></li>
 <li><a href="users.html">👥 Users</a></li>
 <li><a href="teachers.html">👨‍🏫 Teachers</a></li>
@@ -241,211 +71,284 @@ overflow-x:auto;
 <li><a href="certificates.html">🏆 Certificates</a></li>
 <li><a href="donations.html">💰 Payments</a></li>
 <li><a href="messages.html">💬 Messages</a></li>
-
-<li><a href="banner-manager.html">📢 Banner Manager</a></li>
-
+<li><a href="banner-manager.html" class="active">📢 Banner Manager</a></li>
 </ul>
-
 </div>
-
 <div class="menu-bottom">
-
 <ul>
-
 <li><a href="settings.html">⚙️ Settings</a></li>
-<li><a href="#" onclick="logout()">🚪 Logout</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Logout</a></li>
 </ul>
-
 </div>
-
 </aside>
 
-<!-- MAIN -->
-
 <main class="content">
-
 <header class="topbar">
-
 <div class="menu-btn" onclick="toggleMenu()">☰</div>
-
 <h1>Banner Manager</h1>
-
-<div class="dark-toggle" onclick="toggleMode()">🌙</div>
-
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
 </header>
 
-<!-- CREATE -->
-
 <div class="card">
-
-<h3>Create Banner</h3>
-
+<h3>Create Banner Campaign</h3>
 <label>Audience</label>
 <select id="audience">
 <option value="all">All Users</option>
 <option value="students">Students</option>
 <option value="teachers">Teachers</option>
 </select>
-
+<label>Campaign Title</label>
+<input type="text" id="bannerTitle" placeholder="Campaign title">
+<label>Description</label>
+<textarea id="bannerDesc" rows="2" placeholder="Description (optional)"></textarea>
 <label>Start Date</label>
-<input type="date">
-
+<input type="date" id="startDate">
 <label>End Date</label>
-<input type="date">
-<label>Upload Video (max 60s / 5MB)</label>
-<input type="file" id="videoInput" accept="video/*">
+<input type="date" id="endDate">
 
-<label>Upload Images (max 5)</label>
-<input type="file" id="imageInput" multiple accept="image/*">
+<h4 style="margin:15px 0 5px 0;">Banner Media</h4>
 
-<button>Create Banner</button>
-
+<!-- DESKTOP UPLOAD -->
+<div class="upload-section">
+<h4>💻 Desktop / Laptop Version</h4>
+<p style="font-size:12px; opacity:0.8;">Recommended: 1920x400px (max 10MB)</p>
+<input type="file" id="desktopFile" accept="image/*,video/*" onchange="window.validateFile(this, 'desktop')">
+<div id="desktopPreview" class="slide-preview" style="margin-top:10px;"></div>
 </div>
 
-<!-- ACTIVE -->
+<!-- MOBILE UPLOAD -->
+<div class="upload-section">
+<h4>📱 Mobile Version</h4>
+<p style="font-size:12px; opacity:0.8;">Recommended: 375x200px (max 10MB, video max 3 min)</p>
+<input type="file" id="mobileFile" accept="image/*,video/*" onchange="window.validateFile(this, 'mobile')">
+<div id="mobilePreview" class="slide-preview" style="margin-top:10px;"></div>
+</div>
+
+<div id="uploadProgress" style="display:none; margin-top:10px; color:#2563eb;">Uploading...</div>
+<button onclick="window.createBanner()" style="margin-top:20px;">Create Banner Campaign</button>
+</div>
 
 <div class="card">
-
-<h3>Active Banners</h3>
-
+<h3>Active Campaigns</h3>
 <table>
-
-<thead>
-<tr>
-<th>Banner</th>
-<th>Audience</th>
-<th>Start</th>
-<th>End</th>
-<th>Views</th>
-<th>Status</th>
-<th>Actions</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr>
-<td>English Course Promo</td>
-<td>All</td>
-<td>10 Jun</td>
-<td>20 Jun</td>
-<td>Students 30k / Teachers 14k</td>
-<td><span class="status">Active</span></td>
-<td>
-<button class="btn-blue">Preview</button>
-<button>Edit</button>
-<button class="btn-red">Delete</button>
-</td>
-</tr>
-
-<tr>
-<td>Teacher Webinar</td>
-<td>Teachers</td>
-<td>5 Jun</td>
-<td>25 Jun</td>
-<td>Teachers 100k</td>
-<td><span class="status">Active</span></td>
-<td>
-<button class="btn-blue">Preview</button>
-<button>Edit</button>
-<button class="btn-red">Delete</button>
-</td>
-</tr>
-
-</tbody>
-
+<thead><tr><th>Campaign</th><th>Audience</th><th>Start</th><th>End</th><th>Views</th><th>Actions</th></tr></thead>
+<tbody id="bannerTableBody"><tr><td colspan="6" style="text-align:center;">Loading banners...</td></tr></tbody>
 </table>
-
 </div>
-
-<!-- ANALYTICS -->
 
 <div class="card">
-
 <h3>Banner Performance</h3>
-
-<div class="chart-box">
-<canvas id="bannerChart"></canvas>
+<div class="chart-box"><canvas id="bannerChart"></canvas></div>
 </div>
-
-</div>
-
 </main>
-
 </div>
 
+<!-- Preview Modal -->
+<div id="previewModal" class="preview-modal" onclick="window.closePreview()">
+<div class="preview-content" onclick="event.stopPropagation()">
+<h3 id="previewTitle">Banner Preview</h3>
+<div style="display:flex; gap:20px; flex-wrap:wrap;">
+<div style="flex:1; min-width:250px;"><h4>💻 Desktop</h4><div id="previewDesktop"></div></div>
+<div style="flex:1; min-width:200px;"><h4>📱 Mobile</h4><div id="previewMobile"></div></div>
+</div>
+<p id="previewDesc"></p>
+<button onclick="window.closePreview()">Close</button>
+</div>
+</div>
+
+<!-- UI SCRIPT -->
 <script>
-
-function toggleMenu(){
-document.getElementById("sidebar").classList.toggle("show");
-}
-
+if(localStorage.getItem("isAdminLoggedIn") !== "true"){ window.location.href = "../admin-login.html"; }
+function toggleMenu(){ document.getElementById("sidebar").classList.toggle("show"); }
 const darkBtn=document.querySelector(".dark-toggle");
-
-if(localStorage.getItem("nova-theme")==="dark"){
-document.body.classList.add("dark");
-darkBtn.textContent="☀️";
-}
-
+if(localStorage.getItem("nova-theme")==="dark"){ document.body.classList.add("dark"); darkBtn.textContent="☀️"; }
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
-if(document.body.classList.contains("dark")){
-localStorage.setItem("nova-theme","dark");
-darkBtn.textContent="☀️";
-}else{
-localStorage.setItem("nova-theme","light");
-darkBtn.textContent="🌙";
+if(document.body.classList.contains("dark")){ localStorage.setItem("nova-theme","dark"); darkBtn.textContent="☀️"; }
+else{ localStorage.setItem("nova-theme","light"); darkBtn.textContent="🌙"; }
 }
-
-}
-
-function logout(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
-const currentPage=window.location.pathname.split("/").pop();
-
-document.querySelectorAll(".sidebar a").forEach(link=>{
-if(link.getAttribute("href")===currentPage){
-link.classList.add("active");
-}
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("isAdminLoggedIn");
+    window.location.href = "../admin-login.html";
 });
-
-const video=document.getElementById("videoInput");
-const images=document.getElementById("imageInput");
-
-video.addEventListener("change",()=>{
-if(video.files.length>0){
-images.disabled=true;
-}else{
-images.disabled=false;
-}
-});
-
-images.addEventListener("change",()=>{
-if(images.files.length>0){
-video.disabled=true;
-}else{
-video.disabled=false;
-}
-});
-
-new Chart(document.getElementById("bannerChart"),{
-type:'bar',
-data:{
-labels:["Students","Teachers"],
-datasets:[{
-label:"Banner Views",
-data:[30000,14000]
-}]
-}
-});
-
 </script>
 
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { db, storage } from "../firebase.js";
+import { collection, addDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+let allBanners = [];
+let chartInstance = null;
+let desktopFile = null, mobileFile = null;
+
+window.validateFile = (input, type) => {
+    const file = input.files[0];
+    if (!file) return;
+    
+    // 10MB check
+    if (file.size > 10 * 1024 * 1024) {
+        alert(`File "${file.name}" exceeds 10MB limit.`);
+        input.value = '';
+        return;
+    }
+    
+    // Video duration check
+    if (file.type.startsWith('video')) {
+        const video = document.createElement('video');
+        video.preload = 'metadata';
+        video.onloadedmetadata = function() {
+            if (video.duration > 180) {
+                alert(`Video "${file.name}" exceeds 3 minutes limit.`);
+                input.value = '';
+            }
+            URL.revokeObjectURL(video.src);
+        };
+        video.src = URL.createObjectURL(file);
+    }
+    
+    // Razmer ogohlantirish
+    const img = new Image();
+    img.onload = function() {
+        const recW = type === 'desktop' ? 1920 : 375;
+        const recH = type === 'desktop' ? 400 : 200;
+        if (img.width !== recW || img.height !== recH) {
+            if (confirm(`Image size is ${img.width}x${img.height}px. Recommended is ${recW}x${recH}px. Continue anyway?`)) {
+                saveFile(file, type);
+            } else {
+                input.value = '';
+            }
+        } else {
+            saveFile(file, type);
+        }
+    };
+    if (file.type.startsWith('image')) {
+        img.src = URL.createObjectURL(file);
+    } else {
+        saveFile(file, type);
+    }
+};
+
+function saveFile(file, type) {
+    if (type === 'desktop') desktopFile = file;
+    else mobileFile = file;
+    
+    const preview = document.getElementById(`${type}Preview`);
+    if (file.type.startsWith('image')) {
+        preview.innerHTML = `<img src="${URL.createObjectURL(file)}"><span>${file.name}</span>`;
+    } else {
+        preview.innerHTML = `<span>🎬 ${file.name}</span>`;
+    }
+}
+
+loadBanners();
+
+function loadBanners() {
+    onSnapshot(collection(db, "banners"), (snap) => {
+        allBanners = [];
+        snap.forEach(d => allBanners.push({ id: d.id, ...d.data() }));
+        renderBanners();
+        updateChart();
+    });
+}
+
+function renderBanners() {
+    const tbody = document.getElementById("bannerTableBody");
+    tbody.innerHTML = allBanners.length ? "" : '<tr><td colspan="6" style="text-align:center;">No banners</td></tr>';
+    allBanners.forEach(b => {
+        tbody.innerHTML += `<tr>
+            <td>${b.title}</td><td>${b.audience}</td><td>${b.startDate || '-'}</td><td>${b.endDate || '-'}</td>
+            <td>S ${b.studentViews || 0} / T ${b.teacherViews || 0}</td>
+            <td>
+                <button class="btn-preview" onclick="window.previewBanner('${b.id}')">👁 Preview</button>
+                <button class="btn-red" onclick="window.deleteBanner('${b.id}')">🗑 Delete</button>
+            </td>
+        </tr>`;
+    });
+}
+
+function updateChart() {
+    const ctx = document.getElementById("bannerChart").getContext("2d");
+    if (chartInstance) chartInstance.destroy();
+    let totalStudent = 0, totalTeacher = 0;
+    allBanners.forEach(b => { totalStudent += b.studentViews || 0; totalTeacher += b.teacherViews || 0; });
+    chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: { labels: ["Students", "Teachers"], datasets: [{ label: "Banner Views", data: [totalStudent, totalTeacher], backgroundColor: ['#2563eb', '#06b6d4'] }] },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+}
+
+window.createBanner = async () => {
+    const title = document.getElementById("bannerTitle").value.trim();
+    const audience = document.getElementById("audience").value;
+    const description = document.getElementById("bannerDesc").value.trim();
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+    
+    if (!title) { alert("Title required"); return; }
+    if (!desktopFile && !mobileFile) { alert("Upload at least one banner (desktop or mobile)"); return; }
+    
+    const progressDiv = document.getElementById("uploadProgress");
+    progressDiv.style.display = "block";
+    
+    let desktopUrl = null, mobileUrl = null, mediaType = null;
+    
+    if (desktopFile) {
+        progressDiv.textContent = "Uploading desktop banner...";
+        const storageRef = ref(storage, `banners/desktop/${Date.now()}_${desktopFile.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, desktopFile);
+        desktopUrl = await new Promise((resolve, reject) => {
+            uploadTask.on('state_changed', null, reject, async () => resolve(await getDownloadURL(uploadTask.snapshot.ref)));
+        });
+        mediaType = desktopFile.type.startsWith('video') ? 'video' : 'image';
+    }
+    
+    if (mobileFile) {
+        progressDiv.textContent = "Uploading mobile banner...";
+        const storageRef = ref(storage, `banners/mobile/${Date.now()}_${mobileFile.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, mobileFile);
+        mobileUrl = await new Promise((resolve, reject) => {
+            uploadTask.on('state_changed', null, reject, async () => resolve(await getDownloadURL(uploadTask.snapshot.ref)));
+        });
+        if (!mediaType) mediaType = mobileFile.type.startsWith('video') ? 'video' : 'image';
+    }
+    
+    await addDoc(collection(db, "banners"), {
+        title, audience, description, startDate, endDate, desktopUrl, mobileUrl, mediaType,
+        studentViews: 0, teacherViews: 0, createdAt: serverTimestamp(), status: "active"
+    });
+    
+    desktopFile = null; mobileFile = null;
+    document.getElementById("bannerTitle").value = "";
+    document.getElementById("bannerDesc").value = "";
+    document.getElementById("desktopFile").value = "";
+    document.getElementById("mobileFile").value = "";
+    document.getElementById("desktopPreview").innerHTML = "";
+    document.getElementById("mobilePreview").innerHTML = "";
+    progressDiv.style.display = "none";
+    alert("Banner campaign created!");
+};
+
+window.deleteBanner = async (id) => { if (confirm("Delete?")) await deleteDoc(doc(db, "banners", id)); };
+
+window.previewBanner = (id) => {
+    const banner = allBanners.find(b => b.id === id);
+    if (!banner) return;
+    
+    document.getElementById("previewTitle").textContent = banner.title;
+    document.getElementById("previewDesc").textContent = banner.description || '';
+    document.getElementById("previewDesktop").innerHTML = banner.desktopUrl ? 
+        (banner.mediaType === 'video' ? `<video src="${banner.desktopUrl}" controls></video>` : `<img src="${banner.desktopUrl}">`) : '<p>No desktop banner</p>';
+    document.getElementById("previewMobile").innerHTML = banner.mobileUrl ? 
+        (banner.mediaType === 'video' ? `<video src="${banner.mobileUrl}" controls></video>` : `<img src="${banner.mobileUrl}">`) : '<p>No mobile banner</p>';
+    
+    document.getElementById("previewModal").style.display = "flex";
+};
+
+window.closePreview = () => document.getElementById("previewModal").style.display = "none";
+</script>
 </body>
 </html>

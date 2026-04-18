@@ -1,113 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>My Assessments | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.dark-toggle{
-cursor:pointer;
-font-size:20px;
-margin-left:auto;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-body.dark .card{
-background:#1e293b;
-color:#e5e7eb;
-}
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-display:flex;
-align-items:center;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.assessment-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:20px;
-margin-top:10px;
-}
-
-.assessment-item{
-padding:15px;
-border-radius:12px;
-border:1px solid #e5e7eb;
-cursor:pointer;
-transition:0.2s;
-}
-
-body.dark .assessment-item{
-border:1px solid #334155;
-}
-
-.assessment-item:hover{
-transform:translateY(-3px);
-}
-
-.assessment-actions{
-margin-top:10px;
-display:flex;
-gap:6px;
-flex-wrap:wrap;
-}
-
-.builder-box{
-margin-top:20px;
-}
-
-.builder-box input,
-.builder-box select,
-.builder-box textarea{
-width:100%;
-padding:10px;
-border-radius:8px;
-border:1px solid #ccc;
-margin-bottom:10px;
-}
-
-body.dark .builder-box input,
-body.dark .builder-box select,
-body.dark .builder-box textarea{
-background:#0f172a;
-color:#fff;
-border:1px solid #334155;
-}
-
+.dark-toggle{cursor:pointer; font-size:20px; margin-left:auto;}
+body.dark{background:#0f172a; color:#e5e7eb;}
+body.dark .card{background:#1e293b; color:#e5e7eb;}
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px; display:flex; align-items:center;}
+body.dark .topbar{background:#1e293b;}
+.assessment-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px; margin-top:10px;}
+.assessment-item{padding:15px; border-radius:12px; border:1px solid #e5e7eb; cursor:pointer; transition:0.2s;}
+body.dark .assessment-item{border:1px solid #334155;}
+.assessment-item:hover{transform:translateY(-3px);}
+.assessment-actions{margin-top:10px; display:flex; gap:6px; flex-wrap:wrap;}
+.builder-box{margin-top:20px;}
+.builder-box input, .builder-box select, .builder-box textarea{width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; margin-bottom:10px;}
+body.dark .builder-box input, body.dark .builder-box select, body.dark .builder-box textarea{background:#0f172a; color:#fff; border:1px solid #334155;}
+.btn {padding:8px 12px; border-radius:6px; border:none; cursor:pointer; background:#2563eb; color:white; font-size:12px;}
+.btn.delete {background:#ef4444;}
+.btn.success {background:#10b981;}
+.loading-text {text-align:center; padding:20px;}
 </style>
-
 </head>
 
 <body class="teacher-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="dashboard.html">🏠 Dashboard</a></li>
 <li><a href="students.html">👨‍🎓 My Students</a></li>
 <li><a href="content.html">📚 My Content</a></li>
@@ -117,297 +42,192 @@ border:1px solid #334155;
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="analytics.html">📊 My Analytics</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="btnLogout">🚪 Log out</a></li>
 </ul>
-
 </aside>
 
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
-
 <h1>My Assessments</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
 
 <section class="cards">
-
 <div class="card">
-
-<h3>Assessment Types</h3>
-
-<p>Create quizzes and exams for your students.</p>
-
-<div class="assessment-grid">
-
-<div class="assessment-item">
-Multiple Choice
-<div class="assessment-actions">
-<button class="btn">Edit</button>
-<button class="btn">Move</button>
-<button class="btn">Delete</button>
-<button class="btn">Copy</button>
+<h3>My Quizzes & Exams</h3>
+<div class="assessment-grid" id="assessmentsList">
+<div class="loading-text">Loading assessments...</div>
 </div>
 </div>
-
-<div class="assessment-item">
-Listening
-<div class="assessment-actions">
-<button class="btn">Edit</button>
-<button class="btn">Move</button>
-<button class="btn">Delete</button>
-<button class="btn">Copy</button>
-</div>
-</div>
-
-<div class="assessment-item">
-Reading
-<div class="assessment-actions">
-<button class="btn">Edit</button>
-<button class="btn">Move</button>
-<button class="btn">Delete</button>
-<button class="btn">Copy</button>
-</div>
-</div>
-
-<div class="assessment-item">
-Speaking
-<div class="assessment-actions">
-<button class="btn">Edit</button>
-<button class="btn">Move</button>
-<button class="btn">Delete</button>
-<button class="btn">Copy</button>
-</div>
-</div>
-
-<!-- NEW TYPES (CLIENT REQUEST) -->
-
-<div class="assessment-item">
-Writing
-<div class="assessment-actions">
-<button class="btn">Edit</button>
-<button class="btn">Move</button>
-<button class="btn">Delete</button>
-<button class="btn">Copy</button>
-</div>
-</div>
-
-<div class="assessment-item">
-True / False
-<div class="assessment-actions">
-<button class="btn">Edit</button>
-<button class="btn">Move</button>
-<button class="btn">Delete</button>
-<button class="btn">Copy</button>
-</div>
-</div>
-
-<div class="assessment-item">
-Scramble
-<div class="assessment-actions">
-<button class="btn">Edit</button>
-<button class="btn">Move</button>
-<button class="btn">Delete</button>
-<button class="btn">Copy</button>
-</div>
-</div>
-<div class="assessment-item">
-Reading + Questions
-<div class="assessment-actions">
-<button class="btn">Edit</button>
-<button class="btn">Move</button>
-<button class="btn">Delete</button>
-<button class="btn">Copy</button>
-</div>
-</div>
-
-<div class="assessment-item">
-Fill in the Blank
-<div class="assessment-actions">
-<button class="btn">Edit</button>
-<button class="btn">Move</button>
-<button class="btn">Delete</button>
-<button class="btn">Copy</button>
-</div>
-</div>
-
-</div>
-
-<p style="margin-top:10px;">
-Only available for your students.
-</p>
-
-</div>
-
 </section>
 
 <section class="cards">
-
 <div class="card">
-
-<h3>Create Quiz</h3>
-
+<h3>Create New Assessment</h3>
 <div class="builder-box">
-
-<label>Quiz Title</label>
-<input type="text">
-
-<label>Lesson</label>
-<select>
-<option>Select Lesson</option>
-<option>Lesson 1</option>
-<option>Lesson 2</option>
-</select>
-
-<label>Question</label>
-<textarea rows="3"></textarea>
-
-<label>Correct Answer</label>
-<input type="text">
-
-<button class="btn">Create Quiz</button>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Create Exam</h3>
-
-<div class="builder-box">
-
-<label>Exam Title</label>
-<input type="text">
-
+<label>Title</label>
+<input type="text" id="assessmentTitle" placeholder="e.g., Unit 1 Quiz">
 <label>Type</label>
-<select>
-<option>Multiple Choice</option>
-<option>Listening</option>
-<option>Reading</option>
-<option>Speaking</option>
-<option>Writing</option>
-<option>True / False</option>
-<option>Scramble</option>
-<option>Reading + Questions</option>
-<option>Fill in the Blank</option>
+<select id="assessmentType">
+<option value="Multiple Choice">Multiple Choice</option>
+<option value="Listening">Listening</option>
+<option value="Reading">Reading</option>
+<option value="Speaking">Speaking</option>
+<option value="Writing">Writing</option>
+<option value="True/False">True/False</option>
+<option value="Scramble">Scramble</option>
+<option value="Fill in the Blank">Fill in the Blank</option>
 </select>
-
-<label>Instructions</label>
-<textarea rows="3"></textarea>
-
-<button class="btn">Create Exam</button>
-
+<label>Description (optional)</label>
+<textarea id="assessmentDesc" rows="2" placeholder="Instructions..."></textarea>
+<button class="btn success" onclick="window.createAssessment()">➕ Create Assessment</button>
 </div>
-
 </div>
-
-</section>
-
-<section class="cards">
-
-<div class="card">
-
-<h3>Assign Exam</h3>
-
-<div class="builder-box">
-
-<label>Select Exam</label>
-<select>
-<option>Exam 1</option>
-<option>Exam 2</option>
-</select>
-
-<label>Select Student</label>
-<select>
-<option>Maria</option>
-<option>David</option>
-<option>Anna</option>
-</select>
-
-<button class="btn">Assign Exam</button>
-
-</div>
-
-</div>
-
 </section>
 
 </main>
-
 </div>
 
-<script>
+<script type="module">
+import { auth, db } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { collection, addDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
+let teacherId = null;
 
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
-
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
+// AUTH CHECK
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        window.location.href = "../index.html";
+    } else {
+        teacherId = user.uid;
+        loadAssessments();
+    }
 });
 
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
-function toggleMode(){
-
-document.body.classList.toggle("dark");
-
-let btn=document.getElementById("darkBtn");
-
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
+// LOAD ASSESSMENTS (REAL-TIME)
+function loadAssessments() {
+    const container = document.getElementById("assessmentsList");
+    
+    onSnapshot(collection(db, "assessments"), (snapshot) => {
+        container.innerHTML = "";
+        
+        if (snapshot.empty) {
+            container.innerHTML = '<div class="assessment-item">No assessments yet. Create one above.</div>';
+            return;
+        }
+        
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            const card = document.createElement("div");
+            card.className = "assessment-item";
+            card.innerHTML = `
+                <strong>${data.title}</strong><br>
+                <small>${data.type}</small><br>
+                <small style="color:#6b7280;">${data.description || ''}</small>
+                <div class="assessment-actions">
+                    <button class="btn" onclick="window.editAssessment('${doc.id}')">✏️ Edit</button>
+                    <button class="btn delete" onclick="window.deleteAssessment('${doc.id}')">🗑️ Delete</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    });
 }
 
-}
+// CREATE ASSESSMENT
+window.createAssessment = async function() {
+    const title = document.getElementById("assessmentTitle").value.trim();
+    const type = document.getElementById("assessmentType").value;
+    const description = document.getElementById("assessmentDesc").value.trim();
+    
+    if (!title) {
+        alert("Please enter a title");
+        return;
+    }
+    
+    try {
+        await addDoc(collection(db, "assessments"), {
+            title: title,
+            type: type,
+            description: description,
+            teacherId: teacherId,
+            createdAt: serverTimestamp(),
+            questions: []
+        });
+        
+        // Clear form
+        document.getElementById("assessmentTitle").value = "";
+        document.getElementById("assessmentDesc").value = "";
+        alert("Assessment created!");
+    } catch (error) {
+        alert("Error: " + error.message);
+    }
+};
 
-function loadMode(){
+// DELETE ASSESSMENT
+window.deleteAssessment = async function(id) {
+    if (confirm("Delete this assessment?")) {
+        try {
+            await deleteDoc(doc(db, "assessments", id));
+        } catch (error) {
+            alert("Error: " + error.message);
+        }
+    }
+};
 
-let saved=localStorage.getItem("novaMode");
+// EDIT (placeholder - keyin to'ldiramiz)
+window.editAssessment = function(id) {
+    alert("Edit feature coming soon. ID: " + id);
+};
 
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
-}
-
-}
-
-loadMode();
-
-const currentPage = window.location.pathname.split("/").pop();
-
-document.querySelectorAll(".sidebar a").forEach(link => {
-
-if(link.getAttribute("href") === currentPage){
-link.parentElement.classList.add("active");
-}
-
+// LOGOUT
+document.getElementById("btnLogout").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
 });
 
 </script>
 
+<script>
+function toggleMode(){
+    document.body.classList.toggle("dark");
+    let btn=document.getElementById("darkBtn");
+    if(document.body.classList.contains("dark")){
+        btn.textContent="☀️";
+        localStorage.setItem("novaMode","dark");
+    }else{
+        btn.textContent="🌙";
+        localStorage.setItem("novaMode","light");
+    }
+}
+(function loadMode(){
+    if(localStorage.getItem("novaMode")==="dark") {
+        document.body.classList.add("dark");
+        document.getElementById("darkBtn").textContent="☀️";
+    }
+})();
+
+const menuBtn=document.querySelector(".menu-btn");
+const sidebar=document.querySelector(".sidebar");
+const overlay=document.querySelector(".overlay");
+menuBtn.addEventListener("click",()=>{
+    sidebar.classList.toggle("show");
+    overlay.classList.toggle("show");
+});
+overlay.addEventListener("click",()=>{
+    sidebar.classList.remove("show");
+    overlay.classList.remove("show");
+});
+
+const currentPage = window.location.pathname.split("/").pop();
+document.querySelectorAll(".sidebar a").forEach(link => {
+    if(link.getAttribute("href") === currentPage){
+        link.parentElement.classList.add("active");
+    }
+});
+</script>
 </body>
 </html>

@@ -4,56 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Agenda | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.dark-toggle{
-cursor:pointer;
-font-size:20px;
-margin-left:auto;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-body.dark .card{
-background:#1e293b;
-color:#e5e7eb;
-}
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
+.dark-toggle{cursor:pointer; font-size:20px; margin-left:auto;}
+body.dark{background:#0f172a; color:#e5e7eb;}
+body.dark .card{background:#1e293b; color:#e5e7eb;}
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px;}
+body.dark .topbar{background:#1e293b;}
 </style>
-
 </head>
-
 <body class="student-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
-<!-- SIDEBAR -->
-
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="index.html">🏠 Dashboard</a></li>
 <li><a href="courses.html">📚 My Courses</a></li>
 <li><a href="lessons.html">🎓 Level / Lesson</a></li>
@@ -71,203 +37,107 @@ background:#1e293b;
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="support.html">❓ Help / Support</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Log out</a></li>
 </ul>
-
 </aside>
 
-
-<!-- MAIN -->
-
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
-
 <h1>📅 My Agenda</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
 
-
 <section class="cards">
-
-<!-- TODAY -->
-
-<div class="card">
-
-<h3>Today's Plan</h3>
-
-<p>Complete today's lesson and practice speaking.</p>
-
-</div>
-
-
-<!-- WEEKLY -->
-
-<div class="card">
-
-<h3>Weekly Goals</h3>
-
-<ul>
-<li>📚 Study 5 lessons</li>
-<li>🎧 Practice listening 3 times</li>
-<li>🗣 Speak English at least 10 minutes daily</li>
-</ul>
-
-</div>
-
-
-<!-- TASKS -->
-
-<div class="card">
-
-<h3>Upcoming Tasks</h3>
-
-<ul>
-<li>📝 Finish homework</li>
-<li>🎮 Play educational game</li>
-<li>📊 Check progress</li>
-</ul>
-
-</div>
-
-
-<!-- CALENDAR VIEW -->
-
-<div class="card">
-
-<h3>Calendar View</h3>
-
-<p>Switch between monthly and weekly study planning.</p>
-
-<ul>
-<li>📅 Monthly view</li>
-<li>📆 Weekly view</li>
-</ul>
-
-</div>
-
-
-<!-- EVENT TYPES -->
-
-<div class="card">
-
-<h3>Event Types</h3>
-
-<ul>
-<li>📌 Homework Deadline</li>
-<li>🧠 Assessments</li>
-<li>🎙 Practice Sessions</li>
-</ul>
-
-</div>
-
-
-<!-- REMINDERS -->
-
-<div class="card">
-
-<h3>Automatic Reminders</h3>
-
-<p>
-The platform will automatically notify you about:
-</p>
-
-<ul>
-<li>Upcoming lessons</li>
-<li>Homework deadlines</li>
-<li>Assessments and practice sessions</li>
-</ul>
-
-</div>
-
+<div class="card"><h3>Today's Plan</h3><p id="todayPlan">Complete today's lesson and practice speaking.</p></div>
+<div class="card"><h3>Weekly Goals</h3><ul id="weeklyGoals"><li>📚 Study 5 lessons</li><li>🎧 Practice listening 3 times</li><li>🗣 Speak English at least 10 minutes daily</li></ul></div>
+<div class="card"><h3>Upcoming Tasks</h3><ul id="upcomingTasks"><li>📝 Finish homework</li><li>🎮 Play educational game</li><li>📊 Check progress</li></ul></div>
+<div class="card"><h3>Calendar View</h3><p>Switch between monthly and weekly study planning.</p><ul><li>📅 Monthly view</li><li>📆 Weekly view</li></ul></div>
+<div class="card"><h3>Event Types</h3><ul><li>📌 Homework Deadline</li><li>🧠 Assessments</li><li>🎙 Practice Sessions</li></ul></div>
+<div class="card"><h3>Automatic Reminders</h3><p>The platform will automatically notify you about:</p><ul><li>Upcoming lessons</li><li>Homework deadlines</li><li>Assessments and practice sessions</li></ul></div>
 </section>
-
 </main>
-
 </div>
 
-
+<!-- UI SCRIPT (O'ZGARMAYDI) -->
 <script>
-
-const user = JSON.parse(localStorage.getItem("novaUser"));
-
-if(!user){
-window.location.href="../index.html";
-}
-
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
 const menuBtn=document.querySelector(".menu-btn");
 const sidebar=document.querySelector(".sidebar");
 const overlay=document.querySelector(".overlay");
-
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
-});
-
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
+menuBtn.addEventListener("click",()=>{ sidebar.classList.toggle("show"); overlay.classList.toggle("show"); });
+overlay.addEventListener("click",()=>{ sidebar.classList.remove("show"); overlay.classList.remove("show"); });
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
 let btn=document.getElementById("darkBtn");
-
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-
-}
-
 function loadMode(){
-
 let saved=localStorage.getItem("novaMode");
-
 let btn=document.getElementById("darkBtn");
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
+if(saved==="dark"){ document.body.classList.add("dark"); btn.textContent="☀️"; }
 }
-
-}
-
 loadMode();
-
-
-
+const currentPage = window.location.pathname.split("/").pop();
+document.querySelectorAll(".sidebar a").forEach(link => { if(link.getAttribute("href") === currentPage){ link.parentElement.classList.add("active"); } });
 </script>
 
-<script>
+<!-- FIREBASE SCRIPT (YANGI QO'SHILDI) -->
+<script type="module">
+import { auth, db } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc, setDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const currentPage = window.location.pathname.split("/").pop();
+let studentId = null;
 
-document.querySelectorAll(".sidebar a").forEach(link => {
-
-if(link.getAttribute("href") === currentPage){
-link.parentElement.classList.add("active");
-}
-
+onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+        window.location.href = "../index.html";
+        return;
+    }
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists() && userDoc.data().role === "student") {
+        studentId = user.uid;
+        loadAgenda();
+    } else {
+        window.location.href = "../index.html";
+    }
 });
 
+function loadAgenda() {
+    const agendaRef = doc(db, "agendas", studentId);
+    onSnapshot(agendaRef, (docSnap) => {
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            document.getElementById("todayPlan").textContent = data.todayPlan || "Complete today's lesson and practice speaking.";
+            
+            const weeklyList = document.getElementById("weeklyGoals");
+            weeklyList.innerHTML = "";
+            (data.weeklyGoals || ["📚 Study 5 lessons", "🎧 Practice listening 3 times", "🗣 Speak English at least 10 minutes daily"]).forEach(g => {
+                const li = document.createElement("li"); li.textContent = g; weeklyList.appendChild(li);
+            });
+            
+            const tasksList = document.getElementById("upcomingTasks");
+            tasksList.innerHTML = "";
+            (data.upcomingTasks || ["📝 Finish homework", "🎮 Play educational game", "📊 Check progress"]).forEach(t => {
+                const li = document.createElement("li"); li.textContent = t; tasksList.appendChild(li);
+            });
+        } else {
+            setDoc(agendaRef, {
+                todayPlan: "Complete today's lesson and practice speaking.",
+                weeklyGoals: ["📚 Study 5 lessons", "🎧 Practice listening 3 times", "🗣 Speak English at least 10 minutes daily"],
+                upcomingTasks: ["📝 Finish homework", "🎮 Play educational game", "📊 Check progress"],
+                createdAt: serverTimestamp()
+            });
+        }
+    });
+}
+
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
+});
 </script>
 
 </body>

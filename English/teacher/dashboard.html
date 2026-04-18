@@ -1,210 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOVA PRIME Teacher</title>
-
-<link rel="stylesheet" href="../style.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<style>
-.dark-toggle{cursor:pointer;font-size:20px;margin-left:auto;}
-body.dark{background:#0f172a;color:#e5e7eb;}
-body.dark .card{background:#1e293b;color:#e5e7eb;}
-.topbar{background:#f1f5f9;padding:12px 20px;border-radius:12px;margin-bottom:20px;display:flex;align-items:center;}
-body.dark .topbar{background:#1e293b;}
-.chart-box{height:260px;}
-.teacher-banner{background:linear-gradient(90deg,#2563eb,#06b6d4);padding:20px;border-radius:14px;color:white;margin-bottom:20px;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
-.teacher-banner h3{margin:0;font-size:20px;}
-.teacher-banner p{margin:4px 0 0 0;opacity:0.9;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOVA PRIME Teacher Dashboard</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dark-toggle{cursor:pointer; font-size:20px; margin-left:auto;}
+        
+        /* LIGHT MODE */
+        body{background:#f8fafc; color:#1e293b;}
+        .card{background:white; border:1px solid #e2e8f0; box-shadow:0 4px 12px rgba(0,0,0,0.05);}
+        .topbar{background:white; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.03);}
+        
+        /* DARK MODE */
+        body.dark{background:#0f172a; color:#e5e7eb;}
+        body.dark .card{background:#1e293b; border:1px solid #334155; box-shadow:0 4px 12px rgba(0,0,0,0.3);}
+        body.dark .topbar{background:#1e293b; border:1px solid #334155;}
+        
+        .chart-box{height:260px;}
+        .sidebar hr{border:0; border-top:1px solid rgba(255,255,255,0.1); margin:15px 0;}
+        
+        /* SLIDER CONTAINER */
+        .admin-banner-section{margin-bottom:25px; width:100%; position:relative;}
+        .banner-slider { position:relative; width:100%; border-radius:16px; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.08); }
+        .banner-slides { display:flex; transition:transform 0.5s ease; }
+        .banner-slide { min-width:100%; position:relative; }
+        .banner-slide img, .banner-slide video { width:100%; display:block; height:auto; max-height:none; object-fit:contain; }
+        
+        /* STRELKALAR */
+        .slider-arrow { position:absolute; top:50%; transform:translateY(-50%); width:40px; height:40px; background:rgba(0,0,0,0.5); color:white; border:none; border-radius:50%; cursor:pointer; font-size:20px; display:flex; align-items:center; justify-content:center; z-index:10; transition:0.3s; }
+        .slider-arrow:hover { background:rgba(0,0,0,0.8); }
+        .slider-arrow-left { left:15px; }
+        .slider-arrow-right { right:15px; }
+        .slider-arrow.hidden { display:none; }
+        
+        /* DOTS */
+        .slider-dots { position:absolute; bottom:15px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:10; }
+        .slider-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,0.5); cursor:pointer; transition:0.3s; }
+        .slider-dot.active { background:white; width:12px; height:12px; }
+        
+        /* BANNER CONTENT (yozuv pastda) */
+        .banner-content { padding:15px 20px; background:white; border-radius:0 0 16px 16px; }
+        body.dark .banner-content { background:#1e293b; }
+        .banner-content h3 { margin:0 0 5px 0; font-size:20px; }
+        .banner-content p { margin:0; opacity:0.8; }
+        
+        .default-banner{background:linear-gradient(135deg,#2563eb,#06b6d4); color:#fff; padding:40px; border-radius:16px; text-align:center; border:2px solid rgba(255,255,255,0.25); box-shadow:0 8px 25px rgba(0,0,0,0.15);}
+    </style>
 </head>
-
 <body class="teacher-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
+    <aside class="sidebar">
+        <h2>NOVA PRIME</h2>
+        <ul>
+            <li><a href="dashboard.html">🏠 Dashboard</a></li>
+            <li><a href="students.html">👨‍🎓 My Students</a></li>
+            <li><a href="content.html">📚 My Content</a></li>
+            <li><a href="activity-builder.html">🛠 Activity Builder</a></li>
+            <li><a href="assessments.html">🧠 My Assessments</a></li>
+            <li><a href="practice-tools.html">🎧 Practice Tools</a></li>
+            <li><a href="messages.html">💬 Messages</a></li>
+            <li><a href="analytics.html">📊 My Analytics</a></li>
+            <li><a href="settings.html">⚙️ Settings</a></li>
+            <hr>
+            <li><a href="#" id="btnLogout">🚪 Log out</a></li>
+        </ul>
+    </aside>
 
-<aside class="sidebar">
-<h2>NOVA PRIME</h2>
-<ul>
-<li><a href="dashboard.html">🏠 Dashboard</a></li>
-<li><a href="students.html">👨‍🎓 My Students</a></li>
-<li><a href="content.html">📚 My Content</a></li>
-<li><a href="activity-builder.html">🛠 Activity Builder</a></li>
-<li><a href="assessments.html">🧠 My Assessments</a></li>
-<li><a href="practice-tools.html">🎧 Practice Tools</a></li>
-<li><a href="messages.html">💬 Messages</a></li>
-<li><a href="analytics.html">📊 My Analytics</a></li>
-<li><a href="settings.html">⚙️ Settings</a></li>
-<hr>
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-</ul>
-</aside>
+    <main class="content">
+        <header class="topbar">
+            <button class="menu-btn">☰</button>
+            <h1 style="margin-left:15px;">Teacher Dashboard</h1>
+            <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
+        </header>
 
-<main class="content">
+        <section class="admin-banner-section">
+            <div id="bannerContainer"></div>
+        </section>
 
-<header class="topbar">
-<button class="menu-btn">☰</button>
-<h1>Teacher Dashboard</h1>
-<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-</header>
+        <section class="cards">
+            <div class="card"><h3>Total Students</h3><p id="totalStudents">👨‍🎓 --</p></div>
+            <div class="card"><h3>Active Students</h3><p id="activeStudents">🔥 --</p></div>
+            <div class="card"><h3>Average Progress</h3><p id="avgProgress">📈 --</p></div>
+            <div class="card"><h3>Average Accuracy</h3><p id="avgAccuracy">🎯 --</p></div>
+            <div class="card"><h3>Total Sessions</h3><p id="totalSessions">📚 --</p></div>
+            <div class="card"><h3>Average Study Time</h3><p id="avgStudyTime">⏱️ --</p></div>
+        </section>
 
-<div class="teacher-banner">
-<h3>Espacio reservado para anuncios</h3>
-<p>Aquí aparecerán promociones o anuncios del panel de administración</p>
+        <section class="cards">
+            <div class="card chart-box"><h3>Progress by Student</h3><canvas id="progressChart"></canvas></div>
+            <div class="card chart-box"><h3>Weekly Activity</h3><canvas id="activityChart"></canvas></div>
+            <div class="card chart-box"><h3>Level Distribution</h3><canvas id="levelChart"></canvas></div>
+        </section>
+    </main>
 </div>
 
-<section class="cards">
+<script type="module">
+    import { auth, db } from "../firebase.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { doc, getDoc, updateDoc, increment, collection, query, where, getDocs, getCountFromServer } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-<div class="card"><h3>Total Students</h3><p>👨‍🎓 32 Students</p></div>
-<div class="card"><h3>Active Students</h3><p>🔥 24 Active</p></div>
-<div class="card"><h3>Average Progress</h3><p>📈 68%</p></div>
-<div class="card"><h3>Average Accuracy</h3><p>🎯 82%</p></div>
-<div class="card"><h3>Total Sessions</h3><p>📚 140 Sessions</p></div>
-<div class="card"><h3>Average Study Time</h3><p>⏱️ 35 min</p></div>
+    let teacherId = null;
+    let charts = {};
+    let currentSlideIndex = 0;
+    let bannerSlides = [];
 
-</section>
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) { window.location.replace("../auth/login.html"); return; }
+        try {
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (userDoc.exists() && userDoc.data().role === "teacher") {
+                teacherId = user.uid;
+                loadBanner();
+                loadStats();
+            } else { window.location.replace("../student/index.html"); }
+        } catch (e) { console.error(e); }
+    });
 
-<section class="cards">
+    async function loadBanner() {
+        const container = document.getElementById("bannerContainer");
+        const today = new Date().toISOString().split('T')[0];
+        try {
+            const q = query(collection(db, "banners"), where("audience", "in", ["all", "teachers"]), where("status", "==", "active"));
+            const snap = await getDocs(q);
+            
+            const activeBanners = [];
+            snap.forEach(d => { 
+                const data = d.data(); 
+                if (data.startDate <= today && data.endDate >= today) {
+                    activeBanners.push({ id: d.id, ...data });
+                }
+            });
+            
+            if (activeBanners.length > 0) {
+                await updateDoc(doc(db, "banners", activeBanners[0].id), { teacherViews: increment(1) });
+                bannerSlides = activeBanners;
+                currentSlideIndex = 0;
+                renderSlider();
+            } else {
+                container.innerHTML = `<div class="default-banner"><h2>Space reserved for announcements</h2><p>Admin panel promotions or system updates will appear here.</p></div>`;
+            }
+        } catch (e) { console.error(e); }
+    }
 
-<div class="card chart-box">
-<h3>Progress by Student</h3>
-<canvas id="progressChart"></canvas>
-</div>
+    function renderSlider() {
+        const container = document.getElementById("bannerContainer");
+        const hasMultiple = bannerSlides.length > 1;
+        
+        let slidesHtml = bannerSlides.map((b, i) => {
+            const mediaHtml = b.mediaType === 'video' 
+                ? `<video src="${b.mediaUrl}" autoplay muted loop></video>` 
+                : (b.mediaUrl ? `<img src="${b.mediaUrl}" alt="${b.title}">` : '');
+            return `<div class="banner-slide">${mediaHtml}</div>`;
+        }).join('');
+        
+        const dotsHtml = hasMultiple 
+            ? `<div class="slider-dots">${bannerSlides.map((_, i) => `<span class="slider-dot ${i === 0 ? 'active' : ''}" onclick="window.goToSlide(${i})"></span>`).join('')}</div>`
+            : '';
+        
+        const arrowsHtml = hasMultiple
+            ? `<button class="slider-arrow slider-arrow-left" onclick="window.prevSlide()">←</button>
+               <button class="slider-arrow slider-arrow-right" onclick="window.nextSlide()">→</button>`
+            : '';
+        
+        const currentBanner = bannerSlides[0];
+        const contentHtml = (currentBanner.title || currentBanner.description) 
+            ? `<div class="banner-content"><h3>${currentBanner.title || ''}</h3><p>${currentBanner.description || ''}</p></div>`
+            : '';
+        
+        container.innerHTML = `
+            <div class="banner-slider">
+                <div class="banner-slides" id="bannerSlides" style="transform:translateX(0%)">${slidesHtml}</div>
+                ${arrowsHtml}
+                ${dotsHtml}
+            </div>
+            ${contentHtml}
+        `;
+    }
 
-<div class="card chart-box">
-<h3>Weekly Activity</h3>
-<canvas id="activityChart"></canvas>
-</div>
+    function updateSlide(index) {
+        if (!bannerSlides.length) return;
+        currentSlideIndex = (index + bannerSlides.length) % bannerSlides.length;
+        
+        const slides = document.getElementById("bannerSlides");
+        if (slides) slides.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+        
+        document.querySelectorAll('.slider-dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentSlideIndex);
+        });
+        
+        const currentBanner = bannerSlides[currentSlideIndex];
+        const contentDiv = document.querySelector('.banner-content');
+        if (contentDiv) {
+            contentDiv.innerHTML = `<h3>${currentBanner.title || ''}</h3><p>${currentBanner.description || ''}</p>`;
+        }
+    }
 
-<div class="card chart-box">
-<h3>Level Distribution</h3>
-<canvas id="levelChart"></canvas>
-</div>
+    window.nextSlide = () => updateSlide(currentSlideIndex + 1);
+    window.prevSlide = () => updateSlide(currentSlideIndex - 1);
+    window.goToSlide = (index) => updateSlide(index);
 
-</section>
+    async function loadStats() {
+        try {
+            const studentsSnap = await getCountFromServer(query(collection(db, "users"), where("role", "==", "student")));
+            const studentCount = studentsSnap.data().count;
+            
+            const sevenDaysAgo = new Date(Date.now() - 7*24*60*60*1000);
+            const activeSnap = await getDocs(query(collection(db, "users"), where("role", "==", "student"), where("lastActive", ">=", sevenDaysAgo)));
+            const activeCount = activeSnap.size || 0;
+            
+            const sessionsSnap = await getCountFromServer(query(collection(db, "practice_sessions"), where("teacherId", "==", teacherId)));
+            const sessionCount = sessionsSnap.data().count;
+            
+            const allStudentsSnap = await getDocs(query(collection(db, "users"), where("role", "==", "student")));
+            let totalProgress = 0, totalAccuracy = 0, studentWithData = 0;
+            allStudentsSnap.forEach(d => {
+                const data = d.data();
+                if (data.progress) { totalProgress += data.progress; studentWithData++; }
+                if (data.accuracy) totalAccuracy += data.accuracy;
+            });
+            const avgProgress = studentWithData > 0 ? Math.round(totalProgress / studentWithData) : 68;
+            const avgAccuracy = studentWithData > 0 ? Math.round(totalAccuracy / studentWithData) : 82;
+            
+            document.getElementById("totalStudents").textContent = `👨‍🎓 ${studentCount} Students`;
+            document.getElementById("activeStudents").textContent = `🔥 ${activeCount} Active`;
+            document.getElementById("avgProgress").textContent = `📈 ${avgProgress}%`;
+            document.getElementById("avgAccuracy").textContent = `🎯 ${avgAccuracy}%`;
+            document.getElementById("totalSessions").textContent = `📚 ${sessionCount} Sessions`;
+            document.getElementById("avgStudyTime").textContent = `⏱️ 35 min`;
 
-</main>
+            updateCharts(studentCount);
+        } catch (e) { console.error(e); }
+    }
 
-</div>
-<script>
+    function updateCharts(count) {
+        if (charts.p) charts.p.destroy(); if (charts.a) charts.a.destroy(); if (charts.l) charts.l.destroy();
+        charts.p = new Chart(document.getElementById("progressChart"), { type:'bar', data:{ labels:["Students"], datasets:[{ label:"Progress %", data:[count > 0 ? 75 : 0], backgroundColor:'#2563eb' }] }, options:{ responsive:true, maintainAspectRatio:false } });
+        charts.a = new Chart(document.getElementById("activityChart"), { type:'line', data:{ labels:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"], datasets:[{ label:"Sessions", data:[5,8,6,9,7,4,3], borderColor:'#06b6d4', fill:false }] }, options:{ responsive:true, maintainAspectRatio:false } });
+        charts.l = new Chart(document.getElementById("levelChart"), { type:'pie', data:{ labels:["A1","A2","B1","B2"], datasets:[{ data:[Math.floor(count*0.3), Math.floor(count*0.35), Math.floor(count*0.2), Math.floor(count*0.15)], backgroundColor:['#2563eb','#06b6d4','#3b82f6','#1e3a8a'] }] }, options:{ responsive:true, maintainAspectRatio:false } });
+    }
 
-/* 🔐 AUTH + ROLE CHECK (HARD PROTECT) */
-
-function getUser(){
-try{
-return JSON.parse(localStorage.getItem("currentUser"));
-}catch(e){
-return null;
-}
-}
-
-const currentUser = getUser();
-
-/* ❌ USER YO‘Q */
-if(!currentUser || !currentUser.email){
-window.location.replace("../index.html");
-}
-
-/* ❌ ROLE XATO */
-if(currentUser.role !== "teacher"){
-window.location.replace("../student/index.html");
-}
-
-
-/* 🚪 LOGOUT */
-
-function logoutUser(){
-localStorage.removeItem("currentUser");
-window.location.replace("../index.html");
-}
-
-
-/* 📱 SIDEBAR */
-
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
-
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
-});
-
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
-
-/* 🌙 DARK MODE */
-
-function toggleMode(){
-document.body.classList.toggle("dark");
-let btn=document.getElementById("darkBtn");
-
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
-}
-}
-
-function loadMode(){
-let saved=localStorage.getItem("novaMode");
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
-}
-}
-
-loadMode();
-
-
-/* 📍 ACTIVE MENU */
-
-const currentPage = window.location.pathname.split("/").pop();
-document.querySelectorAll(".sidebar a").forEach(link=>{
-if(link.getAttribute("href") === currentPage){
-link.parentElement.classList.add("active");
-}
-});
-
-
-/* 📊 CHARTS */
-
-new Chart(document.getElementById("progressChart"),{
-type:'bar',
-data:{
-labels:["Maria","David","Juan","Luis","Anna"],
-datasets:[{label:"Progress %",data:[80,65,72,90,60]}]
-}
-});
-
-new Chart(document.getElementById("activityChart"),{
-type:'line',
-data:{
-labels:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
-datasets:[{label:"Sessions",data:[5,8,6,9,7,4,3]}]
-}
-});
-
-new Chart(document.getElementById("levelChart"),{
-type:'pie',
-data:{
-labels:["A1","A2","B1","B2"],
-datasets:[{data:[10,12,7,3]}]
-}
-});
-
+    document.getElementById("btnLogout").addEventListener("click", async (e) => {
+        e.preventDefault();
+        await signOut(auth);
+        window.location.replace("../auth/login.html");
+    });
 </script>
 
+<script>
+    const menuBtn = document.querySelector(".menu-btn"), sidebar = document.querySelector(".sidebar"), overlay = document.querySelector(".overlay");
+    menuBtn.addEventListener("click", () => { sidebar.classList.toggle("show"); overlay.classList.toggle("show"); });
+    overlay.addEventListener("click", () => { sidebar.classList.remove("show"); overlay.classList.remove("show"); });
+    function toggleMode() {
+        document.body.classList.toggle("dark");
+        let btn = document.getElementById("darkBtn");
+        if (document.body.classList.contains("dark")) { btn.textContent = "☀️"; localStorage.setItem("novaMode", "dark"); }
+        else { btn.textContent = "🌙"; localStorage.setItem("novaMode", "light"); }
+    }
+    (function loadMode() {
+        let saved = localStorage.getItem("novaMode"), btn = document.getElementById("darkBtn");
+        if (saved === "dark") { document.body.classList.add("dark"); btn.textContent = "☀️"; }
+    })();
+    const currentPage = window.location.pathname.split("/").pop();
+    document.querySelectorAll(".sidebar a").forEach(link => { if (link.getAttribute("href") === currentPage) link.parentElement.classList.add("active"); });
+</script>
 </body>
 </html>

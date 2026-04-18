@@ -4,80 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Certificates | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 <style>
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.dark-toggle{
-cursor:pointer;
-font-size:20px;
-margin-left:auto;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-body.dark .card{
-background:#1e293b;
-color:#e5e7eb;
-}
-
-.certificate-box{
-border:1px solid #e5e7eb;
-border-radius:16px;
-padding:25px;
-margin-bottom:20px;
-text-align:center;
-transition:0.3s;
-}
-
-.certificate-box:hover{
-transform:translateY(-4px);
-box-shadow:0 10px 20px rgba(0,0,0,0.08);
-}
-
-.certificate-icon{
-font-size:40px;
-margin-bottom:10px;
-}
-
-.locked{
-opacity:0.4;
-}
-
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px;}
+body.dark .topbar{background:#1e293b;}
+.dark-toggle{cursor:pointer; font-size:20px; margin-left:auto;}
+body.dark{background:#0f172a; color:#e5e7eb;}
+body.dark .card{background:#1e293b; color:#e5e7eb;}
+.certificate-box{border:1px solid #e5e7eb; border-radius:16px; padding:25px; margin-bottom:20px; text-align:center; transition:0.3s;}
+.certificate-box:hover{transform:translateY(-4px); box-shadow:0 10px 20px rgba(0,0,0,0.08);}
+.certificate-icon{font-size:40px; margin-bottom:10px;}
+.locked{opacity:0.4;}
+.btn{background:#3b82f6; color:white; border:none; padding:10px 16px; border-radius:8px; cursor:pointer; margin-top:10px;}
+.unlocked{border:2px solid #22c55e;}
 </style>
-
 </head>
-
 <body class="student-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="index.html">🏠 Dashboard</a></li>
 <li><a href="courses.html">📚 My Courses</a></li>
 <li><a href="lessons.html">🎓 Level / Lesson</a></li>
@@ -95,184 +45,139 @@ opacity:0.4;
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="support.html">❓ Help / Support</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Log out</a></li>
 </ul>
-
 </aside>
 
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
-
 <h1>🏆 Achievements & Certificates</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
 
-<section class="cards">
-
-<div class="certificate-box" id="certificateArea">
-
-<div class="certificate-icon">🎓</div>
-
-<h3>Lesson Master</h3>
-
-<p>Complete 10 lessons.</p>
-
-<button class="btn" onclick="downloadCertificate()">
-Download PDF
-</button>
-
-</div>
-
-
-<div class="certificate-box">
-
-<div class="certificate-icon">📚</div>
-
-<h3>Vocabulary Hero</h3>
-
-<p>Complete 20 vocabulary practices.</p>
-
-</div>
-
-
-<div class="certificate-box">
-
-<div class="certificate-icon">🧠</div>
-
-<h3>AI Practice Expert</h3>
-
-<p>Use Skill Lab 10 times.</p>
-
-</div>
-
-
-<div class="certificate-box locked">
-
-<div class="certificate-icon">🔒</div>
-
-<h3>Course Completion Certificate</h3>
-
-<p>Unlock after finishing the full course.</p>
-
-</div>
-
+<section class="cards" id="certificatesContainer">
+    <!-- Dinamik yuklanadi -->
 </section>
-
 </main>
-
 </div>
 
+<!-- UI SCRIPT -->
 <script>
-
-/* USER */
-
-const user = JSON.parse(localStorage.getItem("novaUser"));
-
-if(!user){
-window.location.href="../index.html";
-}
-
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
-
-/* SIDEBAR MOBILE */
-
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
-
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
-});
-
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
-
-/* DARK MODE */
-
+const menuBtn=document.querySelector(".menu-btn"), sidebar=document.querySelector(".sidebar"), overlay=document.querySelector(".overlay");
+menuBtn.addEventListener("click",()=>{ sidebar.classList.toggle("show"); overlay.classList.toggle("show"); });
+overlay.addEventListener("click",()=>{ sidebar.classList.remove("show"); overlay.classList.remove("show"); });
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
 let btn=document.getElementById("darkBtn");
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-
-}
-
-function loadMode(){
-
-let saved=localStorage.getItem("novaMode");
-
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
-}
-
-}
-
-loadMode();
-
-
-/* ACTIVE MENU AUTO */
-
+if(localStorage.getItem("novaMode")==="dark"){ document.body.classList.add("dark"); document.getElementById("darkBtn").textContent="☀️"; }
 const currentPage = window.location.pathname.split("/").pop();
-
-document.querySelectorAll(".sidebar a").forEach(link => {
-
-if(link.getAttribute("href") === currentPage){
-link.parentElement.classList.add("active");
-}
-
-});
-
-
-/* CERTIFICATE PDF DOWNLOAD */
-
-async function downloadCertificate(){
-
-const { jsPDF } = window.jspdf;
-
-let element = document.getElementById("certificateArea");
-
-html2canvas(element).then(canvas=>{
-
-let imgData = canvas.toDataURL("image/png");
-
-let pdf = new jsPDF();
-
-pdf.addImage(imgData,'PNG',10,10,180,100);
-
-pdf.save("nova-certificate.pdf");
-
-});
-
-}
-
+document.querySelectorAll(".sidebar a").forEach(link => { if(link.getAttribute("href") === currentPage) link.parentElement.classList.add("active"); });
 </script>
 
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { auth, db } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc, collection, query, where, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let studentId = null, studentData = null;
+
+onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = "../index.html"; return; }
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists() && userDoc.data().role === "student") {
+        studentId = user.uid;
+        studentData = userDoc.data();
+        loadCertificates();
+    } else { window.location.href = "../index.html"; }
+});
+
+async function loadCertificates() {
+    const container = document.getElementById("certificatesContainer");
+    container.innerHTML = "<p>Loading certificates...</p>";
+    
+    // Student progressini olish
+    const completedLessons = studentData.completedLessons ? Object.keys(studentData.completedLessons).length : 0;
+    const aiPractices = studentData.aiPractices || 0;
+    const skillLabUses = studentData.skillLabUses || 0;
+    
+    // Admin tomonidan yaratilgan barcha sertifikatlar
+    const certSnap = await getDocs(collection(db, "certificates"));
+    const issuedSnap = await getDocs(query(collection(db, "issued_certificates"), where("studentId", "==", studentId)));
+    const issuedCerts = new Set();
+    issuedSnap.forEach(d => issuedCerts.add(d.data().certificateId));
+    
+    container.innerHTML = "";
+    
+    // 1. Lesson Master
+    const lessonMasterUnlocked = completedLessons >= 10;
+    container.innerHTML += `
+        <div class="certificate-box ${lessonMasterUnlocked ? 'unlocked' : 'locked'}" id="cert-lesson-master">
+            <div class="certificate-icon">${lessonMasterUnlocked ? '🎓' : '🔒'}</div>
+            <h3>Lesson Master</h3>
+            <p>Complete 10 lessons. (${completedLessons}/10)</p>
+            ${lessonMasterUnlocked ? '<button class="btn" onclick="window.downloadCert(\'lesson-master\')">Download PDF</button>' : ''}
+        </div>
+    `;
+    
+    // 2. Vocabulary Hero (AI Practice)
+    const vocabUnlocked = aiPractices >= 20;
+    container.innerHTML += `
+        <div class="certificate-box ${vocabUnlocked ? 'unlocked' : 'locked'}">
+            <div class="certificate-icon">${vocabUnlocked ? '📚' : '🔒'}</div>
+            <h3>Vocabulary Hero</h3>
+            <p>Complete 20 vocabulary practices. (${aiPractices}/20)</p>
+            ${vocabUnlocked ? '<button class="btn" onclick="window.downloadCert(\'vocab-hero\')">Download PDF</button>' : ''}
+        </div>
+    `;
+    
+    // 3. AI Practice Expert
+    const aiExpertUnlocked = skillLabUses >= 10;
+    container.innerHTML += `
+        <div class="certificate-box ${aiExpertUnlocked ? 'unlocked' : 'locked'}">
+            <div class="certificate-icon">${aiExpertUnlocked ? '🧠' : '🔒'}</div>
+            <h3>AI Practice Expert</h3>
+            <p>Use Skill Lab 10 times. (${skillLabUses}/10)</p>
+            ${aiExpertUnlocked ? '<button class="btn" onclick="window.downloadCert(\'ai-expert\')">Download PDF</button>' : ''}
+        </div>
+    `;
+    
+    // 4. Admin tomonidan berilgan sertifikatlar
+    certSnap.forEach(certDoc => {
+        const cert = certDoc.data();
+        const isIssued = issuedCerts.has(certDoc.id);
+        container.innerHTML += `
+            <div class="certificate-box ${isIssued ? 'unlocked' : 'locked'}">
+                <div class="certificate-icon">${isIssued ? '🏅' : '🔒'}</div>
+                <h3>${cert.title}</h3>
+                <p>${cert.description || 'Complete the course to unlock.'}</p>
+                ${isIssued ? `<button class="btn" onclick="window.downloadCert('${certDoc.id}')">Download PDF</button>` : ''}
+            </div>
+        `;
+    });
+}
+
+window.downloadCert = async (certId) => {
+    const { jsPDF } = window.jspdf;
+    const certElement = document.querySelector(`[onclick="window.downloadCert('${certId}')"]`).closest('.certificate-box');
+    
+    html2canvas(certElement).then(canvas => {
+        let imgData = canvas.toDataURL("image/png");
+        let pdf = new jsPDF();
+        pdf.addImage(imgData, 'PNG', 10, 10, 180, 100);
+        pdf.save(`nova-certificate-${certId}.pdf`);
+    });
+};
+
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
+});
+</script>
 </body>
 </html>

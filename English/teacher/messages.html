@@ -1,112 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Messages | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.dark-toggle{
-cursor:pointer;
-font-size:20px;
-margin-left:auto;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-body.dark .card{
-background:#1e293b;
-color:#e5e7eb;
-}
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-display:flex;
-align-items:center;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.message-form input,
-.message-form textarea,
-.message-form select{
-width:100%;
-padding:10px;
-margin-top:6px;
-margin-bottom:12px;
-border-radius:8px;
-border:1px solid #e5e7eb;
-}
-
-body.dark .message-form input,
-body.dark .message-form textarea,
-body.dark .message-form select{
-background:#0f172a;
-border:1px solid #334155;
-color:#fff;
-}
-
-.message-table{
-width:100%;
-border-collapse:collapse;
-margin-top:10px;
-}
-
-.message-table th,
-.message-table td{
-padding:10px;
-border-bottom:1px solid #e5e7eb;
-text-align:left;
-}
-
-body.dark .message-table th,
-body.dark .message-table td{
-border-bottom:1px solid #334155;
-}
-
-.status-pending{
-color:orange;
-}
-
-.status-approved{
-color:#10b981;
-}
-
-.status-rejected{
-color:#ef4444;
-}
-
+.dark-toggle{cursor:pointer; font-size:20px; margin-left:auto;}
+body.dark{background:#0f172a; color:#e5e7eb;}
+body.dark .card{background:#1e293b; color:#e5e7eb;}
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px; display:flex; align-items:center;}
+body.dark .topbar{background:#1e293b;}
+.message-form input, .message-form textarea, .message-form select{width:100%; padding:10px; margin-top:6px; margin-bottom:12px; border-radius:8px; border:1px solid #e5e7eb;}
+body.dark .message-form input, body.dark .message-form textarea, body.dark .message-form select{background:#0f172a; border:1px solid #334155; color:#fff;}
+.message-table{width:100%; border-collapse:collapse; margin-top:10px;}
+.message-table th, .message-table td{padding:10px; border-bottom:1px solid #e5e7eb; text-align:left;}
+body.dark .message-table th, body.dark .message-table td{border-bottom:1px solid #334155;}
+.status-pending{color:orange;}
+.status-approved{color:#10b981;}
+.status-rejected{color:#ef4444;}
+.preview-media{max-width:100px; max-height:80px; border-radius:6px; margin-top:5px;}
+.file-upload{margin:10px 0;}
 </style>
-
 </head>
-
 <body class="teacher-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
 
-<!-- SIDEBAR -->
-
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="dashboard.html">🏠 Dashboard</a></li>
 <li><a href="students.html">👨‍🎓 My Students</a></li>
 <li><a href="content.html">📚 My Content</a></li>
@@ -116,253 +39,197 @@ color:#ef4444;
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="analytics.html">📊 My Analytics</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Log out</a></li>
 </ul>
-
 </aside>
 
-
-<!-- MAIN -->
-
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
-
 <h1>Messages</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
 
-
 <section class="cards">
-
 <div class="card">
-
 <h3>Admin Approval System</h3>
-
-<p>
-Messages are not sent automatically.  
-Every message requires admin approval before being delivered.
-</p>
-
+<p>Messages are not sent automatically. Every message requires admin approval before being delivered.</p>
 </div>
-
 </section>
 
-
-<!-- NEW MESSAGE -->
-
 <section class="cards">
-
 <div class="card">
-
 <h3>New Message</h3>
-
-<form class="message-form">
-
-<label>Recipient</label>
-
-<select>
-<option>Select student</option>
-<option>Maria</option>
-<option>David</option>
-<option>Anna</option>
+<form class="message-form" id="messageForm">
+<label>Recipient (Student)</label>
+<select id="recipientSelect">
+<option value="">Select student</option>
 </select>
-
-
 <label>Subject</label>
-
-<input type="text" placeholder="Message subject">
-
-
+<input type="text" id="messageSubject" placeholder="Message subject">
 <label>Message</label>
-
-<textarea rows="5" placeholder="Write your message"></textarea>
-
-
-<button class="btn">
-Submit for Approval
-</button>
-
-</form>
-
-<p style="margin-top:10px;">
-Initial status: <strong>Pending Approval</strong>
-</p>
-
+<textarea rows="4" id="messageBody" placeholder="Write your message"></textarea>
+<div class="file-upload">
+<input type="file" id="mediaFile" accept="image/*,video/*">
 </div>
-
-
-<!-- MESSAGE STATUS -->
+<button type="submit" class="btn">Submit for Approval</button>
+</form>
+<p style="margin-top:10px;">Initial status: <strong>Pending Approval</strong></p>
+</div>
 
 <div class="card">
-
 <h3>Message Status</h3>
-
 <table class="message-table">
-
-<thead>
-<tr>
-<th>Date</th>
-<th>Recipient</th>
-<th>Subject</th>
-<th>Status</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr>
-<td>Today</td>
-<td>Maria</td>
-<td>Homework Reminder</td>
-<td class="status-pending">Pending</td>
-</tr>
-
-<tr>
-<td>Yesterday</td>
-<td>David</td>
-<td>Exam Schedule</td>
-<td class="status-approved">Sent</td>
-</tr>
-
-<tr>
-<td>2 days ago</td>
-<td>Anna</td>
-<td>Lesson Update</td>
-<td class="status-rejected">Rejected</td>
-</tr>
-
+<thead><tr><th>Date</th><th>Recipient</th><th>Subject</th><th>Media</th><th>Status</th></tr></thead>
+<tbody id="messageTableBody">
+<tr><td colspan="5" style="text-align:center;">Loading messages...</td></tr>
 </tbody>
-
 </table>
-
 </div>
-
 </section>
 
-
-<!-- MESSAGE INFO -->
-
 <section class="cards">
-
 <div class="card">
-
 <h3>Approval Process</h3>
-
 <ul>
-
-<li>Teacher creates message</li>
+<li>Teacher creates message (text/image/video)</li>
 <li>Message goes to admin approval</li>
 <li>Admin can approve or reject</li>
 <li>If approved → message is sent to student</li>
 <li>If rejected → teacher sees rejection status</li>
-
 </ul>
-
 </div>
-
-
 <div class="card">
-
 <h3>Status Types</h3>
-
 <ul>
 <li class="status-pending">Pending Approval</li>
 <li class="status-approved">Sent</li>
 <li class="status-rejected">Rejected</li>
-
 </ul>
-
 </div>
-
 </section>
-
 </main>
-
 </div>
 
-
+<!-- UI SCRIPT -->
 <script>
-
-/* LOGOUT */
-
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
-/* SIDEBAR MOBILE */
-
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
-
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
-});
-
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
-
-/* DARK MODE */
-
+const menuBtn=document.querySelector(".menu-btn"), sidebar=document.querySelector(".sidebar"), overlay=document.querySelector(".overlay");
+menuBtn.addEventListener("click",()=>{ sidebar.classList.toggle("show"); overlay.classList.toggle("show"); });
+overlay.addEventListener("click",()=>{ sidebar.classList.remove("show"); overlay.classList.remove("show"); });
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
 let btn=document.getElementById("darkBtn");
-
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-
-}
-
-function loadMode(){
-
-let saved=localStorage.getItem("novaMode");
-
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
-}
-
-}
-
-loadMode();
-
-
-/* ACTIVE MENU */
-
+if(localStorage.getItem("novaMode")==="dark"){ document.body.classList.add("dark"); document.getElementById("darkBtn").textContent="☀️"; }
 const currentPage = window.location.pathname.split("/").pop();
-
-document.querySelectorAll(".sidebar a").forEach(link => {
-
-if(link.getAttribute("href") === currentPage){
-link.parentElement.classList.add("active");
-}
-
-});
-
+document.querySelectorAll(".sidebar a").forEach(link => { if(link.getAttribute("href") === currentPage) link.parentElement.classList.add("active"); });
 </script>
 
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { auth, db, storage } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { collection, addDoc, query, where, onSnapshot, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+let teacherId = null, teacherName = "";
+
+onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = "../index.html"; return; }
+    const userDoc = await getDocs(query(collection(db, "users"), where("uid", "==", user.uid)));
+    if (!userDoc.empty && userDoc.docs[0].data().role === "teacher") {
+        teacherId = user.uid;
+        teacherName = userDoc.docs[0].data().name || user.displayName || "Teacher";
+        loadStudents();
+        loadMessages();
+    } else { window.location.href = "../index.html"; }
+});
+
+async function loadStudents() {
+    const select = document.getElementById("recipientSelect");
+    const snapshot = await getDocs(query(collection(db, "users"), where("role", "==", "student")));
+    select.innerHTML = '<option value="">Select student</option>';
+    snapshot.forEach(doc => {
+        const data = doc.data();
+        select.innerHTML += `<option value="${doc.id}">${data.name || data.email || 'Student'}</option>`;
+    });
+}
+
+function loadMessages() {
+    const q = query(collection(db, "messages"), where("teacherId", "==", teacherId));
+    onSnapshot(q, async (snap) => {
+        const tbody = document.getElementById("messageTableBody");
+        tbody.innerHTML = "";
+        if (snap.empty) { tbody.innerHTML = '<tr><td colspan="5">No messages yet</td></tr>'; return; }
+        
+        const studentsSnap = await getDocs(query(collection(db, "users"), where("role", "==", "student")));
+        const studentsMap = {};
+        studentsSnap.forEach(d => { studentsMap[d.id] = d.data().name || "Student"; });
+        
+        snap.forEach(doc => {
+            const data = doc.data();
+            const status = data.status || "pending";
+            const statusClass = status === "pending" ? "status-pending" : status === "approved" ? "status-approved" : "status-rejected";
+            const statusText = status === "pending" ? "Pending" : status === "approved" ? "Sent" : "Rejected";
+            
+            let mediaHtml = '';
+            if (data.mediaUrl) {
+                mediaHtml = data.mediaType === 'image' ? `<img src="${data.mediaUrl}" class="preview-media">` : `<video src="${data.mediaUrl}" class="preview-media">`;
+            }
+            
+            tbody.innerHTML += `<tr>
+                <td>${data.createdAt?.toDate().toLocaleDateString() || 'Today'}</td>
+                <td>${studentsMap[data.studentId] || 'Student'}</td>
+                <td>${data.subject || 'No subject'}</td>
+                <td>${mediaHtml || '-'}</td>
+                <td class="${statusClass}">${statusText}</td>
+            </tr>`;
+        });
+    });
+}
+
+document.getElementById("messageForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const studentId = document.getElementById("recipientSelect").value;
+    const subject = document.getElementById("messageSubject").value.trim();
+    const body = document.getElementById("messageBody").value.trim();
+    const file = document.getElementById("mediaFile").files[0];
+    
+    if (!studentId) { alert("Select a student"); return; }
+    if (!subject && !body && !file) { alert("Enter message or select media"); return; }
+    
+    let mediaUrl = null, mediaType = null;
+    if (file) {
+        const storageRef = ref(storage, `messages/${Date.now()}_${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        await new Promise(resolve => {
+            uploadTask.on('state_changed', null, null, async () => {
+                mediaUrl = await getDownloadURL(uploadTask.snapshot.ref);
+                mediaType = file.type.startsWith('video') ? 'video' : 'image';
+                resolve();
+            });
+        });
+    }
+    
+    await addDoc(collection(db, "messages"), {
+        teacherId, teacherName, studentId, subject, text: body, mediaUrl, mediaType,
+        sender: "teacher", status: "pending", createdAt: serverTimestamp()
+    });
+    
+    document.getElementById("messageSubject").value = "";
+    document.getElementById("messageBody").value = "";
+    document.getElementById("mediaFile").value = "";
+    alert("Message submitted for approval!");
+});
+
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
+});
+</script>
 </body>
 </html>

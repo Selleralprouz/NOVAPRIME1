@@ -4,127 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Messages | NOVA PRIME</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-.topbar{
-background:#f1f5f9;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-body.dark .topbar{
-background:#1e293b;
-}
-
-.dark-toggle{
-cursor:pointer;
-margin-left:auto;
-font-size:20px;
-}
-
-.chat-container{
-border:1px solid #e5e7eb;
-border-radius:16px;
-display:flex;
-flex-direction:column;
-height:520px;
-background:#f9fafb;
-overflow:hidden;
-}
-
-body.dark .chat-container{
-background:#111827;
-}
-
-.chat-messages{
-flex:1;
-overflow-y:auto;
-padding:20px;
-display:flex;
-flex-direction:column;
-gap:12px;
-}
-
-.message{
-padding:10px 14px;
-border-radius:12px;
-max-width:70%;
-word-break:break-word;
-}
-
-.user{
-background:#3b82f6;
-color:white;
-align-self:flex-end;
-}
-
-.bot{
-background:#e5e7eb;
-}
-
-body.dark .bot{
-background:#374151;
-color:#fff;
-}
-
-.chat-input-area{
-border-top:1px solid #e5e7eb;
-padding:10px;
-display:flex;
-gap:10px;
-align-items:center;
-}
-
-.chat-input-area input{
-flex:1;
-padding:10px;
-border-radius:8px;
-border:1px solid #ccc;
-}
-
-.chat-input-area button{
-padding:10px 16px;
-}
-
-.file-btn{
-background:#3b82f6;
-color:#fff;
-border:none;
-padding:10px 12px;
-border-radius:8px;
-cursor:pointer;
-}
-
-.preview img,
-.preview video{
-max-width:180px;
-border-radius:10px;
-margin-top:6px;
-}
-
+.topbar{background:#f1f5f9; padding:12px 20px; border-radius:12px; margin-bottom:20px; display:flex; align-items:center; gap:10px;}
+body.dark .topbar{background:#1e293b;}
+.dark-toggle{cursor:pointer; margin-left:auto; font-size:20px;}
+.chat-container{border:1px solid #e5e7eb; border-radius:16px; display:flex; flex-direction:column; height:520px; background:#f9fafb; overflow:hidden;}
+body.dark .chat-container{background:#111827;}
+.chat-messages{flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:12px;}
+.message{padding:10px 14px; border-radius:12px; max-width:70%; word-break:break-word;}
+.user{background:#3b82f6; color:white; align-self:flex-end;}
+.bot{background:#e5e7eb;}
+body.dark .bot{background:#374151; color:#fff;}
+.chat-input-area{border-top:1px solid #e5e7eb; padding:10px; display:flex; gap:10px; align-items:center;}
+.chat-input-area input{flex:1; padding:10px; border-radius:8px; border:1px solid #ccc;}
+.chat-input-area button{padding:10px 16px;}
+.file-btn{background:#3b82f6; color:#fff; border:none; padding:10px 12px; border-radius:8px; cursor:pointer;}
+.preview-media{max-width:180px; max-height:150px; border-radius:10px; margin-top:6px;}
+.teacher-select{margin-bottom:10px; padding:8px; border-radius:6px; width:100%;}
 </style>
-
 </head>
-
 <body class="student-page">
-
 <div class="overlay"></div>
-
 <div class="dashboard">
-
 <aside class="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="index.html">🏠 Dashboard</a></li>
 <li><a href="courses.html">📚 My Courses</a></li>
 <li><a href="lessons.html">🎓 Level / Lesson</a></li>
@@ -142,231 +47,170 @@ margin-top:6px;
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="support.html">❓ Help / Support</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logoutUser()">🚪 Log out</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Log out</a></li>
 </ul>
-
 </aside>
-
 <main class="content">
-
 <header class="topbar">
-
 <button class="menu-btn">☰</button>
-
 <h1>💬 Messages</h1>
-
 <div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
-
 </header>
 
-<div style="display:flex;gap:10px;margin-bottom:10px;">
+<select id="teacherSelect" class="teacher-select">
+    <option value="">Select Teacher...</option>
+</select>
 
-<button onclick="openChat('tutor')" class="btn">Tutor</button>
-<button onclick="openChat('system')" class="btn">System</button>
-<button onclick="openChat('support')" class="btn">Support</button>
-
-<span id="notifBadge" style="margin-left:auto;background:#ef4444;color:#fff;padding:4px 10px;border-radius:20px;font-size:12px;">
-1 notification
-</span>
-
+<div style="display:flex; gap:10px; margin-bottom:10px;">
+<button onclick="window.openChat('tutor')" class="btn">Tutor</button>
+<button onclick="window.openChat('system')" class="btn">System</button>
+<button onclick="window.openChat('support')" class="btn">Support</button>
+<span id="notifBadge" style="margin-left:auto; background:#ef4444; color:#fff; padding:4px 10px; border-radius:20px; font-size:12px;">0 notifications</span>
 </div>
-
 <div class="chat-container">
-
 <div class="chat-messages" id="chatMessages">
-<div class="message bot">
-Hello 👋 I am the NOVA PRIME assistant. How can I help you?
+<div class="message bot">Hello 👋 Select a teacher and start chatting!</div>
 </div>
-</div>
-
 <div class="chat-input-area">
-
-<input type="file" id="fileInput" hidden>
-
+<input type="file" id="fileInput" hidden accept="image/*,video/*">
 <button class="file-btn" onclick="document.getElementById('fileInput').click()">📎</button>
-
 <input type="text" id="msgInput" placeholder="Write a message...">
-
-<button onclick="sendMessage()">Send</button>
-
+<button onclick="window.sendMessage()">Send</button>
 </div>
-
 </div>
-
 </main>
-
 </div>
 
+<!-- UI SCRIPT -->
 <script>
-
-/* USER */
-
-const user = JSON.parse(localStorage.getItem("novaUser"));
-if(!user){window.location.href="../index.html";}
-
-function logoutUser(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
-/* CHANNEL */
-
-let currentChannel = "system";
-
-/* SEND */
-
-function sendMessage(){
-
-const input=document.getElementById("msgInput");
-const text=input.value.trim();
-if(text==="") return;
-
-if(currentChannel==="tutor"){
-addUserMessage(text,"pending");
-}else{
-addUserMessage(text,"sent");
-}
-
-input.value="";
-}
-
-/* MESSAGE UI */
-
-function addUserMessage(text,status){
-
-const box=document.getElementById("chatMessages");
-
-let statusHtml="";
-
-if(status==="pending"){
-statusHtml=`<div style="font-size:11px;opacity:0.7;">⏳ Pending approval</div>`;
-}
-
-if(status==="sent"){
-statusHtml=`<div style="font-size:11px;opacity:0.7;">✅ Sent</div>`;
-}
-
-box.innerHTML+=`
-<div class="message user">
-${text}
-${statusHtml}
-</div>
-`;
-
-box.scrollTop=box.scrollHeight;
-}
-
-function addBotMessage(text){
-
-const box=document.getElementById("chatMessages");
-
-box.innerHTML+=`
-<div class="message bot">${text}</div>
-`;
-
-box.scrollTop=box.scrollHeight;
-}
-
-/* CHAT SWITCH */
-
-function openChat(type){
-
-currentChannel=type;
-
-const box=document.getElementById("chatMessages");
-box.innerHTML="";
-
-if(type==="tutor"){
-addBotMessage("Your message will be reviewed by admin before reaching the tutor.");
-}
-
-if(type==="system"){
-addBotMessage("System message: Welcome.");
-}
-
-if(type==="support"){
-addBotMessage("Support team here.");
-}
-
-}
-
-/* FILE */
-
-document.getElementById("fileInput").addEventListener("change",function(){
-const file=this.files[0];
-if(!file) return;
-
-const url=URL.createObjectURL(file);
-const box=document.getElementById("chatMessages");
-
-box.innerHTML+=`
-<div class="message user preview">
-<img src="${url}">
-</div>
-`;
-
-box.scrollTop=box.scrollHeight;
-});
-
-/* ENTER */
-
-document.getElementById("msgInput").addEventListener("keypress",function(e){
-if(e.key==="Enter"){sendMessage();}
-});
-
-/* SIDEBAR */
-
-const menuBtn=document.querySelector(".menu-btn");
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".overlay");
-
-menuBtn.addEventListener("click",()=>{
-sidebar.classList.toggle("show");
-overlay.classList.toggle("show");
-});
-
-overlay.addEventListener("click",()=>{
-sidebar.classList.remove("show");
-overlay.classList.remove("show");
-});
-
-/* DARK MODE */
-
+const menuBtn=document.querySelector(".menu-btn"), sidebar=document.querySelector(".sidebar"), overlay=document.querySelector(".overlay");
+menuBtn.addEventListener("click",()=>{ sidebar.classList.toggle("show"); overlay.classList.toggle("show"); });
+overlay.addEventListener("click",()=>{ sidebar.classList.remove("show"); overlay.classList.remove("show"); });
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
 let btn=document.getElementById("darkBtn");
-
-if(document.body.classList.contains("dark")){
-btn.textContent="☀️";
-localStorage.setItem("novaMode","dark");
-}else{
-btn.textContent="🌙";
-localStorage.setItem("novaMode","light");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-
-}
-
-function loadMode(){
-
-let saved=localStorage.getItem("novaMode");
-let btn=document.getElementById("darkBtn");
-
-if(saved==="dark"){
-document.body.classList.add("dark");
-btn.textContent="☀️";
-}
-
-}
-
-loadMode();
-
+if(localStorage.getItem("novaMode")==="dark"){ document.body.classList.add("dark"); document.getElementById("darkBtn").textContent="☀️"; }
+document.getElementById("msgInput").addEventListener("keypress",e=>{ if(e.key==="Enter") window.sendMessage(); });
+const currentPage = window.location.pathname.split("/").pop();
+document.querySelectorAll(".sidebar a").forEach(link => { if(link.getAttribute("href") === currentPage) link.parentElement.classList.add("active"); });
 </script>
 
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { auth, db, storage } from "../firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { collection, addDoc, query, where, onSnapshot, serverTimestamp, doc, getDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+let studentId = null, studentName = "", currentChannel = "tutor", selectedTeacherId = null;
+
+onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = "../index.html"; return; }
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists() && userDoc.data().role === "student") {
+        studentId = user.uid;
+        studentName = userDoc.data().name || "Student";
+        loadTeachers();
+        loadNotifications();
+    } else { window.location.href = "../index.html"; }
+});
+
+async function loadTeachers() {
+    const select = document.getElementById("teacherSelect");
+    const snap = await getDocs(query(collection(db, "users"), where("role", "==", "teacher")));
+    snap.forEach(d => {
+        const data = d.data();
+        select.innerHTML += `<option value="${d.id}">${data.name || 'Teacher'}</option>`;
+    });
+    select.addEventListener("change", () => {
+        selectedTeacherId = select.value;
+        if (selectedTeacherId) loadMessages();
+    });
+}
+
+function loadMessages() {
+    if (!selectedTeacherId) return;
+    
+    const q = query(collection(db, "messages"), where("studentId", "==", studentId), where("teacherId", "==", selectedTeacherId));
+    onSnapshot(q, (snap) => {
+        const box = document.getElementById("chatMessages");
+        box.innerHTML = '<div class="message bot">Chat with your teacher</div>';
+        snap.forEach(d => {
+            const data = d.data();
+            if (data.status === "approved" || data.sender === "student") {
+                let mediaHtml = '';
+                if (data.mediaUrl) {
+                    if (data.mediaType === 'image') mediaHtml = `<img src="${data.mediaUrl}" class="preview-media">`;
+                    else if (data.mediaType === 'video') mediaHtml = `<video src="${data.mediaUrl}" controls class="preview-media"></video>`;
+                }
+                const statusText = data.status === "pending" ? "⏳ Pending" : "✅";
+                const cls = data.sender === "student" ? "user" : "bot";
+                box.innerHTML += `<div class="message ${cls}">${data.text || ''}${mediaHtml}<div style="font-size:11px;">${statusText}</div></div>`;
+            }
+        });
+        box.scrollTop = box.scrollHeight;
+    });
+}
+
+function loadNotifications() {
+    const q = query(collection(db, "notifications"), where("studentId", "==", studentId), where("read", "==", false));
+    onSnapshot(q, snap => {
+        document.getElementById("notifBadge").textContent = snap.size ? `${snap.size} new` : "0 notifications";
+    });
+}
+
+window.openChat = (type) => {
+    currentChannel = type;
+    const box = document.getElementById("chatMessages");
+    box.innerHTML = '<div class="message bot">Select a teacher to chat</div>';
+};
+
+window.sendMessage = async () => {
+    const input = document.getElementById("msgInput");
+    const file = document.getElementById("fileInput").files[0];
+    const text = input.value.trim();
+    
+    if (!text && !file) return;
+    if (!selectedTeacherId) { alert("Select a teacher first!"); return; }
+    
+    const box = document.getElementById("chatMessages");
+    let mediaUrl = null, mediaType = null;
+    
+    if (file) {
+        const storageRef = ref(storage, `messages/${Date.now()}_${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        await new Promise(resolve => {
+            uploadTask.on('state_changed', null, null, async () => {
+                mediaUrl = await getDownloadURL(uploadTask.snapshot.ref);
+                mediaType = file.type.startsWith('video') ? 'video' : 'image';
+                resolve();
+            });
+        });
+        box.innerHTML += `<div class="message user">${mediaType === 'image' ? '<img src="'+mediaUrl+'" class="preview-media">' : '<video src="'+mediaUrl+'" controls class="preview-media"></video>'}<div>⏳ Pending</div></div>`;
+    }
+    
+    if (text) {
+        box.innerHTML += `<div class="message user">${text}<div>⏳ Pending</div></div>`;
+    }
+    
+    await addDoc(collection(db, "messages"), {
+        studentId, studentName, teacherId: selectedTeacherId, text, mediaUrl, mediaType,
+        sender: "student", status: "pending", channel: currentChannel, createdAt: serverTimestamp()
+    });
+    
+    input.value = "";
+    document.getElementById("fileInput").value = "";
+    box.scrollTop = box.scrollHeight;
+};
+
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => window.location.href = "../index.html");
+});
+</script>
 </body>
 </html>

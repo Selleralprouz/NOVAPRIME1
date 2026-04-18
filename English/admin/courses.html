@@ -1,205 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Course Manager | NOVA PRIME ADMIN</title>
-
 <link rel="stylesheet" href="../style.css">
-
 <style>
-
-body{
-margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:#f1f5f9;
-}
-
-body.dark{
-background:#0f172a;
-color:#e5e7eb;
-}
-
-.dashboard{
-display:flex;
-min-height:100vh;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-width:260px;
-background:linear-gradient(180deg,#0f172a,#020617);
-color:white;
-padding:20px;
-}
-
-.sidebar h2{
-margin-bottom:30px;
-}
-
-.sidebar ul{
-list-style:none;
-padding:0;
-}
-
-.sidebar li{
-margin-bottom:10px;
-}
-
-.sidebar a{
-color:white;
-text-decoration:none;
-padding:10px;
-display:block;
-border-radius:8px;
-transition:0.2s;
-}
-
-.sidebar a:hover{
-background:#1e293b;
-}
-
-.sidebar a.active{
-background:#2563eb;
-}
-
-/* CONTENT */
-
-.content{
-flex:1;
-padding:30px;
-}
-
-/* TOPBAR */
-
-.topbar{
-display:flex;
-align-items:center;
-margin-bottom:25px;
-}
-
-.menu-btn{
-font-size:22px;
-cursor:pointer;
-margin-right:15px;
-}
-
-.dark-toggle{
-margin-left:auto;
-cursor:pointer;
-font-size:20px;
-}
-
-/* CARDS */
-
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-margin-bottom:30px;
-}
-
-.card{
-background:white;
-padding:20px;
-border-radius:12px;
-box-shadow:0 10px 20px rgba(0,0,0,0.08);
-}
-
-body.dark .card{
-background:#1e293b;
-}
-
-/* TABLE */
-
-.table{
-width:100%;
-border-collapse:collapse;
-background:white;
-border-radius:10px;
-overflow:hidden;
-}
-
-body.dark .table{
-background:#1e293b;
-}
-
-.table th,
-.table td{
-padding:12px;
-border-bottom:1px solid #e2e8f0;
-text-align:left;
-}
-
-.actions button{
-padding:6px 10px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-margin-right:5px;
-}
-
-.edit{background:#3b82f6;color:white;}
-.delete{background:#ef4444;color:white;}
-.create{background:#22c55e;color:white;margin-bottom:15px}
-
-/* SUBMENU */
-
-.submenu{
-margin-bottom:20px;
-display:flex;
-gap:10px;
-}
-
-.submenu button{
-padding:8px 12px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-background:#e2e8f0;
-}
-
-/* MOBILE */
-
+body{margin:0; font-family:Arial, Helvetica, sans-serif; background:#f1f5f9;}
+body.dark{background:#0f172a; color:#e5e7eb;}
+.dashboard{display:flex; min-height:100vh;}
+.sidebar{width:260px; background:linear-gradient(180deg,#0f172a,#020617); color:white; padding:20px;}
+.sidebar h2{margin-bottom:30px;}
+.sidebar ul{list-style:none; padding:0;}
+.sidebar li{margin-bottom:10px;}
+.sidebar a{color:white; text-decoration:none; padding:10px; display:block; border-radius:8px; transition:0.2s;}
+.sidebar a:hover{background:#1e293b;}
+.sidebar a.active{background:#2563eb;}
+.content{flex:1; padding:30px;}
+.topbar{display:flex; align-items:center; margin-bottom:25px;}
+.menu-btn{font-size:22px; cursor:pointer; margin-right:15px;}
+.dark-toggle{margin-left:auto; cursor:pointer; font-size:20px;}
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-bottom:30px;}
+.card{background:white; padding:20px; border-radius:12px; box-shadow:0 10px 20px rgba(0,0,0,0.08);}
+body.dark .card{background:#1e293b;}
+.table{width:100%; border-collapse:collapse; background:white; border-radius:10px; overflow:hidden;}
+body.dark .table{background:#1e293b;}
+.table th, .table td{padding:12px; border-bottom:1px solid #e2e8f0; text-align:left;}
+.actions button{padding:6px 10px; border:none; border-radius:6px; cursor:pointer; margin-right:5px;}
+.edit{background:#3b82f6; color:white;}
+.delete{background:#ef4444; color:white;}
+.create{background:#22c55e; color:white; margin-bottom:15px; border:none; padding:8px 14px; border-radius:6px; cursor:pointer;}
+.submenu{margin-bottom:20px; display:flex; gap:10px;}
+.submenu button{padding:8px 12px; border:none; border-radius:6px; cursor:pointer; background:#e2e8f0;}
+.modal{display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2000;}
+.modal-content{background:white; width:400px; margin:100px auto; padding:20px; border-radius:12px;}
+body.dark .modal-content{background:#1e293b; color:#fff;}
+.modal-content input, .modal-content textarea{width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc;}
 @media(max-width:900px){
-
-.sidebar{
-position:fixed;
-left:-260px;
-top:0;
-height:100%;
-transition:0.3s;
+.sidebar{position:fixed; left:-260px; top:0; height:100%; transition:0.3s; z-index:1000;}
+.sidebar.show{left:0;}
 }
-
-.sidebar.show{
-left:0;
-}
-
-}
-
 </style>
-
 </head>
-
 <body>
-
 <div class="dashboard">
-
 <aside class="sidebar" id="sidebar">
-
 <h2>NOVA PRIME</h2>
-
 <ul>
-
 <li><a href="dashboard.html">🏠 Dashboard</a></li>
 <li><a href="users.html">👥 Users</a></li>
 <li><a href="teachers.html">👨‍🏫 Teachers</a></li>
-
 <li><a href="courses.html" class="active">📚 Course Manager</a></li>
-
 <li><a href="activity-builder.html">🛠 Activity Builder</a></li>
 <li><a href="learning-blocks.html">🧱 Learning Blocks</a></li>
 <li><a href="skill-lab.html">🧠 Skill Lab</a></li>
@@ -207,144 +58,152 @@ left:0;
 <li><a href="games.html">🎮 Games</a></li>
 <li><a href="assessments.html">📝 Assessments</a></li>
 <li><a href="analytics.html">📊 Analytics</a></li>
-
 <li><a href="banner-manager.html">📢 Banner Manager</a></li>
-
 <li><a href="certificates.html">🏆 Certificates</a></li>
 <li><a href="donations.html">💰 Payments</a></li>
 <li><a href="messages.html">💬 Messages</a></li>
 <li><a href="settings.html">⚙️ Settings</a></li>
-
 <hr>
-
-<li><a href="#" onclick="logout()">🚪 Logout</a></li>
-
+<li><a href="#" id="logoutLink">🚪 Logout</a></li>
 </ul>
-
 </aside>
 
 <main class="content">
-
 <header class="topbar">
-
 <div class="menu-btn" onclick="toggleMenu()">☰</div>
-
 <h1>Course Manager</h1>
-
-<div class="dark-toggle" onclick="toggleMode()">🌙</div>
-
+<div class="dark-toggle" id="darkBtn" onclick="toggleMode()">🌙</div>
 </header>
 
 <section class="cards">
-
-<div class="card">
-<h3>Total Courses</h3>
-<p>24</p>
-</div>
-
-<div class="card">
-<h3>Total Levels</h3>
-<p>86</p>
-</div>
-
-<div class="card">
-<h3>Total Lessons</h3>
-<p>420</p>
-</div>
-
-<div class="card">
-<h3>Students Enrolled</h3>
-<p>1240</p>
-</div>
-
+<div class="card"><h3>Total Courses</h3><p id="totalCourses">--</p></div>
+<div class="card"><h3>Total Levels</h3><p id="totalLevels">--</p></div>
+<div class="card"><h3>Total Lessons</h3><p id="totalLessons">--</p></div>
+<div class="card"><h3>Students Enrolled</h3><p id="totalStudents">--</p></div>
 </section>
 
-<button class="create">+ Create Course</button>
-
-<!-- CLIENT SUBMENU -->
+<button class="create" onclick="window.showModal()">+ Create Course</button>
 
 <div class="submenu">
-<button>Courses</button>
-<button>Levels</button>
-<button>Lessons</button>
-<button>Students</button>
+<button onclick="window.setView('courses')">Courses</button>
+<button onclick="window.setView('levels')">Levels</button>
+<button onclick="window.setView('lessons')">Lessons</button>
+<button onclick="window.setView('students')">Students</button>
 </div>
 
-<table class="table">
-
-<thead>
-<tr>
-<th>Course</th>
-<th>Levels</th>
-<th>Lessons</th>
-<th>Students</th>
-<th>Actions</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>Basic English</td>
-<td>10</td>
-<td>40</td>
-<td>230</td>
-<td class="actions">
-<button class="edit">Edit</button>
-<button>Duplicate</button>
-<button>Move</button>
-<button class="delete">Delete</button>
-</td>
-</tr>
-
-<tr>
-<td>Intermediate English</td>
-<td>12</td>
-<td>56</td>
-<td>180</td>
-<td class="actions">
-<button class="edit">Edit</button>
-<button>Duplicate</button>
-<button>Move</button>
-<button class="delete">Delete</button>
-</td>
-</tr>
-
-</tbody>
-
+<table class="table" id="dataTable">
+<thead id="tableHeader"><tr><th>Course</th><th>Levels</th><th>Lessons</th><th>Students</th><th>Actions</th></tr></thead>
+<tbody id="tableBody"><tr><td colspan="5" style="text-align:center;">Loading...</td></tr></tbody>
 </table>
-
 </main>
-
 </div>
 
+<!-- MODAL -->
+<div id="courseModal" class="modal">
+<div class="modal-content">
+<h3 id="modalTitle">Create Course</h3>
+<input type="text" id="courseTitle" placeholder="Course Title">
+<textarea id="courseDesc" placeholder="Description" rows="3"></textarea>
+<button onclick="window.saveCourse()" style="background:#22c55e; color:white; padding:10px; border:none; border-radius:6px; margin-right:10px;">Save</button>
+<button onclick="window.closeModal()" style="background:#ef4444; color:white; padding:10px; border:none; border-radius:6px;">Cancel</button>
+</div>
+</div>
+
+<!-- UI SCRIPT -->
 <script>
-
-if(localStorage.getItem("nova-theme")==="dark"){
-document.body.classList.add("dark");
-}
-
+if(localStorage.getItem("isAdminLoggedIn") !== "true"){ window.location.href = "../admin-login.html"; }
+function toggleMenu(){ document.getElementById("sidebar").classList.toggle("show"); }
 function toggleMode(){
-
 document.body.classList.toggle("dark");
-
-if(document.body.classList.contains("dark")){
-localStorage.setItem("nova-theme","dark");
-}else{
-localStorage.setItem("nova-theme","light");
+let btn=document.getElementById("darkBtn");
+if(document.body.classList.contains("dark")){ btn.textContent="☀️"; localStorage.setItem("novaMode","dark"); }
+else{ btn.textContent="🌙"; localStorage.setItem("novaMode","light"); }
 }
-
-}
-
-function toggleMenu(){
-document.getElementById("sidebar").classList.toggle("show");
-}
-
-function logout(){
-localStorage.removeItem("novaUser");
-window.location.href="../index.html";
-}
-
+if(localStorage.getItem("novaMode")==="dark"){ document.body.classList.add("dark"); document.getElementById("darkBtn").textContent="☀️"; }
+document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("isAdminLoggedIn");
+    window.location.href = "../admin-login.html";
+});
 </script>
 
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { db } from "../firebase.js";
+import { collection, addDoc, deleteDoc, doc, onSnapshot, getDocs, query, where, getCountFromServer, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let currentView = 'courses';
+let allCourses = [], allLevels = [], allLessons = [];
+
+loadStats();
+loadData();
+
+async function loadStats() {
+    const coursesSnap = await getCountFromServer(collection(db, "courses"));
+    const levelsSnap = await getCountFromServer(collection(db, "levels"));
+    const lessonsSnap = await getCountFromServer(collection(db, "lessons"));
+    const studentsSnap = await getCountFromServer(query(collection(db, "users"), where("role", "==", "student")));
+    
+    document.getElementById("totalCourses").textContent = coursesSnap.data().count;
+    document.getElementById("totalLevels").textContent = levelsSnap.data().count;
+    document.getElementById("totalLessons").textContent = lessonsSnap.data().count;
+    document.getElementById("totalStudents").textContent = studentsSnap.data().count;
+}
+
+function loadData() {
+    onSnapshot(collection(db, "courses"), (s) => { allCourses = []; s.forEach(d => allCourses.push({id:d.id, ...d.data()})); renderTable(); });
+    onSnapshot(collection(db, "levels"), (s) => { allLevels = []; s.forEach(d => allLevels.push({id:d.id, ...d.data()})); renderTable(); });
+    onSnapshot(collection(db, "lessons"), (s) => { allLessons = []; s.forEach(d => allLessons.push({id:d.id, ...d.data()})); renderTable(); });
+}
+
+window.setView = (view) => { currentView = view; renderTable(); };
+
+function renderTable() {
+    const header = document.getElementById("tableHeader");
+    const tbody = document.getElementById("tableBody");
+    
+    if (currentView === 'courses') {
+        header.innerHTML = '<tr><th>Course</th><th>Description</th><th>Levels</th><th>Lessons</th><th>Actions</th></tr>';
+        tbody.innerHTML = allCourses.length ? "" : '<tr><td colspan="5">No courses</td></tr>';
+        allCourses.forEach(c => {
+            const levelCount = allLevels.filter(l => l.courseId === c.id).length;
+            const lessonCount = allLessons.filter(l => l.courseId === c.id).length;
+            tbody.innerHTML += `<tr><td>${c.title}</td><td>${c.description || '-'}</td><td>${levelCount}</td><td>${lessonCount}</td>
+                <td class="actions"><button class="delete" onclick="window.deleteItem('courses','${c.id}')">Delete</button></td></tr>`;
+        });
+    } else if (currentView === 'levels') {
+        header.innerHTML = '<tr><th>Level</th><th>Course</th><th>Description</th><th>Actions</th></tr>';
+        tbody.innerHTML = allLevels.length ? "" : '<tr><td colspan="4">No levels</td></tr>';
+        allLevels.forEach(l => {
+            const course = allCourses.find(c => c.id === l.courseId);
+            tbody.innerHTML += `<tr><td>${l.name || l.title}</td><td>${course?.title || '-'}</td><td>${l.description || '-'}</td>
+                <td class="actions"><button class="delete" onclick="window.deleteItem('levels','${l.id}')">Delete</button></td></tr>`;
+        });
+    } else if (currentView === 'lessons') {
+        header.innerHTML = '<tr><th>Lesson</th><th>Level</th><th>Duration</th><th>Actions</th></tr>';
+        tbody.innerHTML = allLessons.length ? "" : '<tr><td colspan="4">No lessons</td></tr>';
+        allLessons.forEach(l => {
+            const level = allLevels.find(lv => lv.id === l.level);
+            tbody.innerHTML += `<tr><td>${l.title}</td><td>${level?.name || l.level}</td><td>${l.duration || '10 min'}</td>
+                <td class="actions"><button class="delete" onclick="window.deleteItem('lessons','${l.id}')">Delete</button></td></tr>`;
+        });
+    }
+}
+
+window.showModal = () => { document.getElementById("modalTitle").textContent = "Create Course"; document.getElementById("courseModal").style.display = "block"; };
+window.closeModal = () => document.getElementById("courseModal").style.display = "none";
+
+window.saveCourse = async () => {
+    const title = document.getElementById("courseTitle").value.trim();
+    const desc = document.getElementById("courseDesc").value.trim();
+    if (!title) { alert("Title required"); return; }
+    await addDoc(collection(db, "courses"), { title, description: desc, createdAt: serverTimestamp() });
+    window.closeModal();
+    document.getElementById("courseTitle").value = "";
+    document.getElementById("courseDesc").value = "";
+};
+
+window.deleteItem = async (col, id) => { if (confirm("Delete?")) await deleteDoc(doc(db, col, id)); };
+</script>
 </body>
 </html>
